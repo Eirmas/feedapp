@@ -1,0 +1,16 @@
+.app-swatch {
+  @apply flex items-center;
+
+  &-ink {
+    margin: 12px 0;    
+    @apply rounded-full w-14 h-14 mr-7 ml-3 flex-none;
+  }
+
+  &-large &-ink {
+    @apply w-20 h-20 mr-4 ml-0;
+  }
+
+  &-meta {
+    @apply text-body-small-bold;
+  }
+}

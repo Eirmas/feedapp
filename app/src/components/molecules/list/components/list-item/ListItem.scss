@@ -1,0 +1,80 @@
+.app-list-item {
+  @apply text-primary-dark w-full grid items-center flex-none outline-none relative no-underline cursor-default select-none;
+  padding: var(--default);
+  grid-template-areas: "prepend content append";
+  grid-template-columns: max-content auto max-content;
+
+  --default: 10px;
+  --dense: 6px;
+
+  @screen md {
+    --default: 12px;
+    --dense: 8px;
+  }
+
+  &--value:not(&--disabled) {
+    @apply cursor-pointer;
+  }
+
+  &--value:not(&--disabled, &--selected):hover {
+    @apply bg-primary-lighter/25;
+  }
+
+  &--disabled {
+    @apply pointer-events-none text-neutral-medium;
+  }
+
+  &-prepend {
+    grid-area: prepend;
+
+    svg {
+      margin-right: var(--default);
+    }
+  }
+
+  &-content {
+    grid-area: content;
+
+    &-title {
+      @apply line-clamp-1 text-body;
+      font-weight: 500;
+    }
+
+    &-subtitle {
+      @apply text-neutral-medium leading-none text-body-small;
+    }
+  }
+
+  &-append {
+    grid-area: append;
+
+    svg {
+      margin-left: var(--default);
+    }
+  }
+
+  &--selected {
+    @apply bg-neutral-background text-primary-light;
+  }
+
+  &-prepend,
+  &-append {
+    @apply items-center self-center flex;
+
+    svg {
+      @apply w-5 h-5;
+
+      @screen md {
+        @apply w-6 h-6;
+      }
+    }
+  }
+
+  &--dense {
+    padding: var(--dense);
+  }
+
+  &:focus-visible &-content-title {
+    @apply text-semantic-focus underline;
+  }
+}

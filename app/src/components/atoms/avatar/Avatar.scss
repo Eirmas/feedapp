@@ -1,0 +1,139 @@
+@use "sass:map";
+
+$indicator: (
+  "large": (
+    "path":
+      path(
+        "M48 0V48H37C43.07106526939 48,48 43.07106526939,48 37C48 30.928934730610003,43.07106526939 26,37 26C30.928934730610003 26,26 30.928934730610003,26 37C26 43.07106526939,30.928934730610003 48,37 48H0V0Z"
+      ),
+    "pos": 11px,
+    "dim": 0.875rem,
+    "size": 48px,
+    "next": "medium",
+  ),
+  "medium": (
+    "path":
+      path(
+        "M40 0V40H32C36.41532019592 40,40 36.41532019592,40 32C40 27.58467980408,36.41532019592 24,32 24C27.58467980408 24,24 27.58467980408,24 32C24 36.41532019592,27.58467980408 40,32 40H0V0Z"
+      ),
+    "pos": 8px,
+    "dim": 0.625rem,
+    "size": 40px,
+    "next": "small",
+  ),
+  "small": (
+    "path":
+      path(
+        "M32 0V32H24C28.41532019592 32,32 28.41532019592,32 24C32 19.58467980408,28.41532019592 16,24 16C19.58467980408 16,16 19.58467980408,16 24C16 28.41532019592,19.58467980408 32,24 32H0V0Z"
+      ),
+    "pos": 8px,
+    "dim": 0.625rem,
+    "size": 32px,
+    "next": "xsmall",
+  ),
+  "xsmall": (
+    "path":
+      path(
+        "M24 0V24H18C21.31149014694 24,24 21.31149014694,24 18C24 14.688509853060001,21.31149014694 12,18 12C14.688509853060001 12,12 14.688509853060001,12 18C12 21.31149014694,14.688509853060001 24,18 24H0V0Z"
+      ),
+    "pos": 6px,
+    "dim": 0.5rem,
+    "size": 24px,
+  ),
+);
+
+@mixin valued($size, $value) {
+  &.app-avatar--#{$size} {
+    img {
+      width: map-get($value, size);
+      height: map-get($value, size);
+    }
+
+    &.app-avatar--stateful {
+      img {
+        clip-path: map-get($value, path);
+      }
+
+      &:after {
+        bottom: map-get($value, pos);
+        right: map-get($value, pos);
+        width: map-get($value, dim);
+        height: map-get($value, dim);
+      }
+    }
+  }
+}
+
+@mixin sized($size, $md) {
+  $valueMd: map-get($indicator, $md);
+  $valueSize: map-get($indicator, $size);
+
+  @include valued($size, $valueMd);
+
+  @screen md {
+    @include valued($size, $valueSize);
+  }
+}
+
+.app-avatar {
+  @apply inline-block relative;
+
+  img {
+    @apply rounded-full overflow-hidden;
+  }
+
+  @include sized("large", "medium");
+  @include sized("medium", "small");
+  @include sized("small", "xsmall");
+
+  &--stateful {
+    &:after {
+      @apply rounded-full;
+      content: "";
+      position: absolute;
+      transform: translate(50%, 50%);
+    }
+
+    &.app-avatar--online::after {
+      @apply bg-semantic-success-dark;
+    }
+
+    &.app-avatar--offline::after {
+      @apply bg-neutral-medium;
+    }
+
+    &.app-avatar--idle::after {
+      @apply bg-semantic-warning-dark;
+    }
+  }
+}
+
+/** CLIP PATH GENERATOR
+
+const _size = ref(24);
+const _radius = ref(6);
+
+const path = computed(() => {
+  const k = 0.55191502449;
+  const size = _size.value;
+  const radius = _radius.value;
+  const origin = size - radius;
+  const a = origin + radius * k;
+  const b = origin - radius * k;
+  const c = origin - radius;
+
+  return `
+  M ${size} 0
+  V ${size}
+  H ${origin}
+  C ${a} ${size}, ${size} ${a}, ${size} ${origin}
+  C ${size} ${b}, ${a} ${c}, ${origin} ${c}
+  C ${b} ${c}, ${c} ${b}, ${c} ${origin}
+  C ${c} ${a}, ${b} ${size}, ${origin} ${size}
+  H 0
+  V 0
+  Z
+`;
+});
+
+*/

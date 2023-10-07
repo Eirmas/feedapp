@@ -1,0 +1,5 @@
+.app-list-group {
+  &-items {
+    @apply overflow-y-auto overflow-x-hidden;
+  }
+}

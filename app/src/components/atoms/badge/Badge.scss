@@ -1,0 +1,20 @@
+.app-badge {
+  @apply inline-block text-body rounded-full px-2 py-1 ring-1;
+  @apply bg-primary-lighter text-primary ring-primary;
+
+  &-success {
+    @apply text-semantic-success-dark bg-semantic-success-light ring-semantic-success-dark;
+  }
+
+  &-info {
+    @apply text-semantic-info-dark bg-semantic-info-light ring-semantic-info-dark;
+  }
+
+  &-warning {
+    @apply text-semantic-warning-dark bg-semantic-warning-light ring-semantic-warning-dark;
+  }
+
+  &-error {
+    @apply text-semantic-error-dark bg-semantic-error-light ring-semantic-error-dark;
+  }
+}

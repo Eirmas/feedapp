@@ -1,0 +1,19 @@
+.app-list-subheader {
+  --default: 10px;
+  --dense: 6px;
+
+  @screen md {
+    --default: 12px;
+    --dense: 8px;
+  }
+
+  padding: var(--dense) var(--default);
+
+  &-title {
+    @apply text-body-small line-clamp-1 text-neutral-medium;
+  }
+
+  &--dense {
+    padding: var(--dense);
+  }
+}

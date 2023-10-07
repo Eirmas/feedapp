@@ -1,0 +1,58 @@
+.app-switch {
+  @apply relative inline-flex shrink-0 cursor-pointer rounded-full transition-colors duration-100 ease-in-out;
+  @apply bg-neutral-light;
+
+  &:disabled {
+    @apply cursor-default;
+  }
+
+  &-handle {
+    transition-property: left, background-color;
+    @apply relative pointer-events-none inline-block transform rounded-full duration-100 ease-in-out left-0;
+    @apply bg-neutral-white;
+  }
+
+  &[aria-checked="true"] {
+    @apply bg-semantic-success-dark;
+  }
+}
+
+@mixin switch($height, $reduction: 8px) {
+  --height-intermediate: #{$height};
+  --reduction-intermediate: #{$reduction};
+  --switch-height: calc(var(--height-intermediate) - var(--reduction-intermediate));
+
+  @screen md {
+    --switch-height: var(--height-intermediate);
+  }
+
+  --switch-handle-size: calc(var(--switch-height) - 4px);
+
+  padding: 2px;
+  height: var(--switch-height);
+  width: calc(var(--switch-height) * 1.61803398875);
+
+  .app-switch-handle {
+    width: var(--switch-handle-size);
+    height: var(--switch-handle-size);
+  }
+
+  &[aria-checked="true"] .app-switch-handle {
+    left: calc(100% - var(--switch-handle-size));
+  }
+}
+
+/* Size: Large */
+.app-switch.app-switch-large {
+  @include switch(40px);
+}
+
+/* Size: Medium */
+.app-switch.app-switch-medium {
+  @include switch(32px);
+}
+
+/* Size: Small */
+.app-switch.app-switch-small {
+  @include switch(24px, 0px);
+}

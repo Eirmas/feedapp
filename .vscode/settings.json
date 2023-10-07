@@ -1,0 +1,6 @@
+{
+  "prettier.prettierPath": "./node_modules/prettier",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  /* Solved tailwind errors. Ref: https://github.com/tailwindlabs/tailwindcss/discussions/5258 */
+  "scss.lint.unknownAtRules": "ignore"
+}
