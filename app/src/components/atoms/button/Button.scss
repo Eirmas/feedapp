@@ -1,217 +1,131 @@
-.app-button {
-  @apply text-button border-none inline-block transition-colors duration-100 ease-in-out;
-  outline: 2px solid transparent;
-  outline-offset: 3px;
+@use "sass:map";
 
-  &:not(:disabled) {
-    cursor: pointer;
+$disabled-opacity: 0.4;
+$config: (
+  size: (
+    (
+      "large",
+      (
+        x: theme("spacing.4"),
+        y: theme("spacing.3"),
+        icon: theme("spacing.6"),
+        content: theme("spacing.2"),
+      )
+    ),
+    (
+      "medium",
+      (
+        x: theme("spacing.2"),
+        y: theme("spacing.2"),
+        icon: theme("spacing.6"),
+        content: theme("spacing[1.5]"),
+      )
+    ),
+    (
+      "small",
+      (
+        x: theme("spacing[1.5]"),
+        y: theme("spacing.1"),
+        icon: theme("spacing.6"),
+        content: theme("spacing.1"),
+      )
+    ),
+  ),
+  theme: (
+    (
+      "primary",
+      (
+        default: "bg-primary-dark text-neutral-white",
+        hover: "bg-transparent text-primary-dark ring-primary-dark",
+        active: "bg-primary text-neutral-white ring-transparent",
+        disabled: "bg-neutral-light text-neutral-dark/[#{$disabled-opacity}] ring-transparent",
+        focus: "bg-semantic-focus text-neutral-white outline-2 outline-semantic-focus outline-offset-2 ring-transparent",
+      )
+    ),
+    (
+      "secondary",
+      (
+        default: "bg-transparent text-primary-dark ring-primary-dark",
+        hover: "bg-primary-dark text-neutral-white",
+        active: "bg-transparent text-primary ring-primary",
+        disabled: "bg-transparent text-neutral-dark/[#{$disabled-opacity}] ring-neutral-dark/[#{$disabled-opacity}]",
+        focus: "bg-semantic-focus text-neutral-white outline-2 outline-semantic-focus outline-offset-2 ring-transparent",
+      )
+    ),
+    (
+      "tertiary",
+      (
+        default: "bg-transparent text-primary-dark outline-transparent",
+        hover: "bg-neutral-background text-primary-dark ring-transparent",
+        active: "bg-neutral-light text-primary",
+        disabled: "bg-transparent text-primary-dark/[#{$disabled-opacity}]",
+        focus: "bg-transparent text-semantic-focus outline-none ring-semantic-focus",
+      )
+    ),
+  ),
+);
+
+.btn {
+  @apply inline-block leading-none ring-2 ring-transparent ring-inset transition-all;
+
+  /* Typography */
+  .btn-content {
+    @apply text-button;
   }
 
-  &:disabled {
-    cursor: default;
-    opacity: 0.38;
+  &[data-size="sm"] .btn-content {
+    @apply text-button-small;
   }
 
-  & &-content {
-    @apply flex items-center;
-  }
-}
-
-/* Primary */
-.app-button.app-button-primary {
-  @apply bg-primary text-neutral-white;
-
-  &:disabled {
-    @apply bg-primary-lighter text-primary-dark;
-    box-shadow: inset 0 0 0 2px transparent;
-    color: var(--bw-color-neutral-dark);
+  /* Corners */
+  &[data-corners="rounded"] {
+    @apply rounded-full;
   }
 
-  &:focus-visible:not(:active) {
-    background-color: theme("colors.semantic.focus");
-    box-shadow: inset 0 0 0 2px transparent;
-    @apply text-neutral-white;
-    outline-color: theme("colors.semantic.focus");
+  &[data-corners="square"] {
+    @apply rounded-xs;
   }
 
-  &:hover:not(:disabled),
-  &[aria-selected="true"] {
-    @apply bg-neutral-white text-primary;
-    box-shadow: inset 0 0 0 2px theme("colors.primary.DEFAULT");
+  /* Size */
+  @each $size, $values in map-get($config, size) {
+    &[data-size="#{$size}"] {
+      padding: map-get($values, y) map-get($values, x);
 
-    &:active {
-      @apply bg-primary-dark text-neutral-white;
-      box-shadow: inset 0 0 0 2px transparent;
-    }
-  }
-}
+      &[data-icon-mode="fab"] {
+        padding: map-get($values, y);
+      }
 
-/* Secondary */
-.app-button.app-button-secondary {
-  @apply bg-neutral-white text-primary;
-  box-shadow: inset 0 0 0 2px theme("colors.primary.DEFAULT");
+      .btn-content {
+        padding: 0 map-get($values, content);
+      }
 
-  &:disabled {
-    @apply bg-neutral-white text-primary;
-    box-shadow: inset 0 0 0 2px theme("colors.primary.DEFAULT");
-  }
-
-  &:focus-visible:not(:active) {
-    background-color: theme("colors.semantic.focus");
-    box-shadow: inset 0 0 0 2px transparent;
-    @apply text-neutral-white;
-    outline-color: theme("colors.semantic.focus");
-  }
-
-  &:hover:not(:disabled),
-  &[aria-selected="true"] {
-    @apply bg-primary text-neutral-white;
-    box-shadow: inset 0 0 0 2px transparent;
-
-    &:active {
-      @apply bg-neutral-white text-primary;
-      box-shadow: inset 0 0 0 2px theme("colors.primary.DEFAULT");
-    }
-  }
-}
-
-/* Tertiary */
-.app-button.app-button-tertiary {
-  @apply bg-transparent text-primary-dark;
-
-  &:focus-visible:not(:active) {
-    @apply text-semantic-focus;
-    box-shadow: inset 0 0 0 2px theme("colors.semantic.focus");
-  }
-
-  &:hover:not(:disabled),
-  &[aria-selected="true"] {
-    @apply bg-primary-lighter text-primary-dark;
-    box-shadow: inset 0 0 0 2px transparent;
-  }
-}
-
-/* Size: Large */
-.app-button.app-button-large {
-  --button-padding-y: 10px;
-  --button-padding-x: 18px;
-  --button-padding-x-icon: 12px;
-  --button-line-height: 20px;
-
-  @screen md {
-    --button-padding-y: 12px;
-    --button-padding-x: 24px;
-    --button-padding-x-icon: 16px;
-    --button-line-height: 24px;
-  }
-
-  padding: var(--button-padding-y) var(--button-padding-x);
-
-  line-height: var(--button-line-height);
-
-  &.app-button-icon {
-    &-prepend {
-      padding: var(--button-padding-y) var(--button-padding-x) var(--button-padding-y) var(--button-padding-x-icon);
-    }
-    &-append {
-      padding: var(--button-padding-y) var(--button-padding-x-icon) var(--button-padding-y) var(--button-padding-x);
+      .btn-icon {
+        width: map-get($values, icon);
+        height: map-get($values, icon);
+      }
     }
   }
 
-  &.app-button-fab {
-    padding: var(--button-padding-y);
-  }
+  /* Theme */
+  @each $theme, $values in map-get($config, theme) {
+    &[data-theme="#{$theme}"] {
+      @apply #{map-get($values, default)};
 
-  .app-button-icon-wrapper {
-    width: var(--button-line-height);
-    height: var(--button-line-height);
-  }
+      &:hover:not(:disabled) {
+        @apply #{map-get($values, hover)};
 
-  .app-button-content {
-    @apply md:gap-x-2 gap-x-1.5;
-  }
-}
+        &:active {
+          @apply #{map-get($values, active)};
+        }
+      }
 
-/* Size: Medium */
-.app-button.app-button-medium {
-  --button-padding-y: 6px;
-  --button-padding-x: 14px;
-  --button-padding-x-icon: 8px;
-  --button-line-height: 20px;
+      &:disabled {
+        @apply #{map-get($values, disabled)};
+      }
 
-  @screen md {
-    --button-padding-y: 8px;
-    --button-padding-x: 18px;
-    --button-padding-x-icon: 12px;
-    --button-line-height: 24px;
-  }
-
-  padding: var(--button-padding-y) var(--button-padding-x);
-
-  line-height: var(--button-line-height);
-
-  &.app-button-icon {
-    &-prepend {
-      padding: var(--button-padding-y) var(--button-padding-x) var(--button-padding-y) var(--button-padding-x-icon);
+      &:focus-visible:not(:active) {
+        @apply #{map-get($values, focus)};
+      }
     }
-    &-append {
-      padding: var(--button-padding-y) var(--button-padding-x-icon) var(--button-padding-y) var(--button-padding-x);
-    }
-  }
-
-  &.app-button-fab {
-    padding: var(--button-padding-y);
-  }
-
-  .app-button-icon-wrapper {
-    width: var(--button-line-height);
-    height: var(--button-line-height);
-  }
-
-  .app-button-content {
-    @apply md:gap-x-1.5 gap-x-1;
-  }
-}
-
-/* Size: Small */
-.app-button.app-button-small {
-  @apply text-button-small;
-
-  --button-padding-y: 4px;
-  --button-padding-x: 10px;
-  --button-padding-x-icon: 6px;
-  --button-line-height: 16px;
-
-  @screen md {
-    --button-padding-y: 6px;
-    --button-padding-x: 14px;
-    --button-padding-x-icon: 8px;
-    --button-line-height: 20px;
-  }
-
-  padding: var(--button-padding-y) var(--button-padding-x);
-
-  line-height: var(--button-line-height);
-
-  &.app-button-icon {
-    &-prepend {
-      padding: var(--button-padding-y) var(--button-padding-x) var(--button-padding-y) var(--button-padding-x-icon);
-    }
-    &-append {
-      padding: var(--button-padding-y) var(--button-padding-x-icon) var(--button-padding-y) var(--button-padding-x);
-    }
-  }
-
-  &.app-button-fab {
-    padding: var(--button-padding-y);
-  }
-
-  .app-button-icon-wrapper {
-    width: var(--button-line-height);
-    height: var(--button-line-height);
-  }
-
-  .app-button-content {
-    @apply gap-x-1;
   }
 }

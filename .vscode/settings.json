@@ -2,5 +2,10 @@
   "prettier.prettierPath": "./node_modules/prettier",
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   /* Solved tailwind errors. Ref: https://github.com/tailwindlabs/tailwindcss/discussions/5258 */
-  "scss.lint.unknownAtRules": "ignore"
+  "scss.lint.unknownAtRules": "ignore",
+  "files.associations": {
+    // Due to weird syntax that VSCode doesn't understand, we have to do this hack
+    // Will probably be solved some day
+    "Button.scss": "postcss"
+  },
 }
