@@ -29,7 +29,7 @@
     "@storybook/addon-links": "^7.0.24",
     "@storybook/blocks": "^7.0.24",
     "@storybook/builder-vite": "^7.0.24",
-    "@storybook/client-api": "^7.0.25",
+    "@storybook/client-api": "^7.4.6",
     "@storybook/testing-library": "^0.0.14-next.2",
     "@storybook/vue3": "^7.0.24",
     "@storybook/vue3-vite": "^7.0.24",
