@@ -24,7 +24,7 @@
   "devDependencies": {
     "@nrwl/vite": "^15.9.4",
     "@pinia/testing": "^0.1.2",
-    "@storybook/addon-essentials": "^7.0.24",
+    "@storybook/addon-essentials": "^7.4.6",
     "@storybook/addon-interactions": "^7.0.24",
     "@storybook/addon-links": "^7.0.24",
     "@storybook/blocks": "^7.0.24",
