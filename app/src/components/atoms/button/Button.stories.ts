@@ -43,6 +43,6 @@ export const Default = {
     corners: 'rounded',
     iconMode: 'append',
     theme: 'primary',
-    disabled: false
+    disabled: false,
   },
 };

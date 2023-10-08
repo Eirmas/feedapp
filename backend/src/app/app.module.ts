@@ -4,7 +4,7 @@ import appConfig from '../common/config/app-conf';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { HealthModule } from './health/health.module';
 import * as fs from 'fs';
-import entities from './models';
+import entities from '../models';
 
 const getSSL = () => {
   let ssl = undefined;
@@ -23,7 +23,27 @@ const getSSL = () => {
     HealthModule,
     ConfigModule.forRoot({
       load: [appConfig],
-    })
+    }),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) => {
+        const config = configService.get<ConfigType<typeof appConfig>>('appConfig');
+        const ssl = getSSL();
+
+        return {
+          type: 'postgres',
+          host: config.database.host,
+          port: config.database.port,
+          username: config.database.user,
+          password: config.database.password,
+          database: config.database.database,
+          entities: entities,
+          synchronize: true,
+          ssl,
+        };
+      },
+      inject: [ConfigService],
+    }),
   ],
   controllers: [],
   providers: [ConfigService],

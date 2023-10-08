@@ -10,6 +10,6 @@ export default {
 export const Default = {
   args: {
     src: 'https://picsum.photos/200/300',
-    alt: 'Random image'
-  }
+    alt: 'Random image',
+  },
 };

@@ -6,4 +6,3 @@ export class HealthService {
     return 'Healthy!';
   }
 }
-

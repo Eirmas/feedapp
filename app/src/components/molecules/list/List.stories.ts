@@ -15,7 +15,7 @@ const meta = {
   tags: ['autodocs'],
 } satisfies Meta<typeof List>;
 
-const Template: StoryFn<typeof List> = (args, { updateArgs }) => ({
+const Template: StoryFn<typeof List> = args => ({
   components: {
     List,
     ListItem,

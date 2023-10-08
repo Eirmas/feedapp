@@ -1,5 +1,5 @@
 <template>
-  <template v-for="item in items">
+  <template v-for="(item, i) in items" :key="i">
     <ListDivider v-if="isDivider(item)" v-bind="item"></ListDivider>
     <ListSubheader v-else-if="isSubheader(item)" v-bind="item"></ListSubheader>
     <ListGroup v-else-if="isGroup(item)" v-bind="item"></ListGroup>

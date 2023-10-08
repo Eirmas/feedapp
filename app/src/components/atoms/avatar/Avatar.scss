@@ -43,35 +43,32 @@ $indicator: (
 );
 
 @mixin valued($size, $value) {
-  &.app-avatar--#{$size} {
+  &.app-avatar-#{$size} {
     img {
-      width: map-get($value, size);
-      height: map-get($value, size);
+      width: map.get($value, size);
+      height: map.get($value, size);
     }
 
-    &.app-avatar--stateful {
+    &.app-avatar-stateful {
       img {
-        clip-path: map-get($value, path);
+        clip-path: map.get($value, path);
       }
 
-      &:after {
-        bottom: map-get($value, pos);
-        right: map-get($value, pos);
-        width: map-get($value, dim);
-        height: map-get($value, dim);
+      &::after {
+        bottom: map.get($value, pos);
+        right: map.get($value, pos);
+        width: map.get($value, dim);
+        height: map.get($value, dim);
       }
     }
   }
 }
 
 @mixin sized($size, $md) {
-  $valueMd: map-get($indicator, $md);
-  $valueSize: map-get($indicator, $size);
-
-  @include valued($size, $valueMd);
+  @include valued($size, map.get($indicator, $md));
 
   @screen md {
-    @include valued($size, $valueSize);
+    @include valued($size, map.get($indicator, $size));
   }
 }
 
@@ -86,23 +83,24 @@ $indicator: (
   @include sized("medium", "small");
   @include sized("small", "xsmall");
 
-  &--stateful {
-    &:after {
+  &-stateful {
+    &::after {
       @apply rounded-full;
+
       content: "";
       position: absolute;
       transform: translate(50%, 50%);
     }
 
-    &.app-avatar--online::after {
+    &.app-avatar-online::after {
       @apply bg-semantic-success-dark;
     }
 
-    &.app-avatar--offline::after {
+    &.app-avatar-offline::after {
       @apply bg-neutral-medium;
     }
 
-    &.app-avatar--idle::after {
+    &.app-avatar-idle::after {
       @apply bg-semantic-warning-dark;
     }
   }

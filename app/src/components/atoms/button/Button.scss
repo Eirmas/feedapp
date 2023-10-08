@@ -87,44 +87,44 @@ $config: (
   }
 
   /* Size */
-  @each $size, $values in map-get($config, size) {
+  @each $size, $values in map.get($config, size) {
     &[data-size="#{$size}"] {
-      padding: map-get($values, y) map-get($values, x);
+      padding: map.get($values, y) map.get($values, x);
 
       &[data-icon-mode="fab"] {
-        padding: map-get($values, y);
+        padding: map.get($values, y);
       }
 
       .btn-content {
-        padding: 0 map-get($values, content);
+        padding: 0 map.get($values, content);
       }
 
       .btn-icon {
-        width: map-get($values, icon);
-        height: map-get($values, icon);
+        width: map.get($values, icon);
+        height: map.get($values, icon);
       }
     }
   }
 
   /* Theme */
-  @each $theme, $values in map-get($config, theme) {
+  @each $theme, $values in map.get($config, theme) {
     &[data-theme="#{$theme}"] {
-      @apply #{map-get($values, default)};
+      @apply #{map.get($values, default)};
 
       &:hover:not(:disabled) {
-        @apply #{map-get($values, hover)};
+        @apply #{map.get($values, hover)};
 
         &:active {
-          @apply #{map-get($values, active)};
+          @apply #{map.get($values, active)};
         }
       }
 
       &:disabled {
-        @apply #{map-get($values, disabled)};
+        @apply #{map.get($values, disabled)};
       }
 
       &:focus-visible:not(:active) {
-        @apply #{map-get($values, focus)};
+        @apply #{map.get($values, focus)};
       }
     }
   }

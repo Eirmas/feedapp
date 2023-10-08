@@ -13,7 +13,7 @@ import { IAvatarSizes, IAvatarStates } from './types';
 interface Props {
   src: string;
   state?: IAvatarStates;
-  size?: IAvatarSizes
+  size?: IAvatarSizes;
   name?: string;
 }
 
@@ -23,8 +23,8 @@ const props = withDefaults(defineProps<Props>(), {
 
 const classes = computed(() => ({
   'app-avatar': true,
-  'app-avatar--stateful': !!props.state,
-  [`app-avatar--${props.size}`]: true,
-  [`app-avatar--${props.state}`]: !!props.state,
+  'app-avatar-stateful': !!props.state,
+  [`app-avatar-${props.size}`]: true,
+  [`app-avatar-${props.state}`]: !!props.state,
 }));
 </script>

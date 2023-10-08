@@ -1,6 +1,7 @@
 .app-list {
-  @apply flex flex-col;
   --indent-padding: 0px;
+
+  @apply flex flex-col;
 
   .app-list-subheader:not(:last-child) {
     @apply -mb-1;
@@ -29,7 +30,7 @@
   &--nav:not(&--dense) {
     @apply gap-y-2 m-2;
 
-    .app-list-divider  {
+    .app-list-divider {
       @apply -mx-2;
     }
 

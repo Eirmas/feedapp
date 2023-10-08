@@ -1,11 +1,4 @@
-import {
-  ExceptionFilter,
-  Catch,
-  ArgumentsHost,
-  HttpException,
-  HttpStatus,
-  BadRequestException,
-} from '@nestjs/common';
+import { ExceptionFilter, Catch, ArgumentsHost, HttpException, HttpStatus, BadRequestException } from '@nestjs/common';
 import { HttpAdapterHost } from '@nestjs/core';
 
 @Catch()
@@ -86,8 +79,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
       // check the type of the "exception" argument.
       case 'object':
         // if it's an object, check if it has a "message" property that is a string and has multiple lines.
-        return typeof exception['message'] === 'string' &&
-          exception['message'].split('\n').length > 1
+        return typeof exception['message'] === 'string' && exception['message'].split('\n').length > 1
           ? exception['message'].split('\n')[0] // if it does, return the first line of the message
           : exception['message']; // if it doesn't, return the entire message
 

@@ -3,6 +3,8 @@
   "compilerOptions": {
     "useDefineForClassFields": true,
     "strict": true,
+    "module": "es2022",
+    "moduleResolution": "node",
     "jsx": "preserve",
     "isolatedModules": true,
     "esModuleInterop": true,
@@ -15,9 +17,7 @@
     "paths": {
       "@/*": ["app/src/*"]
     },
-    "types": [
-      "vite-plugin-pwa/vue"
-    ]
+    "types": ["vite-plugin-pwa/vue"]
   },
   "references": [
     {

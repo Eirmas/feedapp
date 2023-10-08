@@ -16,7 +16,10 @@
     "skipLibCheck": true,
     "downlevelIteration": true,
     "skipDefaultLibCheck": true,
-    "baseUrl": "."
+    "baseUrl": ".",
+    "paths": {
+      "domain-models": ["packages/domain-models/src/index.ts"]
+    }
   },
   "files": [],
   "exclude": ["node_modules", "tmp"]

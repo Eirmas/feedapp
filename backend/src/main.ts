@@ -8,6 +8,7 @@ import { AppModule } from './app/app.module';
 import { AllExceptionsFilter } from './common/filter/all-exception.filter';
 import appConfig from './common/config/app-conf';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 declare const module: any;
 
 async function bootstrap() {

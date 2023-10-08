@@ -1,9 +1,9 @@
 module.exports = {
   root: true,
-  extends: 'stylelint-config-standard',
+  extends: 'stylelint-config-standard-scss',
   rules: {
     'at-rule-empty-line-before': null,
-    'at-rule-no-unknown': [
+    'scss/at-rule-no-unknown': [
       true,
       {
         ignoreAtRules: [
@@ -17,6 +17,8 @@ module.exports = {
           'define-mixin',
           'tailwind',
           'apply',
+          'responsive',
+          'variants',
           'at-root',
           'use',
           'screen',
@@ -26,5 +28,7 @@ module.exports = {
     'declaration-empty-line-before': null,
     'rule-empty-line-before': null,
     'selector-list-comma-newline-after': null,
+    'declaration-block-trailing-semicolon': null,
+    'no-descending-specificity': null,
   },
 };

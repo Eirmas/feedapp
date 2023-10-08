@@ -29,7 +29,7 @@ const props = withDefaults(defineProps<Props>(), {
   multiple: false,
   selected: () => [],
   opened: () => [],
-  items: () => []
+  items: () => [],
 });
 
 const emit = defineEmits<{

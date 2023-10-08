@@ -10,7 +10,7 @@
     @click="emit('click', $event)"
   >
     <div :class="['flex items-center justify-center', iconMode === 'append' && 'flex-row-reverse']">
-      <component v-if="icon" :is="icon" class="btn-icon" />
+      <component :is="icon" v-if="icon" class="btn-icon" />
       <div v-if="iconMode !== 'fab'" class="btn-content">
         <slot></slot>
       </div>

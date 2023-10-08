@@ -1,5 +1,6 @@
 .app-list-item {
   @apply text-primary-dark w-full grid items-center flex-none outline-none relative no-underline cursor-default select-none;
+
   padding: var(--default);
   grid-template-areas: "prepend content append";
   grid-template-columns: max-content auto max-content;
@@ -37,6 +38,7 @@
 
     &-title {
       @apply line-clamp-1 text-body;
+
       font-weight: 500;
     }
 

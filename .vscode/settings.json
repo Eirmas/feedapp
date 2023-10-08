@@ -8,4 +8,7 @@
     // Will probably be solved some day
     "Button.scss": "postcss"
   },
+  "css.validate": false,
+  "less.validate": false,
+  "scss.validate": false
 }

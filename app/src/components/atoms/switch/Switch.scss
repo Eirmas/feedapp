@@ -8,6 +8,7 @@
 
   &-handle {
     transition-property: left, background-color;
+
     @apply relative pointer-events-none inline-block transform rounded-full duration-100 ease-in-out left-0;
     @apply bg-neutral-white;
   }
@@ -30,7 +31,7 @@
 
   padding: 2px;
   height: var(--switch-height);
-  width: calc(var(--switch-height) * 1.61803398875);
+  width: calc(var(--switch-height) * 1.618);
 
   .app-switch-handle {
     width: var(--switch-handle-size);
@@ -54,5 +55,5 @@
 
 /* Size: Small */
 .app-switch.app-switch-small {
-  @include switch(24px, 0px);
+  @include switch(24px, 0);
 }

@@ -45,6 +45,14 @@
         "lintFilePatterns": ["backend/**/*.ts"]
       }
     },
+    "lint:fix": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "fix": true,
+        "lintFilePatterns": ["backend/**/*.ts"]
+      }
+    },
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
