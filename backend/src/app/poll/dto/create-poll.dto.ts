@@ -1,0 +1,35 @@
+import { Expose, Type } from 'class-transformer';
+import { ApiProperty } from '@nestjs/swagger';
+import { IsBoolean, IsEmail, IsNotEmpty, IsOptional, IsString, MaxLength } from 'class-validator';
+
+export class CreatePollDto {
+  @ApiProperty({ type: String })
+  @Expose()
+  @Type(() => String)
+  @IsNotEmpty()
+  @MaxLength(255)
+  @IsString()
+  public title: string;
+
+  @ApiProperty({ type: String })
+  @Expose()
+  @Type(() => String)
+  @IsNotEmpty()
+  @MaxLength(255)
+  @IsString()
+  public question: string;
+
+  @ApiProperty({ type: Boolean })
+  @Expose()
+  @Type(() => Boolean)
+  @IsOptional()
+  @IsBoolean()
+  public private: boolean;
+
+  @ApiProperty({ type: Array<string> })
+  @Expose()
+  @Type(() => Array<string>)
+  @IsOptional()
+  @IsEmail({}, { each: true })
+  public emails: string[];
+}

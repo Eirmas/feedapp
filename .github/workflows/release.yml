@@ -1,0 +1,84 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  project: nx-vite-tailwind
+  account-id: 53b218bcbcf8884b7fb40d27ee50ac09
+
+jobs:
+  app:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: app
+      cancel-in-progress: true
+    environment:
+      name: dev
+    permissions:
+      contents: write
+      deployments: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'pnpm'
+      - run: pnpm install --frozen-lockfile
+
+      - name: Build
+        run: npx nx run-many -t build --parallel=3 --configuration=production
+
+      - name: Publish to Cloudflare Pages
+        id: publish
+        uses: cloudflare/pages-action@v1.5.0
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ env.account-id }}
+          projectName: ${{ env.project }}
+          directory: dist/app
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          branch: main
+
+  storybook:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: storybook
+      cancel-in-progress: true
+    environment:
+      name: dev
+    permissions:
+      contents: write
+      deployments: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'pnpm'
+      - run: pnpm install --frozen-lockfile
+
+      - name: Build
+        run: npx nx run-many -t build-storybook --parallel=3 --configuration=production && touch ./dist/storybook/app/.nojekyll
+
+      - name: Publish Storybook to Github Pages
+        id: storybook
+        uses: crazy-max/ghaction-github-pages@v1
+        with:
+          target_branch: gh-pages
+          build_dir: dist/storybook/app
+          jekyll: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

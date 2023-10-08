@@ -1,0 +1,131 @@
+@use "sass:map";
+
+$disabled-opacity: 0.4;
+$config: (
+  size: (
+    (
+      "large",
+      (
+        x: theme("spacing.4"),
+        y: theme("spacing.3"),
+        icon: theme("spacing.6"),
+        content: theme("spacing.2"),
+      )
+    ),
+    (
+      "medium",
+      (
+        x: theme("spacing.2"),
+        y: theme("spacing.2"),
+        icon: theme("spacing.6"),
+        content: theme("spacing[1.5]"),
+      )
+    ),
+    (
+      "small",
+      (
+        x: theme("spacing[1.5]"),
+        y: theme("spacing.1"),
+        icon: theme("spacing.6"),
+        content: theme("spacing.1"),
+      )
+    ),
+  ),
+  theme: (
+    (
+      "primary",
+      (
+        default: "bg-primary-dark text-neutral-white",
+        hover: "bg-transparent text-primary-dark ring-primary-dark",
+        active: "bg-primary text-neutral-white ring-transparent",
+        disabled: "bg-neutral-light text-neutral-dark/[#{$disabled-opacity}] ring-transparent",
+        focus: "bg-semantic-focus text-neutral-white outline-2 outline-semantic-focus outline-offset-2 ring-transparent",
+      )
+    ),
+    (
+      "secondary",
+      (
+        default: "bg-transparent text-primary-dark ring-primary-dark",
+        hover: "bg-primary-dark text-neutral-white",
+        active: "bg-transparent text-primary ring-primary",
+        disabled: "bg-transparent text-neutral-dark/[#{$disabled-opacity}] ring-neutral-dark/[#{$disabled-opacity}]",
+        focus: "bg-semantic-focus text-neutral-white outline-2 outline-semantic-focus outline-offset-2 ring-transparent",
+      )
+    ),
+    (
+      "tertiary",
+      (
+        default: "bg-transparent text-primary-dark outline-transparent",
+        hover: "bg-neutral-background text-primary-dark ring-transparent",
+        active: "bg-neutral-light text-primary",
+        disabled: "bg-transparent text-primary-dark/[#{$disabled-opacity}]",
+        focus: "bg-transparent text-semantic-focus outline-none ring-semantic-focus",
+      )
+    ),
+  ),
+);
+
+.btn {
+  @apply inline-block leading-none ring-2 ring-transparent ring-inset transition-all;
+
+  /* Typography */
+  .btn-content {
+    @apply text-button;
+  }
+
+  &[data-size="sm"] .btn-content {
+    @apply text-button-small;
+  }
+
+  /* Corners */
+  &[data-corners="rounded"] {
+    @apply rounded-full;
+  }
+
+  &[data-corners="square"] {
+    @apply rounded-xs;
+  }
+
+  /* Size */
+  @each $size, $values in map.get($config, size) {
+    &[data-size="#{$size}"] {
+      padding: map.get($values, y) map.get($values, x);
+
+      &[data-icon-mode="fab"] {
+        padding: map.get($values, y);
+      }
+
+      .btn-content {
+        padding: 0 map.get($values, content);
+      }
+
+      .btn-icon {
+        width: map.get($values, icon);
+        height: map.get($values, icon);
+      }
+    }
+  }
+
+  /* Theme */
+  @each $theme, $values in map.get($config, theme) {
+    &[data-theme="#{$theme}"] {
+      @apply #{map.get($values, default)};
+
+      &:hover:not(:disabled) {
+        @apply #{map.get($values, hover)};
+
+        &:active {
+          @apply #{map.get($values, active)};
+        }
+      }
+
+      &:disabled {
+        @apply #{map.get($values, disabled)};
+      }
+
+      &:focus-visible:not(:active) {
+        @apply #{map.get($values, focus)};
+      }
+    }
+  }
+}

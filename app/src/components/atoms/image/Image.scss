@@ -1,0 +1,11 @@
+.app-image {
+  object-fit: contain;
+
+  &-cover {
+    object-fit: cover;
+  }
+
+  &-inline {
+    display: inline-block;
+  }
+}

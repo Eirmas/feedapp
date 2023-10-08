@@ -1,0 +1,26 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true,
+    "target": "esnext",
+    "module": "esnext",
+    "lib": ["esnext", "dom"],
+    "skipLibCheck": true,
+    "downlevelIteration": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "domain-models": ["packages/domain-models/src/index.ts"]
+    }
+  },
+  "files": [],
+  "exclude": ["node_modules", "tmp"]
+}
