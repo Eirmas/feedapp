@@ -24,7 +24,7 @@
     "@nx/linter": "16.3.2",
     "@nx/nest": "^16.10.0",
     "@nx/node": "16.10.0",
-    "@nx/storybook": "^16.3.2",
+    "@nx/storybook": "^16.10.0",
     "@nx/webpack": "16.10.0",
     "@nx/workspace": "16.3.2",
     "@storybook/addon-actions": "^7.0.24",
