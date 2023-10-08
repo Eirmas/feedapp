@@ -47,7 +47,7 @@
     "storybook": "^7.0.24",
     "vite": "^4.3.9",
     "vite-plugin-pwa": "^0.16.4",
-    "vitest": "^0.32.0",
+    "vitest": "^0.34.6",
     "vue-tsc": "^0.34.7",
     "workbox-window": "^7.0.0"
   }
