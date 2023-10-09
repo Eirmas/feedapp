@@ -28,6 +28,7 @@ export class VoteController {
   constructor(private readonly voteService: VoteService) {}
 
   @Get(':pollId')
+  @ApiBearerAuth()
   @UseGuards(HasPollAccessGuard)
   @ApiParam({ name: 'pollId', format: 'uuid' })
   public getVotesByPoll(@Param('pollId', new ParseUUIDPipe()) pollId: string): Promise<{ yes: number; no: number }> {
@@ -46,6 +47,7 @@ export class VoteController {
   }
 
   @Post(':pollId')
+  @ApiBearerAuth()
   @UseGuards(HasPollAccessGuard)
   @ApiParam({ name: 'pollId', format: 'uuid' })
   @ApiBody({ type: CreateVoteDto })

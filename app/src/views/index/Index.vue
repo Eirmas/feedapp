@@ -13,6 +13,7 @@ const login = () => {
     supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
+        redirectTo: 'http://localhost:8080',
         queryParams: {
           access_type: 'offline',
           prompt: 'consent',

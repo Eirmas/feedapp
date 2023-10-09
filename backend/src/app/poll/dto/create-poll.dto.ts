@@ -28,7 +28,7 @@ export class CreatePollDto {
 
   @ApiProperty({ type: String, required: false, isArray: true })
   @Expose()
-  @Type(() => Array<String>)
+  @Type(() => Array<string>)
   @IsOptional()
   @IsEmail({}, { each: true })
   public emails?: string[];

@@ -50,9 +50,9 @@ export class PollController {
   }
 
   @Get(':pollId')
+  @ApiBearerAuth()
   @UseGuards(HasPollAccessGuard)
   @ApiParam({ name: 'pollId', format: 'uuid' })
-  @ApiBody({ type: CreatePollDto })
   public getPollById(@Param('pollId', new ParseUUIDPipe()) pollId: string): Promise<PollEntity> {
     return lastValueFrom(
       this.pollService.getPollById(pollId).pipe(

@@ -17,5 +17,5 @@ export class UpdateUserDto extends PartialType(UserEntity) {
   @Type(() => String)
   @IsOptional()
   @IsUrl()
-  public avatarUrl: string;
+  public avatar: string;
 }

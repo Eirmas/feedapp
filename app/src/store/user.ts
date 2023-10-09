@@ -1,30 +1,12 @@
-import { defineStore } from 'pinia';
-import { supabase } from '@/plugins/supabase';
 import { UserDomainModel } from 'domain-models';
+import { defineStore } from 'pinia';
 
 type State = {
   user: UserDomainModel | null;
 };
 
-type Getters = {
-};
-
-type Actions = {
-  fetchUser(): Promise<void>;
-};
-
-export const useAuthStore = defineStore<'auth', State, Getters, Actions>('auth', {
+export const useAuthStore = defineStore<'user', State>('user', {
   state: () => ({
     user: null,
   }),
-  actions: {
-    fetchUser() {
-      this.currentPromise = supabase.auth.getSession().then(res => {
-        this.currentSession = res.data.session;
-        this.currentPromise = null;
-        this.initialized = true;
-      });
-      return this.currentPromise;
-    },
-  },
 });
