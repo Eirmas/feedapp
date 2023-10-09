@@ -4,7 +4,7 @@ import { Expose, Type } from 'class-transformer';
 import { IsOptional, IsString, IsUrl, MaxLength } from 'class-validator';
 
 export class UpdateUserDto extends PartialType(UserEntity) {
-  @ApiProperty({ type: String })
+  @ApiProperty({ type: String, required: false })
   @Expose()
   @Type(() => String)
   @IsOptional()
@@ -12,7 +12,7 @@ export class UpdateUserDto extends PartialType(UserEntity) {
   @MaxLength(255)
   public name: string;
 
-  @ApiProperty({ type: String })
+  @ApiProperty({ type: String, required: false })
   @Expose()
   @Type(() => String)
   @IsOptional()

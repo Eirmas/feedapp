@@ -15,7 +15,7 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiParam, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
 import { AccessToken } from '../../common/decorators/access-token.decorator';
 import { AuthGuard } from '../../common/guards/auth.guard';
 import { HasPollAccessGuard } from '../../common/guards/has-poll-access.guard';
@@ -52,6 +52,7 @@ export class PollController {
   @Get(':pollId')
   @UseGuards(HasPollAccessGuard)
   @ApiParam({ name: 'pollId', format: 'uuid' })
+  @ApiBody({ type: CreatePollDto })
   public getPollById(@Param('pollId', new ParseUUIDPipe()) pollId: string): Promise<PollEntity> {
     return lastValueFrom(
       this.pollService.getPollById(pollId).pipe(
@@ -70,6 +71,7 @@ export class PollController {
   @Post()
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
+  @ApiBody({ type: CreatePollDto })
   @HttpCode(HttpStatus.CREATED)
   public createPoll(@AccessToken() accessToken: AccessTokenData, @Body() createPollDto: CreatePollDto): Promise<PollEntity> {
     return lastValueFrom(
@@ -106,6 +108,7 @@ export class PollController {
   @ApiBearerAuth()
   @UseGuards(IsPollOwnerGuard)
   @ApiParam({ name: 'pollId', format: 'uuid' })
+  @ApiBody({ type: UpdatePollDto })
   @HttpCode(HttpStatus.NO_CONTENT)
   public updatePoll(@Param('pollId', new ParseUUIDPipe()) pollId: string, @Body() updatePollDto: UpdatePollDto): Promise<UpdateResult> {
     return lastValueFrom(

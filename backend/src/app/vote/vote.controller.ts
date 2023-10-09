@@ -13,7 +13,7 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiParam, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
 import ResourceNotFoundException from '../../common/exceptions/resource-not-found.exception';
 import { HasPollAccessGuard } from '../../common/guards/has-poll-access.guard';
 import { VoteEntity } from '../../models';
@@ -46,7 +46,9 @@ export class VoteController {
   }
 
   @Post(':pollId')
-  @ApiBearerAuth()
+  @UseGuards(HasPollAccessGuard)
+  @ApiParam({ name: 'pollId', format: 'uuid' })
+  @ApiBody({ type: CreateVoteDto })
   @HttpCode(HttpStatus.CREATED)
   public createVote(@Param('pollId', new ParseUUIDPipe()) pollId: string, @Body() createVoteDto: CreateVoteDto): Promise<VoteEntity> {
     return lastValueFrom(

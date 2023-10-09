@@ -15,7 +15,8 @@
     "noFallthroughCasesInSwitch": true,
     "forceConsistentCasingInFileNames": true,
     "paths": {
-      "@/*": ["app/src/*"]
+      "@/*": ["app/src/*"],
+      "domain-models": ["packages/domain-models/src/index.ts"]
     },
     "types": ["vite-plugin-pwa/vue"]
   },

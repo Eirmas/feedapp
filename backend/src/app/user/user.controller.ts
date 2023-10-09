@@ -14,7 +14,7 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
 import { AccessToken } from '../../common/decorators/access-token.decorator';
 import { AuthGuard } from '../../common/guards/auth.guard';
 import { AccessTokenData } from '../../common/interfaces/access-token.type';
@@ -52,6 +52,7 @@ export class UserController {
   @Get(':userId')
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
+  @ApiParam({ name: 'userId', format: 'uuid' })
   public getUserById(@Param('userId', new ParseUUIDPipe()) userId: string): Promise<UserEntity> {
     return lastValueFrom(
       this.userService.getUserById(userId).pipe(
@@ -70,6 +71,7 @@ export class UserController {
   @Put()
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
+  @ApiBody({ type: UpdateUserDto })
   @HttpCode(HttpStatus.NO_CONTENT)
   public updateUser(@AccessToken() accessToken: AccessTokenData, @Body() updateUserDto: UpdateUserDto): Promise<UpdateResult> {
     return lastValueFrom(

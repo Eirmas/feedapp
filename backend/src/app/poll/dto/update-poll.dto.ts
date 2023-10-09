@@ -4,7 +4,7 @@ import { IsBoolean, IsOptional, IsString, MaxLength } from 'class-validator';
 import PollEntity from '../../../models/poll.entity';
 
 export class UpdatePollDto extends PartialType(PollEntity) {
-  @ApiProperty({ type: String })
+  @ApiProperty({ type: String, required: false })
   @Expose()
   @Type(() => String)
   @IsOptional()
@@ -12,7 +12,7 @@ export class UpdatePollDto extends PartialType(PollEntity) {
   @MaxLength(255)
   public title: string;
 
-  @ApiProperty({ type: String })
+  @ApiProperty({ type: String, required: false })
   @Expose()
   @Type(() => String)
   @IsOptional()
@@ -20,7 +20,7 @@ export class UpdatePollDto extends PartialType(PollEntity) {
   @MaxLength(255)
   public question: string;
 
-  @ApiProperty({ type: Boolean })
+  @ApiProperty({ type: Boolean, required: false })
   @Expose()
   @Type(() => Boolean)
   @IsOptional()

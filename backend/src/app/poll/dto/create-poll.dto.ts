@@ -19,17 +19,17 @@ export class CreatePollDto {
   @IsString()
   public question: string;
 
-  @ApiProperty({ type: Boolean })
+  @ApiProperty({ type: Boolean, required: false })
   @Expose()
   @Type(() => Boolean)
   @IsOptional()
   @IsBoolean()
   public private: boolean;
 
-  @ApiProperty({ type: Array<string> })
+  @ApiProperty({ type: String, required: false, isArray: true })
   @Expose()
-  @Type(() => Array<string>)
+  @Type(() => Array<String>)
   @IsOptional()
   @IsEmail({}, { each: true })
-  public emails: string[];
+  public emails?: string[];
 }
