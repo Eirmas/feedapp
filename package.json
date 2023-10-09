@@ -17,7 +17,7 @@
   "devDependencies": {
     "@intlify/eslint-plugin-vue-i18n": "^2.0.0",
     "@nestjs/schematics": "^10.0.1",
-    "@nestjs/testing": "^10.0.2",
+    "@nestjs/testing": "^10.2.7",
     "@nx/eslint-plugin": "16.3.2",
     "@nx/jest": "16.10.0",
     "@nx/js": "16.10.0",
