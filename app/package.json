@@ -32,7 +32,7 @@
     "@storybook/client-api": "^7.0.25",
     "@storybook/testing-library": "^0.0.14-next.2",
     "@storybook/vue3": "^7.0.24",
-    "@storybook/vue3-vite": "^7.0.24",
+    "@storybook/vue3-vite": "^7.4.6",
     "@types/sinon": "^10.0.15",
     "@vitejs/plugin-vue": "^4.2.3",
     "@vue/test-utils": "^2.4.0",
