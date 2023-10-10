@@ -8,14 +8,55 @@ updates:
   - package-ecosystem: 'npm' # See documentation for possible values
     directory: '/' # Location of package manifests
     schedule:
-      interval: 'daily'
+      interval: 'weekly'
+    groups:
+      vue:
+        patterns:
+          - 'vue'
+          - 'vue-*'
+          - '@vue/test-utils'
+      nx:
+        patterns:
+          - '@nx/*'
+          - '@nrwl/cli'
+          - 'nx'
+          - 'nx-stylelint'
+          - 'nx-vue3-vite'
+      storybook:
+        patterns:
+          - '@storybook/*'
+          - 'storybook'
+      react:
+        patterns:
+          - 'react'
+          - 'react-dom'
+      test:
+        patterns:
+          - '@types/jest'
+          - 'jest*'
+          - 'ts-jest'
+          - 'vitest'
+          - '@pinia/testing'
+          - 'sinon'
+          - 'happy-dom'
+      lint:
+        patterns:
+          - '@typescript-eslint*'
+          - 'eslint*'
+          - 'prettier'
+          - 'stylelint*'
+      css:
+        patterns:
+          - 'postcss*'
+          - 'autoprefixer'
+          - 'tailwindcss*'
+          - 'sass'
     ignore:
       - dependency-name: '*'
         update-types: ['version-update:semver-patch']
   - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:
-      # Check for updates to GitHub Actions every weekday
-      interval: 'daily'
+      interval: 'weekly'
       time: '05:00'
       timezone: 'Europe/Oslo'
