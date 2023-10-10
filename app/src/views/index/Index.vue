@@ -13,7 +13,7 @@ const login = () => {
     supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: import.meta.env.BASE_URL,
+        redirectTo: window.location.href,
         queryParams: {
           access_type: 'offline',
           prompt: 'consent',
