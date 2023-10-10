@@ -23,8 +23,6 @@ interface Props {
   nav?: boolean;
 }
 
-console.log(import.meta.env.VITE_SUPABASE_URL);
-
 const props = withDefaults(defineProps<Props>(), {
   tag: 'ul',
   nav: false,

@@ -106,7 +106,7 @@ jobs:
           path: dist
 
   publish-app:
-    name: Publish app to Heroku
+    name: Publish app to Cloudflare Pages
     needs: build
     runs-on: ubuntu-latest
     permissions:
