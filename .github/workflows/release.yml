@@ -100,6 +100,10 @@ jobs:
 
       - name: Build
         run: npx nx run-many -t build --parallel=3 --configuration=production
+      - uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: dist
 
   publish-app:
     name: Publish app to Heroku
@@ -111,6 +115,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: dist
+          path: dist
 
       - name: Publish App to Cloudflare Pages
         id: publish
