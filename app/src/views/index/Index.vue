@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Index</h1>
+    <h1>Index2</h1>
     <button @click="login">Login</button>
   </div>
 </template>
