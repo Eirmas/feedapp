@@ -9,13 +9,9 @@
 import { supabase } from '@/plugins/supabase';
 
 const login = () => {
-  const redirect = window.location.origin;
-  console.log(redirect);
-
   supabase.auth.signInWithOAuth({
     provider: 'google',
     options: {
-      redirectTo: redirect,
       queryParams: {
         access_type: 'offline',
         prompt: 'consent',
