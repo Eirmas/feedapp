@@ -9,17 +9,18 @@
 import { supabase } from '@/plugins/supabase';
 
 const login = () => {
-  console.log(
-    supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: {
-        redirectTo: window.location.href,
-        queryParams: {
-          access_type: 'offline',
-          prompt: 'consent',
-        },
+  const redirect = window.location.origin;
+  console.log(redirect);
+
+  supabase.auth.signInWithOAuth({
+    provider: 'google',
+    options: {
+      redirectTo: redirect,
+      queryParams: {
+        access_type: 'offline',
+        prompt: 'consent',
       },
-    }),
-  );
+    },
+  });
 };
 </script>
