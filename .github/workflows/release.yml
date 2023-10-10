@@ -5,9 +5,6 @@ on:
     branches:
       - main
 
-env:
-  project: dat250-feedapp
-
 jobs:
   lint:
     name: Lint
@@ -109,10 +106,11 @@ jobs:
       deployments: write
     steps:
       - name: Deploy to Heroku
-        uses: akhileshns/heroku-deploy@v3.12.12
+        uses: akhileshns/heroku-deploy@v3.12.14
         with:
+          branch: "main"
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-          heroku_app_name: ${{ env.project }}
+          heroku_app_name: "dat250-feedapp"
           heroku_email: ${{ secrets.HEROKU_EMAIL }}
           appdir: dist/app
 
