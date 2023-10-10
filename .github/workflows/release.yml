@@ -112,7 +112,7 @@ jobs:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: 'dat250-feedapp'
           heroku_email: ${{ secrets.HEROKU_EMAIL }}
-          appdir: "dist/app"
+          appdir: 'dist/app'
 
   publish-storybook:
     name: Publish Storybook to GitHub Pages
