@@ -116,13 +116,12 @@ jobs:
           heroku_email: ${{ secrets.HEROKU_EMAIL }}
           appdir: dist/app
 
-  storybook:
+  publish-storybook:
+    name: Publish Storybook to GitHub Pages
     runs-on: ubuntu-latest
     concurrency:
       group: storybook
       cancel-in-progress: true
-    environment:
-      name: dev
     permissions:
       contents: write
       deployments: write
