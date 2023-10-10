@@ -82,6 +82,7 @@ jobs:
         run: npx nx affected -t test --parallel=3 --configuration=ci
 
   build:
+    name: Build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -99,7 +100,8 @@ jobs:
       - name: Build
         run: npx nx run-many -t build --parallel=3 --configuration=production
 
-  deploy-app:
+  publish-app:
+    name: Publish app to Heroku
     needs: build
     runs-on: ubuntu-latest
     permissions:
@@ -112,7 +114,7 @@ jobs:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: ${{ env.project }}
           heroku_email: ${{ secrets.HEROKU_EMAIL }}
-          heroku_directory: dist/app
+          appdir: dist/app
 
   storybook:
     runs-on: ubuntu-latest
