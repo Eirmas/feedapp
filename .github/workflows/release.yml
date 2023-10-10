@@ -5,6 +5,10 @@ on:
     branches:
       - main
 
+env:
+  project: feedapp
+  account-id: 53b218bcbcf8884b7fb40d27ee50ac09
+
 jobs:
   lint:
     name: Lint
@@ -108,13 +112,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Deploy to Heroku
-        uses: akhileshns/heroku-deploy@v3.12.14
+      - name: Publish App to Cloudflare Pages
+        id: publish
+        uses: cloudflare/pages-action@v1.5.0
         with:
-          branch: 'main'
-          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-          heroku_app_name: 'dat250-feedapp'
-          heroku_email: ${{ secrets.HEROKU_EMAIL }}
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ env.account-id }}
+          projectName: ${{ env.project }}
+          directory: dist/app
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          branch: main
 
   publish-storybook:
     name: Publish Storybook to GitHub Pages
