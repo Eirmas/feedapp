@@ -116,7 +116,7 @@ importers:
         version: 7.0.24(react-dom@18.2.0)(react@18.2.0)
       '@storybook/addon-styling':
         specifier: ^1.3.2
-        version: 1.3.2(less@4.1.3)(postcss@8.4.31)(react-dom@18.2.0)(react@18.2.0)(sass@1.53.0)(webpack@5.88.1)
+        version: 1.3.2(less@4.1.3)(postcss@8.4.31)(react-dom@18.2.0)(react@18.2.0)(sass@1.69.1)(webpack@5.88.1)
       '@tailwindcss/forms':
         specifier: ^0.5.3
         version: 0.5.3(tailwindcss@3.3.2)
@@ -166,8 +166,8 @@ importers:
         specifier: ^2.8.8
         version: 2.8.8
       sass:
-        specifier: ^1.53.0
-        version: 1.53.0
+        specifier: ^1.69.1
+        version: 1.69.1
       stylelint:
         specifier: ^15.10.3
         version: 15.10.3
@@ -297,13 +297,13 @@ importers:
         version: 7.0.24
       vite:
         specifier: ^4.3.9
-        version: 4.3.9(@types/node@20.3.2)(less@4.1.3)(sass@1.53.0)(stylus@0.59.0)
+        version: 4.3.9(@types/node@20.3.2)(less@4.1.3)(sass@1.69.1)(stylus@0.59.0)
       vite-plugin-pwa:
         specifier: ^0.16.4
         version: 0.16.4(vite@4.3.9)(workbox-build@7.0.0)(workbox-window@7.0.0)
       vitest:
         specifier: ^0.32.0
-        version: 0.32.0(happy-dom@9.20.3)(less@4.1.3)(sass@1.53.0)(stylus@0.59.0)
+        version: 0.32.0(happy-dom@9.20.3)(less@4.1.3)(sass@1.69.1)(stylus@0.59.0)
       vue-tsc:
         specifier: ^0.34.7
         version: 0.34.7(typescript@4.5.4)
@@ -4253,8 +4253,8 @@ packages:
       '@swc/helpers': 0.4.14
       dotenv: 10.0.0
       enquirer: 2.3.6
-      vite: 4.3.9(@types/node@20.3.2)(less@4.1.3)(sass@1.53.0)(stylus@0.59.0)
-      vitest: 0.32.0(happy-dom@9.20.3)(less@4.1.3)(sass@1.53.0)(stylus@0.59.0)
+      vite: 4.3.9(@types/node@20.3.2)(less@4.1.3)(sass@1.69.1)(stylus@0.59.0)
+      vitest: 0.32.0(happy-dom@9.20.3)(less@4.1.3)(sass@1.69.1)(stylus@0.59.0)
     transitivePeerDependencies:
       - '@babel/traverse'
       - '@swc-node/register'
@@ -5118,8 +5118,8 @@ packages:
       postcss-import: 14.1.0(postcss@8.4.24)
       postcss-loader: 6.2.1(postcss@8.4.24)(webpack@5.88.1)
       rxjs: 7.8.1
-      sass: 1.53.0
-      sass-loader: 12.6.0(sass@1.53.0)(webpack@5.88.1)
+      sass: 1.69.1
+      sass-loader: 12.6.0(sass@1.69.1)(webpack@5.88.1)
       source-map-loader: 3.0.2(webpack@5.88.1)
       style-loader: 3.3.3(webpack@5.88.1)
       stylus: 0.59.0
@@ -5622,7 +5622,7 @@ packages:
       ts-dedent: 2.2.0
     dev: true
 
-  /@storybook/addon-styling@1.3.2(less@4.1.3)(postcss@8.4.31)(react-dom@18.2.0)(react@18.2.0)(sass@1.53.0)(webpack@5.88.1):
+  /@storybook/addon-styling@1.3.2(less@4.1.3)(postcss@8.4.31)(react-dom@18.2.0)(react@18.2.0)(sass@1.69.1)(webpack@5.88.1):
     resolution: {integrity: sha512-pxc2ncCH3jlOjsJFOmUECxIFvC4jmUxd0noeEC4shGfKvGhsssHpxcVtA36+s3JhDdx+Yhrk/0KeYoMe+35/qg==}
     hasBin: true
     peerDependencies:
@@ -5651,7 +5651,7 @@ packages:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       resolve-url-loader: 5.0.0
-      sass-loader: 13.3.2(sass@1.53.0)(webpack@5.88.1)
+      sass-loader: 13.3.2(sass@1.69.1)(webpack@5.88.1)
       style-loader: 3.3.3(webpack@5.88.1)
     transitivePeerDependencies:
       - encoding
@@ -5821,7 +5821,7 @@ packages:
       remark-slug: 6.1.0
       rollup: 3.25.3
       typescript: 4.5.4
-      vite: 4.3.9(@types/node@20.3.2)(less@4.1.3)(sass@1.53.0)(stylus@0.59.0)
+      vite: 4.3.9(@types/node@20.3.2)(less@4.1.3)(sass@1.69.1)(stylus@0.59.0)
     transitivePeerDependencies:
       - encoding
       - supports-color
@@ -6376,7 +6376,7 @@ packages:
       magic-string: 0.27.0
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-      vite: 4.3.9(@types/node@20.3.2)(less@4.1.3)(sass@1.53.0)(stylus@0.59.0)
+      vite: 4.3.9(@types/node@20.3.2)(less@4.1.3)(sass@1.69.1)(stylus@0.59.0)
       vue-docgen-api: 4.73.0(vue@3.3.4)
     transitivePeerDependencies:
       - '@preact/preset-vite'
@@ -6403,7 +6403,7 @@ packages:
       ts-dedent: 2.2.0
       type-fest: 2.19.0
       vue: 3.3.4
-      vue-component-type-helpers: 1.8.16
+      vue-component-type-helpers: 1.8.18
     transitivePeerDependencies:
       - encoding
       - supports-color
@@ -7210,7 +7210,7 @@ packages:
       vite: ^4.0.0
       vue: ^3.2.25
     dependencies:
-      vite: 4.3.9(@types/node@20.3.2)(less@4.1.3)(sass@1.53.0)(stylus@0.59.0)
+      vite: 4.3.9(@types/node@20.3.2)(less@4.1.3)(sass@1.69.1)(stylus@0.59.0)
       vue: 3.3.4
     dev: true
 
@@ -12772,6 +12772,7 @@ packages:
 
   /memory-pager@1.5.0:
     resolution: {integrity: sha512-ZS4Bp4r/Zoeq6+NLJpP+0Zzm0pR8whtGPf1XExKLJBAczGMnSi3It14OiNCStjQjM6NU1okjQGSxgEZN8eBYKg==}
+    requiresBuild: true
     dev: false
     optional: true
 
@@ -13291,7 +13292,7 @@ packages:
       '@nx/devkit': 16.10.0(nx@16.3.2)
       '@vitejs/plugin-vue': 4.2.3(vite@4.3.9)(vue@3.3.4)
       cypress: 12.16.0
-      vite: 4.3.9(@types/node@20.3.2)(less@4.1.3)(sass@1.53.0)(stylus@0.59.0)
+      vite: 4.3.9(@types/node@20.3.2)(less@4.1.3)(sass@1.69.1)(stylus@0.59.0)
     dev: true
 
   /nx@15.9.4:
@@ -13954,6 +13955,7 @@ packages:
   /pify@4.0.1:
     resolution: {integrity: sha512-uB80kBFb/tfd68bVleG9T5GGsGPjJrLAUpR5PZIrhBnIaRTQRjqdJSsIKkOP6OAIFbj7GOrcudc5pNjZ+geV2g==}
     engines: {node: '>=6'}
+    requiresBuild: true
     dev: true
 
   /pinia@2.1.4(typescript@4.5.4)(vue@3.3.4):
@@ -14628,6 +14630,7 @@ packages:
 
   /prr@1.0.1:
     resolution: {integrity: sha512-yPw4Sng1gWghHQWj0B3ZggWUm4qVbPwPFcRG8KyxiU7J2OHFSoEHKS+EZ3fv5l1t9CyCiop6l/ZYeWbrgoQejw==}
+    requiresBuild: true
     dev: true
     optional: true
 
@@ -15264,7 +15267,7 @@ packages:
   /safer-buffer@2.1.2:
     resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
 
-  /sass-loader@12.6.0(sass@1.53.0)(webpack@5.88.1):
+  /sass-loader@12.6.0(sass@1.69.1)(webpack@5.88.1):
     resolution: {integrity: sha512-oLTaH0YCtX4cfnJZxKSLAyglED0naiYfNG1iXfU5w1LNZ+ukoA5DtyDIN5zmKVZwYNJP4KRc5Y3hkWga+7tYfA==}
     engines: {node: '>= 12.13.0'}
     peerDependencies:
@@ -15285,11 +15288,11 @@ packages:
     dependencies:
       klona: 2.0.6
       neo-async: 2.6.2
-      sass: 1.53.0
+      sass: 1.69.1
       webpack: 5.88.1(esbuild@0.17.19)
     dev: true
 
-  /sass-loader@13.3.2(sass@1.53.0)(webpack@5.88.1):
+  /sass-loader@13.3.2(sass@1.69.1)(webpack@5.88.1):
     resolution: {integrity: sha512-CQbKl57kdEv+KDLquhC+gE3pXt74LEAzm+tzywcA0/aHZuub8wTErbjAoNI57rPUWRYRNC5WUnNl8eGJNbDdwg==}
     engines: {node: '>= 14.15.0'}
     peerDependencies:
@@ -15309,13 +15312,13 @@ packages:
         optional: true
     dependencies:
       neo-async: 2.6.2
-      sass: 1.53.0
+      sass: 1.69.1
       webpack: 5.88.1(esbuild@0.17.19)
     dev: true
 
-  /sass@1.53.0:
-    resolution: {integrity: sha512-zb/oMirbKhUgRQ0/GFz8TSAwRq2IlR29vOUJZOx0l8sV+CkHUfHa4u5nqrG+1VceZp7Jfj59SVW9ogdhTvJDcQ==}
-    engines: {node: '>=12.0.0'}
+  /sass@1.69.1:
+    resolution: {integrity: sha512-nc969GvTVz38oqKgYYVHM/Iq7Yl33IILy5uqaH2CWSiSUmRCvw+UR7tA3845Sp4BD5ykCUimvrT3k1EjTwpVUA==}
+    engines: {node: '>=14.0.0'}
     hasBin: true
     dependencies:
       chokidar: 3.5.3
@@ -15690,6 +15693,7 @@ packages:
 
   /sparse-bitfield@3.0.3:
     resolution: {integrity: sha512-kvzhi7vqKTfkh0PZU+2D2PIllw2ymqJKujUcyPMd9Y75Nv4nPbGJZXNhxsgdQab2BmlDct1YnfQCguEvHr7VsQ==}
+    requiresBuild: true
     dependencies:
       memory-pager: 1.5.0
     dev: false
@@ -17075,7 +17079,7 @@ packages:
       extsprintf: 1.3.0
     dev: true
 
-  /vite-node@0.32.0(@types/node@20.3.2)(less@4.1.3)(sass@1.53.0)(stylus@0.59.0):
+  /vite-node@0.32.0(@types/node@20.3.2)(less@4.1.3)(sass@1.69.1)(stylus@0.59.0):
     resolution: {integrity: sha512-220P/y8YacYAU+daOAqiGEFXx2A8AwjadDzQqos6wSukjvvTWNqleJSwoUn0ckyNdjHIKoxn93Nh1vWBqEKr3Q==}
     engines: {node: '>=v14.18.0'}
     hasBin: true
@@ -17085,7 +17089,7 @@ packages:
       mlly: 1.4.0
       pathe: 1.1.1
       picocolors: 1.0.0
-      vite: 4.3.9(@types/node@20.3.2)(less@4.1.3)(sass@1.53.0)(stylus@0.59.0)
+      vite: 4.3.9(@types/node@20.3.2)(less@4.1.3)(sass@1.69.1)(stylus@0.59.0)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -17107,14 +17111,14 @@ packages:
       debug: 4.3.4(supports-color@8.1.1)
       fast-glob: 3.2.12
       pretty-bytes: 6.1.1
-      vite: 4.3.9(@types/node@20.3.2)(less@4.1.3)(sass@1.53.0)(stylus@0.59.0)
+      vite: 4.3.9(@types/node@20.3.2)(less@4.1.3)(sass@1.69.1)(stylus@0.59.0)
       workbox-build: 7.0.0
       workbox-window: 7.0.0
     transitivePeerDependencies:
       - supports-color
     dev: true
 
-  /vite@4.3.9(@types/node@20.3.2)(less@4.1.3)(sass@1.53.0)(stylus@0.59.0):
+  /vite@4.3.9(@types/node@20.3.2)(less@4.1.3)(sass@1.69.1)(stylus@0.59.0):
     resolution: {integrity: sha512-qsTNZjO9NoJNW7KnOrgYwczm0WctJ8m/yqYAMAK9Lxt4SoySUfS5S8ia9K7JHpa3KEeMfyF8LoJ3c5NeBJy6pg==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
@@ -17144,13 +17148,13 @@ packages:
       less: 4.1.3
       postcss: 8.4.24
       rollup: 3.25.3
-      sass: 1.53.0
+      sass: 1.69.1
       stylus: 0.59.0
     optionalDependencies:
       fsevents: 2.3.2
     dev: true
 
-  /vitest@0.32.0(happy-dom@9.20.3)(less@4.1.3)(sass@1.53.0)(stylus@0.59.0):
+  /vitest@0.32.0(happy-dom@9.20.3)(less@4.1.3)(sass@1.69.1)(stylus@0.59.0):
     resolution: {integrity: sha512-SW83o629gCqnV3BqBnTxhB10DAwzwEx3z+rqYZESehUB+eWsJxwcBQx7CKy0otuGMJTYh7qCVuUX23HkftGl/Q==}
     engines: {node: '>=v14.18.0'}
     hasBin: true
@@ -17204,8 +17208,8 @@ packages:
       strip-literal: 1.0.1
       tinybench: 2.5.0
       tinypool: 0.5.0
-      vite: 4.3.9(@types/node@20.3.2)(less@4.1.3)(sass@1.53.0)(stylus@0.59.0)
-      vite-node: 0.32.0(@types/node@20.3.2)(less@4.1.3)(sass@1.53.0)(stylus@0.59.0)
+      vite: 4.3.9(@types/node@20.3.2)(less@4.1.3)(sass@1.69.1)(stylus@0.59.0)
+      vite-node: 0.32.0(@types/node@20.3.2)(less@4.1.3)(sass@1.69.1)(stylus@0.59.0)
       why-is-node-running: 2.2.2
     transitivePeerDependencies:
       - less
@@ -17225,8 +17229,8 @@ packages:
     resolution: {integrity: sha512-iGdlqtajmiqed8ptURKPJ/Olz0/mwripVZszg6tygfZSIL9kYFPJTNY6+Q6OjWGznl2L06vxG5HvNvAnWrnzbg==}
     dev: true
 
-  /vue-component-type-helpers@1.8.16:
-    resolution: {integrity: sha512-Pbm1/OyJ1m+8TnMApwHu9+WFqju756rdjdhd9TxldkbjmD5baVXVE3UnCqGa/qlEqUxqgi6zC7I5OKNUI8inGQ==}
+  /vue-component-type-helpers@1.8.18:
+    resolution: {integrity: sha512-SklLIg782E5Ff0qdE68AUrRBhT2YGW97edBewNEjCWCw+RSETcGOjA8m1/6T68CXkymWBSk+KDpPXqIGthqCDg==}
     dev: true
 
   /vue-demi@0.14.5(vue@3.3.4):
