@@ -81,7 +81,7 @@ jobs:
       - uses: nrwl/nx-set-shas@v4
       - name: Test
         run: npx nx affected -t test --parallel=3 --configuration=ci
-  
+
   app:
     runs-on: ubuntu-latest
     concurrency:
