@@ -18,7 +18,7 @@
     "@ivanv/vue-collapse-transition": "^1.0.2",
     "pinia": "^2.1.4",
     "vue": "^3.3.4",
-    "vue-i18n": "^9.2.2",
+    "vue-i18n": "^9.5.0",
     "vue-router": "^4.2.2"
   },
   "devDependencies": {
@@ -48,7 +48,7 @@
     "vite": "^4.3.9",
     "vite-plugin-pwa": "^0.16.4",
     "vitest": "^0.32.0",
-    "vue-tsc": "^0.34.7",
+    "vue-tsc": "^1.8.18",
     "workbox-window": "^7.0.0"
   }
 }
