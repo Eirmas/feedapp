@@ -45,7 +45,7 @@
 import { ComputedRef, computed, inject } from 'vue';
 import { IListItem } from '../../types';
 import './ListItem.scss';
-import router from '@/plugins/router';
+import { useRouter } from 'vue-router';
 
 const props = withDefaults(defineProps<IListItem>(), {
   dense: false,
@@ -70,7 +70,7 @@ const onClick = (event: MouseEvent | KeyboardEvent) => {
   }
 
   if (props.to) {
-    router[props.replace ? 'replace' : 'push'](props.to);
+    useRouter()[props.replace ? 'replace' : 'push'](props.to);
   }
 
   select();
