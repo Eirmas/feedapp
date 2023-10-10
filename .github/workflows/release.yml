@@ -6,8 +6,7 @@ on:
       - main
 
 env:
-  project: nx-vite-tailwind
-  account-id: 53b218bcbcf8884b7fb40d27ee50ac09
+  project: dat250-feedapp
 
 jobs:
   lint:
@@ -82,16 +81,8 @@ jobs:
       - name: Test
         run: npx nx affected -t test --parallel=3 --configuration=ci
 
-  app:
+  build:
     runs-on: ubuntu-latest
-    concurrency:
-      group: app
-      cancel-in-progress: true
-    environment:
-      name: dev
-    permissions:
-      contents: write
-      deployments: write
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -108,16 +99,20 @@ jobs:
       - name: Build
         run: npx nx run-many -t build --parallel=3 --configuration=production
 
-      - name: Publish to Cloudflare Pages
-        id: publish
-        uses: cloudflare/pages-action@v1.5.0
+  deploy-app:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      deployments: write
+    steps:
+      - name: Deploy to Heroku
+        uses: akhileshns/heroku-deploy@v3.12.12
         with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ env.account-id }}
-          projectName: ${{ env.project }}
-          directory: dist/app
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-          branch: main
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: ${{ env.project }}
+          heroku_email: ${{ secrets.HEROKU_EMAIL }}
+          heroku_directory: dist/app
 
   storybook:
     runs-on: ubuntu-latest
@@ -145,6 +140,7 @@ jobs:
       - name: Build
         run: npx nx run-many -t build-storybook --parallel=3 --configuration=production && touch ./dist/storybook/app/.nojekyll
         env:
+          VITE_REST_API_URL: ${{ secrets.VITE_REST_API_URL }}
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           VITE_SUPABASE_KEY: ${{ secrets.VITE_SUPABASE_KEY }}
 
@@ -157,5 +153,3 @@ jobs:
           jekyll: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
-          VITE_SUPABASE_KEY: ${{ secrets.VITE_SUPABASE_KEY }}
