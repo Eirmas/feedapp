@@ -1,7 +1,11 @@
 {
   "name": "feedapp",
+  "displayName": "FeedApp",
+  "description": "Monorepo for a complete application that allows for creating and voting on polls",
+  "author": "Eirik Måseidvåg",
   "version": "0.0.1",
   "license": "MIT",
+  "private": false,
   "scripts": {
     "serve:app": "nx serve app --port 8080",
     "serve:backend": "nx serve backend --port 3005",
@@ -18,7 +22,35 @@
     "npm": ">=8.14.0",
     "pnpm": ">=8.6.0"
   },
-  "private": true,
+  "workspaces": [
+    "app",
+    "backend",
+    "packages/*"
+  ],
+  "dependencies": {
+    "@nestjs/axios": "^3.0.0",
+    "@nestjs/common": "^10.0.2",
+    "@nestjs/config": "^3.1.1",
+    "@nestjs/core": "^10.0.2",
+    "@nestjs/jwt": "^10.1.1",
+    "@nestjs/mongoose": "^10.0.1",
+    "@nestjs/platform-express": "^10.0.2",
+    "@nestjs/swagger": "^7.1.13",
+    "@nestjs/typeorm": "^10.0.0",
+    "@supabase/supabase-js": "^2.38.0",
+    "axios": "^1.0.0",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.0",
+    "code-tag": "^1.1.0",
+    "es6-shim": "^0.35.8",
+    "mongoose": "^7.6.0",
+    "pg": "^8.11.3",
+    "reflect-metadata": "^0.1.13",
+    "rxjs": "^7.8.0",
+    "swagger-ui-express": "^5.0.0",
+    "typeorm": "^0.3.17",
+    "uuid": "^9.0.1"
+  },
   "devDependencies": {
     "@intlify/eslint-plugin-vue-i18n": "^2.0.0",
     "@nestjs/schematics": "^10.0.1",
@@ -61,33 +93,5 @@
     "tslib": "^2.5.3",
     "typescript": "~5.1.6",
     "vue-eslint-parser": "^9.3.1"
-  },
-  "workspaces": [
-    "packages/*",
-    "app"
-  ],
-  "dependencies": {
-    "@nestjs/axios": "^3.0.0",
-    "@nestjs/common": "^10.0.2",
-    "@nestjs/config": "^3.1.1",
-    "@nestjs/core": "^10.0.2",
-    "@nestjs/jwt": "^10.1.1",
-    "@nestjs/mongoose": "^10.0.1",
-    "@nestjs/platform-express": "^10.0.2",
-    "@nestjs/swagger": "^7.1.13",
-    "@nestjs/typeorm": "^10.0.0",
-    "@supabase/supabase-js": "^2.38.0",
-    "axios": "^1.0.0",
-    "class-transformer": "^0.5.1",
-    "class-validator": "^0.14.0",
-    "code-tag": "^1.1.0",
-    "es6-shim": "^0.35.8",
-    "mongoose": "^7.6.0",
-    "pg": "^8.11.3",
-    "reflect-metadata": "^0.1.13",
-    "rxjs": "^7.8.0",
-    "swagger-ui-express": "^5.0.0",
-    "typeorm": "^0.3.17",
-    "uuid": "^9.0.1"
   }
 }

@@ -1,5 +1,7 @@
 # FeedApp
 
+![Release workflow status](https://github.com/eirmas/feedapp/actions/workflows/release.yml/badge.svg)
+
 ### App
 
 [https://feedapp.no/](https://feedapp.no/)
