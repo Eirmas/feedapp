@@ -80,6 +80,9 @@ importers:
       swagger-ui-express:
         specifier: ^5.0.0
         version: 5.0.0(express@4.18.2)
+      tslib:
+        specifier: ^2.5.3
+        version: 2.5.3
       typeorm:
         specifier: ^0.3.17
         version: 0.3.17(pg@8.11.3)(ts-node@10.9.1)
@@ -279,9 +282,6 @@ importers:
       tsconfig:
         specifier: ^7.0.0
         version: 7.0.0
-      tslib:
-        specifier: ^2.5.3
-        version: 2.5.3
       typescript:
         specifier: ~5.1.6
         version: 5.1.6
