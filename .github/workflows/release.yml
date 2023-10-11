@@ -6,7 +6,8 @@ on:
       - main
 
 env:
-  project: feedapp
+  app-project: feedapp
+  rest-project: feedapp-api
   account-id: 53b218bcbcf8884b7fb40d27ee50ac09
 
 jobs:
@@ -108,6 +109,11 @@ jobs:
           VITE_REST_API_URL: ${{ secrets.VITE_REST_API_URL }}
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           VITE_SUPABASE_KEY: ${{ secrets.VITE_SUPABASE_KEY }}
+          NX_POSTGRES_HOST: ${{ secrets.NX_POSTGRES_HOST }}
+          NX_POSTGRES_USER: ${{ secrets.NX_POSTGRES_USER }}
+          NX_POSTGRES_PASSWORD: ${{ secrets.NX_POSTGRES_PASSWORD }}
+          NX_POSTGRES_PORT: ${{ secrets.NX_POSTGRES_PORT }}
+          NX_POSTGRES_DATABASE: ${{ secrets.NX_POSTGRES_DATABASE }}
 
       - uses: actions/upload-artifact@v3
         with:
