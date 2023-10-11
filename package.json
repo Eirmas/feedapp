@@ -82,7 +82,7 @@
     "nx": "16.3.2",
     "nx-stylelint": "^15.0.0",
     "prettier": "^2.8.8",
-    "sass": "^1.53.0",
+    "sass": "^1.69.2",
     "stylelint": "^15.10.3",
     "stylelint-config-standard-scss": "^11.0.0",
     "supabase": "^1.100.1",
