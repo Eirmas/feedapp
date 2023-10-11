@@ -77,6 +77,10 @@ jobs:
       - uses: nrwl/nx-set-shas@v4
       - name: Test
         run: npx nx affected -t test --parallel=3 --configuration=ci
+        env:
+          VITE_REST_API_URL: ${{ secrets.VITE_REST_API_URL }}
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_KEY: ${{ secrets.VITE_SUPABASE_KEY }}
 
   build:
     runs-on: ubuntu-latest
