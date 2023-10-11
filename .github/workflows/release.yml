@@ -155,7 +155,7 @@ jobs:
           branch: main
 
   publish-rest:
-    name: Publish REST API to Cloudflare Pages
+    name: Publish REST API to Heroku
     needs: build
     runs-on: ubuntu-latest
     permissions:
@@ -165,21 +165,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - uses: actions/download-artifact@v3
-        with:
-          name: dist
-          path: dist
-
-      - name: Publish REST API to Cloudflare Pages
+      - name: Publish REST API to Heroku
         id: publish
-        uses: cloudflare/pages-action@v1.5.0
+        uses: akhileshns/heroku-deploy@v3.12.14
         with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ env.account-id }}
-          projectName: ${{ env.rest-project }}
-          directory: dist/backend
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-          branch: main
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
+          heroku_email: ${{ secrets.HEROKU_EMAIL }}
+          buildpack: https://github.com/unfold/heroku-buildpack-pnpm
 
   publish-storybook:
     name: Publish Storybook to GitHub Pages
