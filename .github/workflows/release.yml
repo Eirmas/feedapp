@@ -173,7 +173,7 @@ jobs:
           heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
           heroku_email: ${{ secrets.HEROKU_EMAIL }}
           buildpack: https://github.com/unfold/heroku-buildpack-pnpm
-          appdir: dist/backend
+          procfile: web: node dist/backend/main.js
 
   publish-storybook:
     name: Publish Storybook to GitHub Pages
