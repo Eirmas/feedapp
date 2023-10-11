@@ -5,10 +5,6 @@ concurrency:
 on:
   pull_request:
 
-env:
-  project: nx-vite-tailwind
-  account-id: 53b218bcbcf8884b7fb40d27ee50ac09
-
 jobs:
   lint:
     name: Lint
@@ -122,4 +118,4 @@ jobs:
       - run: pnpm install --frozen-lockfile
 
       - name: Build
-        run: npx nx run-many -t build-storybook --parallel=3 --configuration=production && touch ./dist/storybook/app/.nojekyll
+        run: npx nx run-many -t build-storybook --parallel=3 --configuration=production
