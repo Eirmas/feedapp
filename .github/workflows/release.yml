@@ -173,7 +173,9 @@ jobs:
           heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
           heroku_email: ${{ secrets.HEROKU_EMAIL }}
           buildpack: https://github.com/unfold/heroku-buildpack-pnpm
+          healthcheck: https://api.feedapp.no/v1/health
           procfile: web: node dist/backend/main.js
+          env_file: /.env
 
   publish-storybook:
     name: Publish Storybook to GitHub Pages
