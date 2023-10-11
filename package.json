@@ -13,6 +13,11 @@
     "build-storybook": "nx run-many -t build-storybook --parallel 10",
     "kill": "lsof -i :8080 | awk 'FNR == 2 {print $2}' | xargs kill -9"
   },
+  "engines": {
+    "node": ">=16.14.0",
+    "npm": ">=8.14.0",
+    "pnpm": ">=8.6.0"
+  },
   "private": true,
   "devDependencies": {
     "@intlify/eslint-plugin-vue-i18n": "^2.0.0",
