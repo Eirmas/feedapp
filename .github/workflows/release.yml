@@ -118,6 +118,9 @@ jobs:
           NX_MONGODB_PASSWORD: ${{ secrets.NX_MONGODB_PASSWORD }}
           NX_MONGODB_CLUSTER: ${{ secrets.NX_MONGODB_CLUSTER }}
           NX_MONGODB_DATABASE: ${{ secrets.NX_MONGODB_DATABASE }}
+          NX_SUPABASE_URL: ${{ secrets.NX_SUPABASE_URL }}
+          NX_SUPABASE_KEY: ${{ secrets.NX_SUPABASE_KEY }}
+          NX_JWT_SECRET: ${{ secrets.NX_JWT_SECRET }}
 
       - uses: actions/upload-artifact@v3
         with:
