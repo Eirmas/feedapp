@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { RouteLocation } from 'vue-router';
 
-import { Session } from '@supabase/supabase-js';
+import { Session, User } from '@supabase/supabase-js';
 import { supabase } from '@/plugins/supabase';
 
 type State = {
@@ -12,7 +12,8 @@ type State = {
 };
 
 type Getters = {
-  isAuthenticated(): boolean;
+  isAuthenticated: (state: State) => boolean;
+  user: (state: State) => User | null;
 };
 
 type Actions = {
@@ -24,16 +25,17 @@ type Actions = {
 };
 
 export const useAuthStore = defineStore<'auth', State, Getters, Actions>('auth', {
-  state: () => ({
-    initialized: false,
-    currentPromise: null,
-    currentSession: null,
-    redirectRoute: null,
-  }),
+  state: () => {
+    return {
+      initialized: false,
+      currentPromise: null,
+      currentSession: null,
+      redirectRoute: null,
+    };
+  },
   getters: {
-    isAuthenticated() {
-      return !!this.currentSession;
-    },
+    isAuthenticated: (state: State) => !!state.currentSession,
+    user: (state: State) => state.currentSession?.user || null,
   },
   actions: {
     loadSession() {

@@ -1,5 +1,5 @@
 .app-card {
-  @apply ring-1 rounded-sm ring-neutral-light overflow-hidden;
+  @apply ring-1 rounded-xs ring-neutral-light overflow-hidden;
 
   &:not(&-dense) {
     @apply p-2.5;

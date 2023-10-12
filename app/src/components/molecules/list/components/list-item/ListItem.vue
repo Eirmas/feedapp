@@ -3,6 +3,7 @@
     :is="!!href ? 'a' : 'li'"
     :class="classes"
     :href="href"
+    :target="targetBlank ? '_blank' : undefined"
     :tabindex="href || value || click ? 0 : -1"
     :aria-selected="isSelected"
     @click="onClick"
@@ -58,7 +59,7 @@ const props = withDefaults(defineProps<IListItem>(), {
 const onClick = (event: MouseEvent | KeyboardEvent) => {
   emits('click', event);
 
-  if (props.disabled || (props.href && props.targetBlank)) {
+  if (props.disabled || props.href) {
     return;
   }
 
@@ -98,6 +99,6 @@ const classes = computed(() => ({
   'app-list-item--selected': isSelected.value,
   'app-list-item--dense': parentDense?.value ?? props.dense,
   'app-list-item--disabled': parentDisabled?.value ?? props.disabled,
-  'app-list-item--value': !!props.value || !!props.click,
+  'app-list-item--value': !!props.value || !!props.click || !!props.href || !!props.to,
 }));
 </script>

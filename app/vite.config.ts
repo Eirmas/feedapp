@@ -72,17 +72,6 @@ export default defineConfig({
       },
     }),
     vue(),
-    {
-      name: 'singleHMR',
-      handleHotUpdate({ modules }) {
-        modules.map(m => {
-          m.importedModules = new Set();
-          m.importers = new Set();
-        });
-
-        return modules;
-      },
-    },
   ],
   test: {
     environment: 'happy-dom',

@@ -36,8 +36,8 @@ $config: (
       "primary",
       (
         default: "bg-primary-dark text-neutral-white",
-        hover: "bg-transparent text-primary-dark ring-primary-dark",
-        active: "bg-primary text-neutral-white ring-transparent",
+        hover: "bg-primary text-neutral-white ring-transparent",
+        active: "bg-transparent text-primary-dark ring-primary-dark",
         disabled: "bg-neutral-light text-neutral-dark/[#{$disabled-opacity}] ring-transparent",
         focus: "bg-semantic-focus text-neutral-white outline-2 outline-semantic-focus outline-offset-2 ring-transparent",
       )
@@ -46,8 +46,8 @@ $config: (
       "secondary",
       (
         default: "bg-transparent text-primary-dark ring-primary-dark",
-        hover: "bg-primary-dark text-neutral-white",
-        active: "bg-transparent text-primary ring-primary",
+        hover: "bg-transparent text-primary ring-primary ring-[3px]",
+        active: "bg-transparent text-primary-dark ring-primary-dark ring-[3px]",
         disabled: "bg-transparent text-neutral-dark/[#{$disabled-opacity}] ring-neutral-dark/[#{$disabled-opacity}]",
         focus: "bg-semantic-focus text-neutral-white outline-2 outline-semantic-focus outline-offset-2 ring-transparent",
       )
@@ -56,8 +56,8 @@ $config: (
       "tertiary",
       (
         default: "bg-transparent text-primary-dark outline-transparent",
-        hover: "bg-neutral-background text-primary-dark ring-transparent",
-        active: "bg-neutral-light text-primary",
+        hover: "bg-primary-lighter/50 text-primary-dark ring-transparent",
+        active: "bg-primary-lighter text-primary",
         disabled: "bg-transparent text-primary-dark/[#{$disabled-opacity}]",
         focus: "bg-transparent text-semantic-focus outline-none ring-semantic-focus",
       )
