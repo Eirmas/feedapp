@@ -1,12 +1,14 @@
 <template>
-  <Suspense>
-    <router-view></router-view>
-  </Suspense>
+  <Main>
+    <Suspense>
+      <router-view></router-view>
+    </Suspense>
+  </Main>
 </template>
 
 <script setup lang="ts">
 import { RouteLocationRaw, RouterView, useRouter } from 'vue-router';
-
+import Main from '@/layout/Main.vue';
 import { supabase } from '@/plugins/supabase';
 import { useAuthStore } from '@/store/auth';
 

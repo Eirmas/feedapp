@@ -25,22 +25,50 @@ export default defineConfig({
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
       },
-      includeAssets: ['favicon.ico', 'robots.txt'],
+      includeAssets: [
+        'favicon.ico',
+        'favicon-16x16.ico',
+        'favicon-32x32.ico',
+        'robots.txt',
+        'android-chrome-192x192.png',
+        'android-chrome-512x512.png',
+        'apple-touch-icon.png',
+        'mstile-70x70.png',
+        'mstile-144x144.png',
+        'mstile-150x150.png',
+        'mstile-310x150.png',
+        'mstile-310x310.png',
+        'safari-pinned-tab.svg',
+      ],
       manifest: {
-        name: 'My Awesome App',
-        short_name: 'MyApp',
-        description: 'My Awesome App description',
-        theme_color: '#ffffff',
+        name: 'FeedApp',
+        short_name: 'FeedApp',
+        description:
+          'Empower your voice and make every vote count with our interactive polling app. ' +
+          'Create, vote on, and explore polls with ease. Join the community of active participants today and be part of the conversation.',
+        theme_color: '#e5dfec',
         icons: [
           {
-            src: 'pwa-192x192.png',
+            src: 'android-chrome-192x192.png',
             sizes: '192x192',
             type: 'image/png',
           },
           {
-            src: 'pwa-512x512.png',
+            src: 'android-chrome-512x512.png',
             sizes: '512x512',
             type: 'image/png',
+          },
+          {
+            src: 'android-chrome-512x512.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'any',
+          },
+          {
+            src: 'android-chrome-512x512.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'maskable',
           },
         ],
       },
