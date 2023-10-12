@@ -1,4 +1,4 @@
-# FeedApp
+![FeedApp Header](./app/public/header.png)
 
 ![Release workflow status](https://github.com/eirmas/feedapp/actions/workflows/release.yml/badge.svg)
 

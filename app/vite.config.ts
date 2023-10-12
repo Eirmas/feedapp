@@ -4,13 +4,11 @@ import vue from '@vitejs/plugin-vue';
 import { tsconfigBaseAliases } from 'nx-vue3-vite';
 import { VitePWA } from 'vite-plugin-pwa';
 
-// https://vitejs.dev/config/
 export default defineConfig({
   resolve: {
     alias: {
       ...tsconfigBaseAliases(__dirname),
       'vue-i18n': 'vue-i18n/dist/vue-i18n.cjs.js',
-      // Add your aliases here
       '@': path.resolve(__dirname, './src'),
     },
   },
