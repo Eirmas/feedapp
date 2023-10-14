@@ -48,7 +48,7 @@ import { AnalyticModule } from './analytic/analytic.module';
           password: config.database.password,
           database: config.database.database,
           entities: entities,
-          synchronize: true,
+          synchronize: false,
         };
       },
       inject: [ConfigService],

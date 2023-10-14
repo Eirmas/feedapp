@@ -1,14 +1,16 @@
-import { InviteDomainModel } from 'domain-models';
 import { CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 import PollEntity from './poll.entity';
+import { ApiProperty } from '@nestjs/swagger';
 
 @Entity({
   name: 'invites',
 })
-export default class InviteEntity implements InviteDomainModel {
+export default class InviteEntity {
+  @ApiProperty()
   @PrimaryColumn({ type: 'uuid' })
   pollId: string;
 
+  @ApiProperty()
   @PrimaryColumn({
     type: 'varchar',
     length: 255,
@@ -17,6 +19,7 @@ export default class InviteEntity implements InviteDomainModel {
   })
   email: string;
 
+  @ApiProperty()
   @CreateDateColumn({
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP(6)',

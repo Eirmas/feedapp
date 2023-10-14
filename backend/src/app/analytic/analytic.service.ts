@@ -2,15 +2,16 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import ResourceNotFoundException from '../../common/exceptions/resource-not-found.exception';
 import { Analytic } from '../../models/analytic.schema';
-import { PollDomainModel } from 'domain-models';
 import { Model } from 'mongoose';
 import { Observable, from, tap } from 'rxjs';
+import { PollEntity } from '../../models';
+import { PaginateDto } from '../../common/dto/paginate.dto';
 
 @Injectable()
 export class AnalyticService {
   constructor(@InjectModel(Analytic.name) private analyticModel: Model<Analytic>) {}
 
-  public createAnalytic(poll: PollDomainModel, yes: number, no: number): Observable<Analytic> {
+  public createAnalytic(poll: PollEntity, yes: number, no: number): Observable<Analytic> {
     const createdAnalytic = new this.analyticModel({
       _id: poll.id,
       title: poll.title,
@@ -22,8 +23,15 @@ export class AnalyticService {
 
     return from(createdAnalytic.save());
   }
-  public getAnalytics(): Observable<Analytic[]> {
-    return from(this.analyticModel.find({}).lean().exec()).pipe();
+  public getAnalytics(pagination: PaginateDto): Observable<Analytic[]> {
+    return from(
+      this.analyticModel
+        .find({})
+        .skip(pagination.skip)
+        .limit(pagination.take || 100)
+        .lean()
+        .exec(),
+    ).pipe();
   }
 
   public getAnalyticById(id: string): Observable<Analytic> {

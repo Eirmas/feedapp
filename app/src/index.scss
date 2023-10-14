@@ -36,11 +36,11 @@ h4 {
 
   /* Handle */
   ::-webkit-scrollbar-thumb {
-    @apply bg-primary/80 rounded-full;
+    @apply bg-neutral-medium rounded-full;
   }
 
   /* Handle on hover */
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-primary;
+    @apply bg-neutral-dark/50;
   }
 }

@@ -8,8 +8,8 @@ export async function authGuard(to: RouteLocationNormalized, from: RouteLocation
   if (to.meta.authRequired && !isAuth) {
     authStore.saveRedirectRoute(to);
     next({ name: 'Index' });
-  } else if (!to.meta.authRequired && isAuth) {
-    next({ name: 'Manage' });
+  } else if (to.name === 'Index' && isAuth) {
+    next({ name: 'Home' });
   } else {
     next();
   }

@@ -7,8 +7,8 @@
       <div class="flex grow justify-end">
         <Menu v-if="user" as="div" class="relative inline-block text-left">
           <MenuButton class="flex gap-x-2 items-center hover:bg-primary-light/25 -mx-4 -my-2 py-2 px-4 rounded-xs">
-            <Avatar size="small" :src="user.user_metadata.picture" :name="user.user_metadata.name"></Avatar>
-            <div class="hidden sm:block text-body-small-bold">{{ user.user_metadata.name }}</div>
+            <Avatar size="small" :src="user.avatar" :name="user.name"></Avatar>
+            <div class="hidden sm:block text-body-small-bold">{{ user.name }}</div>
             <ChevronDownIcon class="w-4"></ChevronDownIcon>
           </MenuButton>
           <transition
@@ -23,18 +23,22 @@
               <Card dense class="absolute -right-4 mt-3 w-56 origin-top-right bg-neutral-white">
                 <List dense>
                   <ListSubheader>Settings</ListSubheader>
-                  <MenuItem v-slot="{ active }"
-                    ><ListItem :prependIcon="UserCircleIcon" :selected="active" href="/profile">Profile</ListItem></MenuItem
-                  >
-                  <MenuItem v-slot="{ active }"
-                    ><ListItem :prependIcon="ArrowLeftOnRectangleIcon" :selected="active" href="/signout">Sign out</ListItem></MenuItem
-                  >
+                  <MenuItem v-slot="{ active }">
+                    <RouterLink :to="{ name: 'Profile' }">
+                      <ListItem :prependIcon="UserCircleIcon" :selected="active" value="profile">Profile</ListItem>
+                    </RouterLink>
+                  </MenuItem>
+                  <MenuItem v-slot="{ active }">
+                    <RouterLink :to="{ name: 'Sign out' }">
+                      <ListItem :prependIcon="ArrowLeftOnRectangleIcon" :selected="active" value="signout">Sign out</ListItem>
+                    </RouterLink>
+                  </MenuItem>
                   <ListDivider></ListDivider>
-                  <MenuItem v-slot="{ active }"
-                    ><ListItem :prependIcon="CodeBracketIcon" :selected="active" href="https://github.com/eirmas/feedapp" targetBlank
+                  <MenuItem v-slot="{ active }">
+                    <ListItem :prependIcon="CodeBracketIcon" :selected="active" href="https://github.com/eirmas/feedapp" targetBlank
                       >Github</ListItem
-                    ></MenuItem
-                  >
+                    >
+                  </MenuItem>
                 </List>
               </Card>
             </MenuItems>
@@ -47,7 +51,7 @@
     </div>
   </nav>
   <main class="app-main mx-8">
-    <div class="container mx-auto xl:max-w-screen-xl xl:mx-auto">
+    <div class="container mx-auto xl:max-w-screen-xl xl:mx-auto my-12">
       <slot></slot>
     </div>
   </main>
@@ -62,21 +66,21 @@ import ListDivider from '@/components/molecules/list/components/list-divider/Lis
 import ListItem from '@/components/molecules/list/components/list-item/ListItem.vue';
 import ListSubheader from '@/components/molecules/list/components/list-subheader/ListSubheader.vue';
 import { login } from '@/services/auth';
-import { useAuthStore } from '@/store/auth';
-import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue';
+import { useUserStore } from '@/store/user';
+import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
 import {
-  ArrowRightOnRectangleIcon,
   ArrowLeftOnRectangleIcon,
-  UserCircleIcon,
-  CodeBracketIcon,
+  ArrowRightOnRectangleIcon,
   ChevronDownIcon,
+  CodeBracketIcon,
+  UserCircleIcon,
 } from '@heroicons/vue/24/outline';
 import { storeToRefs } from 'pinia';
 import { RouterLink, useRoute } from 'vue-router';
 
-const authStore = useAuthStore();
+const userStore = useUserStore();
 const route = useRoute();
-const { user } = storeToRefs(authStore);
+const { user } = storeToRefs(userStore);
 </script>
 
 <style lang="scss" scoped>

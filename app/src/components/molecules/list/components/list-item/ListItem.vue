@@ -63,9 +63,6 @@ const onClick = (event: MouseEvent | KeyboardEvent) => {
     return;
   }
 
-  event.preventDefault();
-  event.stopPropagation();
-
   if (props.click) {
     props.click?.(event);
   }

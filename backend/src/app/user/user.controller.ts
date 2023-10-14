@@ -14,7 +14,7 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiOkResponse, ApiParam, ApiTags, getSchemaPath } from '@nestjs/swagger';
 import { AccessToken } from '../../common/decorators/access-token.decorator';
 import { AuthGuard } from '../../common/guards/auth.guard';
 import { AccessTokenData } from '../../common/interfaces/access-token.type';
@@ -34,6 +34,7 @@ export class UserController {
   @Get()
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
+  @ApiOkResponse({ schema: { $ref: getSchemaPath(UserEntity) } })
   public getUser(@AccessToken() accessToken: AccessTokenData): Promise<UserEntity> {
     return lastValueFrom(
       this.userService.getUserById(accessToken.sub).pipe(
@@ -53,6 +54,7 @@ export class UserController {
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
   @ApiParam({ name: 'userId', format: 'uuid' })
+  @ApiOkResponse({ type: UserEntity })
   public getUserById(@Param('userId', new ParseUUIDPipe()) userId: string): Promise<UserEntity> {
     return lastValueFrom(
       this.userService.getUserById(userId).pipe(

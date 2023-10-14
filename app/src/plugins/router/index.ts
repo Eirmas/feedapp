@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Index from '../../views/index/Index.vue';
-import Manage from '../../views/manage/Manage.vue';
+import Home from '../../views/home/Home.vue';
+import Signout from '../../views/signout/Signout.vue';
+import Profile from '../../views/profile/Profile.vue';
 import { authGuard } from './guards/auth';
 
 const router = createRouter({
@@ -13,9 +15,21 @@ const router = createRouter({
       meta: { authRequired: false },
     },
     {
-      path: '/manage',
-      name: 'Manage',
-      component: Manage,
+      path: '/home',
+      name: 'Home',
+      component: Home,
+      meta: { authRequired: true },
+    },
+    {
+      path: '/signout',
+      name: 'Sign out',
+      component: Signout,
+      meta: { authRequired: false },
+    },
+    {
+      path: '/profile',
+      name: 'Profile',
+      component: Profile,
       meta: { authRequired: true },
     },
   ],

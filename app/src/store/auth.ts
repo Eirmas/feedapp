@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia';
 import { RouteLocation } from 'vue-router';
-
 import { Session, User } from '@supabase/supabase-js';
 import { supabase } from '@/plugins/supabase';
 
@@ -17,7 +16,7 @@ type Getters = {
 };
 
 type Actions = {
-  loadSession(): Promise<void>;
+  loadSession(refresh?: boolean): Promise<void>;
   clearSession(): void;
   saveRedirectRoute(route: Partial<RouteLocation>): void;
   loadRedirectRoute(): void;
@@ -39,6 +38,10 @@ export const useAuthStore = defineStore<'auth', State, Getters, Actions>('auth',
   },
   actions: {
     loadSession() {
+      if (this.currentPromise) {
+        return this.currentPromise;
+      }
+
       this.currentPromise = supabase.auth.getSession().then(res => {
         this.currentSession = res.data.session;
         this.currentPromise = null;

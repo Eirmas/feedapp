@@ -13,11 +13,12 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiOkResponse, ApiParam, ApiTags } from '@nestjs/swagger';
+import { catchError, lastValueFrom, take } from 'rxjs';
 import ResourceNotFoundException from '../../common/exceptions/resource-not-found.exception';
 import { HasPollAccessGuard } from '../../common/guards/has-poll-access.guard';
 import { VoteEntity } from '../../models';
-import { catchError, lastValueFrom, take } from 'rxjs';
+import { GetVotesDao } from './dao/get-votes.dao';
 import { CreateVoteDto } from './dto/create-vote.dto';
 import { VoteService } from './vote.service';
 
@@ -31,6 +32,7 @@ export class VoteController {
   @ApiBearerAuth()
   @UseGuards(HasPollAccessGuard)
   @ApiParam({ name: 'pollId', format: 'uuid' })
+  @ApiOkResponse({ type: GetVotesDao })
   public getVotesByPoll(@Param('pollId', new ParseUUIDPipe()) pollId: string): Promise<{ yes: number; no: number }> {
     return lastValueFrom(
       this.voteService.getVotesByPoll(pollId).pipe(

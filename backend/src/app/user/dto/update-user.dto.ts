@@ -1,9 +1,8 @@
-import { ApiProperty, PartialType } from '@nestjs/swagger';
-import { UserEntity } from '../../../models';
+import { ApiProperty } from '@nestjs/swagger';
 import { Expose, Type } from 'class-transformer';
 import { IsOptional, IsString, IsUrl, MaxLength } from 'class-validator';
 
-export class UpdateUserDto extends PartialType(UserEntity) {
+export class UpdateUserDto {
   @ApiProperty({ type: String, required: false })
   @Expose()
   @Type(() => String)
