@@ -201,7 +201,6 @@ jobs:
       - name: Build
         run: |
           npx nx run-many -t build-storybook --parallel=3 --configuration=production &&
-          touch ./dist/storybook/app/.nojekyll &&
           echo "storybook.feedapp.no" > ./dist/storybook/app/CNAME
         env:
           VITE_REST_API_URL: ${{ secrets.VITE_REST_API_URL }}
@@ -214,6 +213,5 @@ jobs:
         with:
           target_branch: gh-pages
           build_dir: dist/storybook/app
-          jekyll: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
