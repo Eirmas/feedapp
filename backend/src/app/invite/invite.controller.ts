@@ -14,7 +14,7 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiOkResponse, ApiParam, ApiTags } from '@nestjs/swagger';
 import ResourceExistsException from '../../common/exceptions/resource-exists.exception';
 import ResourceNotFoundException from '../../common/exceptions/resource-not-found.exception';
 import { IsPollOwnerGuard } from '../../common/guards/is-poll-owner.guard';
@@ -37,6 +37,7 @@ export class InviteController {
   @ApiParam({ name: 'pollId', format: 'uuid' })
   @ApiBody({ type: CreateInviteDto })
   @HttpCode(HttpStatus.CREATED)
+  @ApiOkResponse({ type: InviteEntity })
   public createInvite(
     @Param('pollId', new ParseUUIDPipe()) pollId: string,
     @Body() createInviteDto: CreateInviteDto,

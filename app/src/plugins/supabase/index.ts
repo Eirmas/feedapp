@@ -7,4 +7,9 @@ if (!supabaseUrl || !supabaseKey) {
   throw new Error('Missing Supabase URL or Supabase Key');
 }
 
-export const supabase = createClient(supabaseUrl, supabaseKey);
+export const supabase = createClient(supabaseUrl, supabaseKey, {
+  auth: {
+    autoRefreshToken: true,
+    persistSession: true,
+  },
+});

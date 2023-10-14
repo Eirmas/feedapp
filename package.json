@@ -20,7 +20,8 @@
     "serve:app": "nx serve app --port 8080",
     "serve:backend": "nx serve backend --port 3005",
     "storybook": "nx storybook app",
-    "test": "nx run-many -t test --parallel 10"
+    "test": "nx run-many -t test --parallel 10",
+    "generate-types": "swagger-typescript-api -p http://localhost:3000/docs-json -o app/src/services/api --modular --extract-enums --single-http-client --axios -n ./types.ts --templates src/templates --type-prefix Api --clean-output"
   },
   "dependencies": {
     "@headlessui/vue": "^1.7.15",
@@ -36,7 +37,7 @@
     "@nestjs/swagger": "^7.1.13",
     "@nestjs/typeorm": "^10.0.0",
     "@supabase/supabase-js": "^2.38.0",
-    "axios": "^1.0.0",
+    "axios": "^1.5.1",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
     "code-tag": "^1.1.0",
@@ -52,7 +53,8 @@
     "uuid": "^9.0.1",
     "vue": "^3.3.4",
     "vue-i18n": "^9.5.0",
-    "vue-router": "^4.2.2"
+    "vue-router": "^4.2.2",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@intlify/eslint-plugin-vue-i18n": "^2.0.0",
@@ -112,6 +114,7 @@
     "stylelint": "^15.10.3",
     "stylelint-config-standard-scss": "^11.0.0",
     "supabase": "^1.100.1",
+    "swagger-typescript-api": "^13.0.3",
     "tailwindcss": "^3.3.2",
     "ts-jest": "^29.1.0",
     "ts-node": "10.9.1",

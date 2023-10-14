@@ -1,19 +1,27 @@
-import { PollDomainModel, PollStatus } from 'domain-models';
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import InviteEntity from './invite.entity';
 import UserEntity from './user.entity';
 import VoteEntity from './vote.entity';
+import { ApiProperty } from '@nestjs/swagger';
+
+export enum PollStatus {
+  OPEN = 'OPEN',
+  CLOSED = 'CLOSED',
+}
 
 @Entity({
   name: 'polls',
 })
-export default class PollEntity implements PollDomainModel {
+export default class PollEntity {
+  @ApiProperty()
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @ApiProperty()
   @Column({ type: 'uuid' })
   ownerId: string;
 
+  @ApiProperty()
   @Column({
     type: 'varchar',
     length: 255,
@@ -21,6 +29,7 @@ export default class PollEntity implements PollDomainModel {
   })
   title: string;
 
+  @ApiProperty()
   @Column({
     type: 'varchar',
     length: 255,
@@ -28,6 +37,7 @@ export default class PollEntity implements PollDomainModel {
   })
   question: string;
 
+  @ApiProperty()
   @Column({
     type: 'boolean',
     nullable: false,
@@ -35,6 +45,7 @@ export default class PollEntity implements PollDomainModel {
   })
   private: boolean;
 
+  @ApiProperty()
   @CreateDateColumn({
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP(6)',
@@ -42,6 +53,7 @@ export default class PollEntity implements PollDomainModel {
   })
   createdAt: string;
 
+  @ApiProperty()
   @UpdateDateColumn({
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP(6)',
@@ -50,6 +62,7 @@ export default class PollEntity implements PollDomainModel {
   })
   updatedAt: string;
 
+  @ApiProperty({ enum: PollStatus })
   @Column({
     type: 'enum',
     enum: PollStatus,
@@ -67,6 +80,7 @@ export default class PollEntity implements PollDomainModel {
   })
   votes: VoteEntity[];
 
+  @ApiProperty()
   @OneToMany(() => InviteEntity, invite => invite.poll, {
     cascade: true,
     eager: true,

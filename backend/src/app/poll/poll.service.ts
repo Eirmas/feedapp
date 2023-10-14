@@ -1,15 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import ResourceClosedException from '../../common/exceptions/resource-closed.exception';
-import { PollStatus } from 'domain-models';
 import { Observable, combineLatest, from, of, switchMap, tap } from 'rxjs';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
+import ResourceClosedException from '../../common/exceptions/resource-closed.exception';
 import ResourceNotFoundException from '../../common/exceptions/resource-not-found.exception';
 import { PollEntity } from '../../models';
+import { PollStatus } from '../../models/poll.entity';
+import { AnalyticService } from '../analytic/analytic.service';
+import { VoteService } from '../vote/vote.service';
 import { CreatePollDto } from './dto/create-poll.dto';
 import { UpdatePollDto } from './dto/update-poll.dto';
-import { VoteService } from '../vote/vote.service';
-import { AnalyticService } from '../analytic/analytic.service';
+import { PaginateDto } from '../../common/dto/paginate.dto';
 
 @Injectable()
 export class PollService {
@@ -34,8 +35,8 @@ export class PollService {
     );
   }
 
-  public getPollsByUser(userId: string): Observable<PollEntity[]> {
-    return from(this.pollRepository.find({ where: { ownerId: userId } }));
+  public getPollsByUser(userId: string, pagination: PaginateDto): Observable<PollEntity[]> {
+    return from(this.pollRepository.find({ where: { ownerId: userId }, skip: pagination.skip, take: pagination.take || 100 }));
   }
 
   public getPollById(id: string): Observable<PollEntity | null> {
@@ -46,6 +47,10 @@ export class PollService {
         }
       }),
     );
+  }
+
+  public getPublicPolls(pagination: PaginateDto): Observable<PollEntity[]> {
+    return from(this.pollRepository.find({ where: { private: false }, skip: pagination.skip, take: pagination.take || 100 }));
   }
 
   public updatePoll(id: string, body: UpdatePollDto): Observable<UpdateResult> {

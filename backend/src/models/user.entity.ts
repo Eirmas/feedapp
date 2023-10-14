@@ -1,14 +1,16 @@
-import { UserDomainModel } from 'domain-models';
+import { ApiProperty } from '@nestjs/swagger';
 import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity({
   name: 'users',
   synchronize: false,
 })
-export default class UserEntity implements UserDomainModel {
+export default class UserEntity {
+  @ApiProperty()
   @PrimaryColumn('uuid')
   id: string;
 
+  @ApiProperty()
   @Column({
     type: 'varchar',
     length: 255,
@@ -18,6 +20,7 @@ export default class UserEntity implements UserDomainModel {
   })
   email: string;
 
+  @ApiProperty()
   @Column({
     type: 'varchar',
     length: 255,
@@ -26,6 +29,7 @@ export default class UserEntity implements UserDomainModel {
   })
   name: string;
 
+  @ApiProperty()
   @Column({
     type: 'varchar',
     length: 255,
@@ -34,6 +38,7 @@ export default class UserEntity implements UserDomainModel {
   })
   avatar: string;
 
+  @ApiProperty()
   @CreateDateColumn({
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP(6)',
@@ -41,6 +46,7 @@ export default class UserEntity implements UserDomainModel {
   })
   createdAt: string;
 
+  @ApiProperty()
   @UpdateDateColumn({
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP(6)',

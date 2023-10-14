@@ -15,15 +15,16 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiOkResponse, ApiParam, ApiTags } from '@nestjs/swagger';
+import { catchError, lastValueFrom, take } from 'rxjs';
+import { DeleteResult, UpdateResult } from 'typeorm';
 import { AccessToken } from '../../common/decorators/access-token.decorator';
+import { PaginateDto } from '../../common/dto/paginate.dto';
+import ResourceNotFoundException from '../../common/exceptions/resource-not-found.exception';
 import { AuthGuard } from '../../common/guards/auth.guard';
 import { HasPollAccessGuard } from '../../common/guards/has-poll-access.guard';
 import { IsPollOwnerGuard } from '../../common/guards/is-poll-owner.guard';
 import { AccessTokenData } from '../../common/interfaces/access-token.type';
-import { catchError, lastValueFrom, take } from 'rxjs';
-import { DeleteResult, UpdateResult } from 'typeorm';
-import ResourceNotFoundException from '../../common/exceptions/resource-not-found.exception';
 import { PollEntity } from '../../models';
 import { CreatePollDto } from './dto/create-poll.dto';
 import { UpdatePollDto } from './dto/update-poll.dto';
@@ -38,9 +39,25 @@ export class PollController {
   @Get()
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
-  public getPolls(@AccessToken() accessToken: AccessTokenData): Promise<PollEntity[]> {
+  @ApiOkResponse({ type: PollEntity, isArray: true })
+  @ApiBody({ type: PaginateDto })
+  public getPolls(@AccessToken() accessToken: AccessTokenData, @Body() pagination: PaginateDto): Promise<PollEntity[]> {
     return lastValueFrom(
-      this.pollService.getPollsByUser(accessToken.sub).pipe(
+      this.pollService.getPollsByUser(accessToken.sub, pagination).pipe(
+        take(1),
+        catchError(err => {
+          throw new BadRequestException(err.message || err);
+        }),
+      ),
+    );
+  }
+
+  @Get('/public')
+  @ApiBody({ type: PaginateDto })
+  @ApiOkResponse({ type: PollEntity, isArray: true })
+  public getPublicPolls(@Body() pagination: PaginateDto): Promise<PollEntity[]> {
+    return lastValueFrom(
+      this.pollService.getPublicPolls(pagination).pipe(
         take(1),
         catchError(err => {
           throw new BadRequestException(err.message || err);
@@ -53,6 +70,7 @@ export class PollController {
   @ApiBearerAuth()
   @UseGuards(HasPollAccessGuard)
   @ApiParam({ name: 'pollId', format: 'uuid' })
+  @ApiOkResponse({ type: PollEntity })
   public getPollById(@Param('pollId', new ParseUUIDPipe()) pollId: string): Promise<PollEntity> {
     return lastValueFrom(
       this.pollService.getPollById(pollId).pipe(
@@ -73,6 +91,7 @@ export class PollController {
   @UseGuards(AuthGuard)
   @ApiBody({ type: CreatePollDto })
   @HttpCode(HttpStatus.CREATED)
+  @ApiOkResponse({ type: PollEntity })
   public createPoll(@AccessToken() accessToken: AccessTokenData, @Body() createPollDto: CreatePollDto): Promise<PollEntity> {
     return lastValueFrom(
       this.pollService.createPoll(accessToken.sub, createPollDto).pipe(
@@ -88,7 +107,7 @@ export class PollController {
   @ApiBearerAuth()
   @UseGuards(IsPollOwnerGuard)
   @ApiParam({ name: 'pollId', format: 'uuid' })
-  @HttpCode(HttpStatus.OK)
+  @HttpCode(HttpStatus.NO_CONTENT)
   public closePoll(@Param('pollId', new ParseUUIDPipe()) pollId: string): Promise<UpdateResult> {
     return lastValueFrom(
       this.pollService.closePoll(pollId).pipe(

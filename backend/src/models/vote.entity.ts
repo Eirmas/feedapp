@@ -1,17 +1,20 @@
-import { VoteDomainModel } from 'domain-models';
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import PollEntity from './poll.entity';
+import { ApiProperty } from '@nestjs/swagger';
 
 @Entity({
   name: 'votes',
 })
-export default class VoteEntity implements VoteDomainModel {
+export default class VoteEntity {
+  @ApiProperty()
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @ApiProperty()
   @Column({ type: 'uuid', nullable: false })
   pollId: string;
 
+  @ApiProperty()
   @Column({
     type: 'boolean',
     nullable: false,
