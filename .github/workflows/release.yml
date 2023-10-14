@@ -210,7 +210,7 @@ jobs:
 
       - name: Publish Storybook to Github Pages
         id: storybook
-        uses: crazy-max/ghaction-github-pages@v1
+        uses: crazy-max/ghaction-github-pages@v4
         with:
           target_branch: gh-pages
           build_dir: dist/storybook/app
