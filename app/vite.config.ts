@@ -21,7 +21,7 @@ export default defineConfig({
       },
       srcDir: 'src',
       workbox: {
-        globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,json,vue,txt,woff2}'],
       },
       includeAssets: [
         'favicon.ico',

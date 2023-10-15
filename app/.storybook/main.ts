@@ -21,7 +21,17 @@ const config: StorybookConfig = {
   },
   async viteFinal(config) {
     return mergeConfig(config, {
-      plugins: [VitePWA({})],
+      plugins: [
+        VitePWA({
+          registerType: 'autoUpdate',
+          devOptions: {
+            enabled: true,
+          },
+          workbox: {
+            globPatterns: ['**/*.{js,css,html,ico,png,svg,json,vue,txt,woff2}'],
+          },
+        }),
+      ],
       resolve: {
         alias: {
           '@': path.resolve(__dirname, '../src'),
