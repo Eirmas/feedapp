@@ -1,33 +1,34 @@
 import {
   BadRequestException,
-  Body,
   ClassSerializerInterceptor,
   Controller,
   Get,
   NotFoundException,
   Param,
   ParseUUIDPipe,
+  Query,
   UseInterceptors,
 } from '@nestjs/common';
-import { ApiBody, ApiOkResponse, ApiParam, ApiTags } from '@nestjs/swagger';
+import { ApiOkResponse, ApiParam, ApiTags } from '@nestjs/swagger';
+import { ApiOkResponsePaginated } from '../../common/decorators/api-ok-response-paginated.decorator';
+import { catchError, lastValueFrom, take } from 'rxjs';
+import { PageOptionsDto } from '../../common/dto/page-options.dto';
+import { PageDto } from '../../common/dto/page.dto';
 import ResourceNotFoundException from '../../common/exceptions/resource-not-found.exception';
 import { Analytic } from '../../models/analytic.schema';
-import { catchError, lastValueFrom, take } from 'rxjs';
 import { AnalyticService } from './analytic.service';
-import { PaginateDto } from '../../common/dto/paginate.dto';
 
-@ApiTags('FeedApp Analytics')
+@ApiTags('Analytics')
 @Controller('analytics')
 @UseInterceptors(ClassSerializerInterceptor)
 export class AnalyticController {
   constructor(private readonly analyticService: AnalyticService) {}
 
   @Get()
-  @ApiOkResponse({ type: Analytic, isArray: true })
-  @ApiBody({ type: PaginateDto })
-  public getAnalytics(@Body() pagination: PaginateDto): Promise<Analytic[]> {
+  @ApiOkResponsePaginated(Analytic)
+  public getAnalytics(@Query() pageOptionsDto: PageOptionsDto): Promise<PageDto<Analytic>> {
     return lastValueFrom(
-      this.analyticService.getAnalytics(pagination).pipe(
+      this.analyticService.getAnalytics(pageOptionsDto).pipe(
         take(1),
         catchError(err => {
           throw new BadRequestException(err.message || err);

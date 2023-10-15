@@ -1,9 +1,9 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiPropertyOptional } from '@nestjs/swagger';
 import { Expose, Type } from 'class-transformer';
 import { IsOptional, IsString, IsUrl, MaxLength } from 'class-validator';
 
 export class UpdateUserDto {
-  @ApiProperty({ type: String, required: false })
+  @ApiPropertyOptional({ type: String })
   @Expose()
   @Type(() => String)
   @IsOptional()
@@ -11,7 +11,7 @@ export class UpdateUserDto {
   @MaxLength(255)
   public name: string;
 
-  @ApiProperty({ type: String, required: false })
+  @ApiPropertyOptional({ type: String })
   @Expose()
   @Type(() => String)
   @IsOptional()

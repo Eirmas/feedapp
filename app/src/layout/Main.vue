@@ -1,5 +1,5 @@
 <template>
-  <nav class="bg-primary-lighter">
+  <nav class="bg-primary-lighter relative z-10">
     <div class="flex gap-x-4 flex-wrap items-center justify-between mx-auto py-4 px-8">
       <RouterLink to="/" class="flex items-center">
         <img src="~@/assets/logo.svg" class="h-8" alt="Flowbite Logo" />
@@ -50,7 +50,7 @@
       </div>
     </div>
   </nav>
-  <main class="app-main mx-8">
+  <main class="app-main mx-4 md:mx-8">
     <div class="container mx-auto xl:max-w-screen-xl xl:mx-auto my-12">
       <slot></slot>
     </div>

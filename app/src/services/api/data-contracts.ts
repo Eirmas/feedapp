@@ -23,9 +23,17 @@ export interface ApiUpdateUserDto {
   avatar?: string;
 }
 
-export interface ApiPaginateDto {
-  skip?: number;
-  take?: number;
+export interface ApiPageMetaDto {
+  page: number;
+  take: number;
+  itemCount: number;
+  pageCount: number;
+  hasPreviousPage: boolean;
+  hasNextPage: boolean;
+}
+
+export interface ApiPageDto {
+  meta: ApiPageMetaDto;
 }
 
 export interface ApiPollEntity {
@@ -37,12 +45,15 @@ export interface ApiPollEntity {
   createdAt: string;
   updatedAt: string;
   status: ApiPollEntityStatusEnum;
+  ownerName: string;
+  ownerAvatar: string;
   invites: string[];
 }
 
 export interface ApiCreatePollDto {
   title: string;
   question: string;
+  /** @default false */
   private?: boolean;
   emails?: string[];
 }
@@ -86,6 +97,24 @@ export interface ApiDeleteInviteDto {
 }
 
 export enum ApiPollEntityStatusEnum {
-  OPEN = 'OPEN',
-  CLOSED = 'CLOSED',
+  Open = 'open',
+  Closed = 'closed',
+}
+
+/** @default "ASC" */
+export enum ApiPollControllerGetPollsParamsOrderEnum {
+  ASC = 'ASC',
+  DESC = 'DESC',
+}
+
+/** @default "ASC" */
+export enum ApiPollControllerGetPublicPollsParamsOrderEnum {
+  ASC = 'ASC',
+  DESC = 'DESC',
+}
+
+/** @default "ASC" */
+export enum ApiAnalyticControllerGetAnalyticsParamsOrderEnum {
+  ASC = 'ASC',
+  DESC = 'DESC',
 }

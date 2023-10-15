@@ -51,6 +51,12 @@ export default class ApiHttpClient extends HttpClient {
             return instance(originalRequest);
           }
         }
+
+        if (error.response.status >= 500) {
+          const router = useRouter();
+          await router.push({ name: 'Server Error' });
+        }
+
         return Promise.reject(error);
       },
     );

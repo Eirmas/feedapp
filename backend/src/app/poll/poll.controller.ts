@@ -12,6 +12,7 @@ import {
   ParseUUIDPipe,
   Post,
   Put,
+  Query,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
@@ -19,7 +20,8 @@ import { ApiBearerAuth, ApiBody, ApiOkResponse, ApiParam, ApiTags } from '@nestj
 import { catchError, lastValueFrom, take } from 'rxjs';
 import { DeleteResult, UpdateResult } from 'typeorm';
 import { AccessToken } from '../../common/decorators/access-token.decorator';
-import { PaginateDto } from '../../common/dto/paginate.dto';
+import { PageOptionsDto } from '../../common/dto/page-options.dto';
+import { PageDto } from '../../common/dto/page.dto';
 import ResourceNotFoundException from '../../common/exceptions/resource-not-found.exception';
 import { AuthGuard } from '../../common/guards/auth.guard';
 import { HasPollAccessGuard } from '../../common/guards/has-poll-access.guard';
@@ -29,8 +31,9 @@ import { PollEntity } from '../../models';
 import { CreatePollDto } from './dto/create-poll.dto';
 import { UpdatePollDto } from './dto/update-poll.dto';
 import { PollService } from './poll.service';
+import { ApiOkResponsePaginated } from '../../common/decorators/api-ok-response-paginated.decorator';
 
-@ApiTags('FeedApp Polls')
+@ApiTags('Polls')
 @Controller('polls')
 @UseInterceptors(ClassSerializerInterceptor)
 export class PollController {
@@ -39,11 +42,10 @@ export class PollController {
   @Get()
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
-  @ApiOkResponse({ type: PollEntity, isArray: true })
-  @ApiBody({ type: PaginateDto })
-  public getPolls(@AccessToken() accessToken: AccessTokenData, @Body() pagination: PaginateDto): Promise<PollEntity[]> {
+  @ApiOkResponsePaginated(PollEntity)
+  public getPolls(@AccessToken() accessToken: AccessTokenData, @Query() pageOptionsDto: PageOptionsDto): Promise<PageDto<PollEntity>> {
     return lastValueFrom(
-      this.pollService.getPollsByUser(accessToken.sub, pagination).pipe(
+      this.pollService.getPollsByUser(accessToken.sub, pageOptionsDto).pipe(
         take(1),
         catchError(err => {
           throw new BadRequestException(err.message || err);
@@ -53,11 +55,10 @@ export class PollController {
   }
 
   @Get('/public')
-  @ApiBody({ type: PaginateDto })
-  @ApiOkResponse({ type: PollEntity, isArray: true })
-  public getPublicPolls(@Body() pagination: PaginateDto): Promise<PollEntity[]> {
+  @ApiOkResponsePaginated(PollEntity)
+  public getPublicPolls(@Query() pageOptionsDto: PageOptionsDto): Promise<PageDto<PollEntity>> {
     return lastValueFrom(
-      this.pollService.getPublicPolls(pagination).pipe(
+      this.pollService.getPublicPolls(pageOptionsDto).pipe(
         take(1),
         catchError(err => {
           throw new BadRequestException(err.message || err);

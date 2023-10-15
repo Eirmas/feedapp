@@ -22,7 +22,7 @@ import { GetVotesDao } from './dao/get-votes.dao';
 import { CreateVoteDto } from './dto/create-vote.dto';
 import { VoteService } from './vote.service';
 
-@ApiTags('FeedApp Votes')
+@ApiTags('Votes')
 @Controller('votes')
 @UseInterceptors(ClassSerializerInterceptor)
 export class VoteController {

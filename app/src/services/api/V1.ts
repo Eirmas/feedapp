@@ -11,13 +11,16 @@
 
 import {
   ApiAnalytic,
+  ApiAnalyticControllerGetAnalyticsParamsOrderEnum,
   ApiCreateInviteDto,
   ApiCreatePollDto,
   ApiCreateVoteDto,
   ApiDeleteInviteDto,
   ApiGetVotesDao,
   ApiInviteEntity,
-  ApiPaginateDto,
+  ApiPageDto,
+  ApiPollControllerGetPollsParamsOrderEnum,
+  ApiPollControllerGetPublicPollsParamsOrderEnum,
   ApiPollEntity,
   ApiUpdatePollDto,
   ApiUpdateUserDto,
@@ -35,6 +38,7 @@ export class V1<SecurityDataType = unknown> {
   /**
    * No description
    *
+   * @tags Health
    * @name HealthControllerGetHealth
    * @request GET:/v1/health
    */
@@ -48,7 +52,7 @@ export class V1<SecurityDataType = unknown> {
   /**
    * No description
    *
-   * @tags FeedApp Users
+   * @tags Users
    * @name UserControllerGetUser
    * @request GET:/v1/users
    * @secure
@@ -64,7 +68,7 @@ export class V1<SecurityDataType = unknown> {
   /**
    * No description
    *
-   * @tags FeedApp Users
+   * @tags Users
    * @name UserControllerUpdateUser
    * @request PUT:/v1/users
    * @secure
@@ -81,7 +85,7 @@ export class V1<SecurityDataType = unknown> {
   /**
    * No description
    *
-   * @tags FeedApp Users
+   * @tags Users
    * @name UserControllerDeleteUser
    * @request DELETE:/v1/users
    * @secure
@@ -96,7 +100,7 @@ export class V1<SecurityDataType = unknown> {
   /**
    * No description
    *
-   * @tags FeedApp Users
+   * @tags Users
    * @name UserControllerGetUserById
    * @request GET:/v1/users/{userId}
    * @secure
@@ -112,25 +116,46 @@ export class V1<SecurityDataType = unknown> {
   /**
    * No description
    *
-   * @tags FeedApp Polls
+   * @tags Polls
    * @name PollControllerGetPolls
    * @request GET:/v1/polls
    * @secure
    */
-  pollControllerGetPolls = (data: ApiPaginateDto, params: RequestParams = {}) =>
-    this.http.request<ApiPollEntity[], any>({
+  pollControllerGetPolls = (
+    query?: {
+      /** @default "ASC" */
+      order?: ApiPollControllerGetPollsParamsOrderEnum;
+      /**
+       * @min 1
+       * @default 1
+       */
+      page?: number;
+      /**
+       * @min 1
+       * @max 50
+       * @default 10
+       */
+      take?: number;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.http.request<
+      ApiPageDto & {
+        data: ApiPollEntity[];
+      },
+      any
+    >({
       path: `/v1/polls`,
       method: 'GET',
-      body: data,
+      query: query,
       secure: true,
-      type: ContentType.Json,
       format: 'json',
       ...params,
     });
   /**
    * No description
    *
-   * @tags FeedApp Polls
+   * @tags Polls
    * @name PollControllerCreatePoll
    * @request POST:/v1/polls
    * @secure
@@ -148,23 +173,44 @@ export class V1<SecurityDataType = unknown> {
   /**
    * No description
    *
-   * @tags FeedApp Polls
+   * @tags Polls
    * @name PollControllerGetPublicPolls
    * @request GET:/v1/polls/public
    */
-  pollControllerGetPublicPolls = (data: ApiPaginateDto, params: RequestParams = {}) =>
-    this.http.request<ApiPollEntity[], any>({
+  pollControllerGetPublicPolls = (
+    query?: {
+      /** @default "ASC" */
+      order?: ApiPollControllerGetPublicPollsParamsOrderEnum;
+      /**
+       * @min 1
+       * @default 1
+       */
+      page?: number;
+      /**
+       * @min 1
+       * @max 50
+       * @default 10
+       */
+      take?: number;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.http.request<
+      ApiPageDto & {
+        data: ApiPollEntity[];
+      },
+      any
+    >({
       path: `/v1/polls/public`,
       method: 'GET',
-      body: data,
-      type: ContentType.Json,
+      query: query,
       format: 'json',
       ...params,
     });
   /**
    * No description
    *
-   * @tags FeedApp Polls
+   * @tags Polls
    * @name PollControllerGetPollById
    * @request GET:/v1/polls/{pollId}
    * @secure
@@ -180,7 +226,7 @@ export class V1<SecurityDataType = unknown> {
   /**
    * No description
    *
-   * @tags FeedApp Polls
+   * @tags Polls
    * @name PollControllerUpdatePoll
    * @request PUT:/v1/polls/{pollId}
    * @secure
@@ -197,7 +243,7 @@ export class V1<SecurityDataType = unknown> {
   /**
    * No description
    *
-   * @tags FeedApp Polls
+   * @tags Polls
    * @name PollControllerDeletePoll
    * @request DELETE:/v1/polls/{pollId}
    * @secure
@@ -212,7 +258,7 @@ export class V1<SecurityDataType = unknown> {
   /**
    * No description
    *
-   * @tags FeedApp Polls
+   * @tags Polls
    * @name PollControllerClosePoll
    * @request PUT:/v1/polls/{pollId}/close
    * @secure
@@ -227,7 +273,7 @@ export class V1<SecurityDataType = unknown> {
   /**
    * No description
    *
-   * @tags FeedApp Votes
+   * @tags Votes
    * @name VoteControllerGetVotesByPoll
    * @request GET:/v1/votes/{pollId}
    * @secure
@@ -243,7 +289,7 @@ export class V1<SecurityDataType = unknown> {
   /**
    * No description
    *
-   * @tags FeedApp Votes
+   * @tags Votes
    * @name VoteControllerCreateVote
    * @request POST:/v1/votes/{pollId}
    * @secure
@@ -260,23 +306,44 @@ export class V1<SecurityDataType = unknown> {
   /**
    * No description
    *
-   * @tags FeedApp Analytics
+   * @tags Analytics
    * @name AnalyticControllerGetAnalytics
    * @request GET:/v1/analytics
    */
-  analyticControllerGetAnalytics = (data: ApiPaginateDto, params: RequestParams = {}) =>
-    this.http.request<ApiAnalytic[], any>({
+  analyticControllerGetAnalytics = (
+    query?: {
+      /** @default "ASC" */
+      order?: ApiAnalyticControllerGetAnalyticsParamsOrderEnum;
+      /**
+       * @min 1
+       * @default 1
+       */
+      page?: number;
+      /**
+       * @min 1
+       * @max 50
+       * @default 10
+       */
+      take?: number;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.http.request<
+      ApiPageDto & {
+        data: ApiAnalytic[];
+      },
+      any
+    >({
       path: `/v1/analytics`,
       method: 'GET',
-      body: data,
-      type: ContentType.Json,
+      query: query,
       format: 'json',
       ...params,
     });
   /**
    * No description
    *
-   * @tags FeedApp Analytics
+   * @tags Analytics
    * @name AnalyticControllerGetAnalyticByPoll
    * @request GET:/v1/analytics/{pollId}
    */
@@ -290,7 +357,7 @@ export class V1<SecurityDataType = unknown> {
   /**
    * No description
    *
-   * @tags FeedApp Invites
+   * @tags Invites
    * @name InviteControllerCreateInvite
    * @request POST:/v1/invites/{pollId}
    * @secure
@@ -308,7 +375,7 @@ export class V1<SecurityDataType = unknown> {
   /**
    * No description
    *
-   * @tags FeedApp Invites
+   * @tags Invites
    * @name InviteControllerDeletePoll
    * @request DELETE:/v1/invites/{pollId}
    * @secure

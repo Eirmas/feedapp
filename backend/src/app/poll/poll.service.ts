@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Observable, combineLatest, from, of, switchMap, tap } from 'rxjs';
-import { DeleteResult, Repository, UpdateResult } from 'typeorm';
+import { Observable, combineLatest, from, map, of, switchMap, tap } from 'rxjs';
+import { DeleteResult, FindOptionsUtils, Repository, UpdateResult } from 'typeorm';
 import ResourceClosedException from '../../common/exceptions/resource-closed.exception';
 import ResourceNotFoundException from '../../common/exceptions/resource-not-found.exception';
 import { PollEntity } from '../../models';
@@ -10,7 +10,9 @@ import { AnalyticService } from '../analytic/analytic.service';
 import { VoteService } from '../vote/vote.service';
 import { CreatePollDto } from './dto/create-poll.dto';
 import { UpdatePollDto } from './dto/update-poll.dto';
-import { PaginateDto } from '../../common/dto/paginate.dto';
+import { PageOptionsDto } from '../../common/dto/page-options.dto';
+import { PageMetaDto } from '../../common/dto/page-meta.dto';
+import { PageDto } from '../../common/dto/page.dto';
 
 @Injectable()
 export class PollService {
@@ -35,8 +37,23 @@ export class PollService {
     );
   }
 
-  public getPollsByUser(userId: string, pagination: PaginateDto): Observable<PollEntity[]> {
-    return from(this.pollRepository.find({ where: { ownerId: userId }, skip: pagination.skip, take: pagination.take || 100 }));
+  public getPollsByUser(userId: string, pageOptionsDto: PageOptionsDto): Observable<PageDto<PollEntity>> {
+    const queryBuilder = this.pollRepository.createQueryBuilder('poll');
+    FindOptionsUtils.joinEagerRelations(queryBuilder, queryBuilder.alias, this.pollRepository.metadata);
+
+    queryBuilder
+      .where({ ownerId: userId })
+      .orderBy('poll.createdAt', pageOptionsDto.order)
+      .skip(pageOptionsDto.skip)
+      .take(pageOptionsDto.take);
+
+    return combineLatest([queryBuilder.getCount(), queryBuilder.getRawAndEntities()]).pipe(
+      map(([itemCount, { entities }]) => {
+        const pageMetaDto = new PageMetaDto({ itemCount, pageOptionsDto });
+
+        return new PageDto(entities, pageMetaDto);
+      }),
+    );
   }
 
   public getPollById(id: string): Observable<PollEntity | null> {
@@ -49,8 +66,23 @@ export class PollService {
     );
   }
 
-  public getPublicPolls(pagination: PaginateDto): Observable<PollEntity[]> {
-    return from(this.pollRepository.find({ where: { private: false }, skip: pagination.skip, take: pagination.take || 100 }));
+  public getPublicPolls(pageOptionsDto: PageOptionsDto): Observable<PageDto<PollEntity>> {
+    const queryBuilder = this.pollRepository.createQueryBuilder('poll');
+    FindOptionsUtils.joinEagerRelations(queryBuilder, queryBuilder.alias, this.pollRepository.metadata);
+
+    queryBuilder
+      .where({ private: false })
+      .orderBy('poll.createdAt', pageOptionsDto.order)
+      .skip(pageOptionsDto.skip)
+      .take(pageOptionsDto.take);
+
+    return combineLatest([queryBuilder.getCount(), queryBuilder.getRawAndEntities()]).pipe(
+      map(([itemCount, { entities }]) => {
+        const pageMetaDto = new PageMetaDto({ itemCount, pageOptionsDto });
+
+        return new PageDto(entities, pageMetaDto);
+      }),
+    );
   }
 
   public updatePoll(id: string, body: UpdatePollDto): Observable<UpdateResult> {

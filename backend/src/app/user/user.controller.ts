@@ -25,7 +25,7 @@ import { UserEntity } from '../../models';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserService } from './user.service';
 
-@ApiTags('FeedApp Users')
+@ApiTags('Users')
 @Controller('users')
 @UseInterceptors(ClassSerializerInterceptor)
 export class UserController {

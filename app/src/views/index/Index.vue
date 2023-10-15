@@ -15,6 +15,11 @@
         <div class="pt-2">
           <Button @click="login">Sign in with Google</Button>
         </div>
+        <p class="text-caption">
+          By signing in, you agree to our
+          <RouterLink :to="{ name: 'Terms of Service' }" class="underline text-semantic-link">Terms of Service</RouterLink> and
+          <RouterLink :to="{ name: 'Privacy Policy' }" class="underline text-semantic-link">Privacy Policy</RouterLink>.
+        </p>
       </div>
       <div class="mb-8 hidden md:flex col-span-5 items-center justify-center mx-0">
         <img src="~@/assets/landingpage_illustration.svg" class="w-full" />
@@ -27,4 +32,5 @@
 import Button from '@/components/atoms/button/Button.vue';
 import Main from '@/layout/Main.vue';
 import { login } from '@/services/auth';
+import { RouterLink } from 'vue-router';
 </script>

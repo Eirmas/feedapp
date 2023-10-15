@@ -3,10 +3,11 @@ import InviteEntity from './invite.entity';
 import UserEntity from './user.entity';
 import VoteEntity from './vote.entity';
 import { ApiProperty } from '@nestjs/swagger';
+import { Exclude, Expose } from 'class-transformer';
 
 export enum PollStatus {
-  OPEN = 'OPEN',
-  CLOSED = 'CLOSED',
+  OPEN = 'open',
+  CLOSED = 'closed',
 }
 
 @Entity({
@@ -71,7 +72,20 @@ export default class PollEntity {
   })
   status: PollStatus;
 
-  @ManyToOne(() => UserEntity, user => user.id, { eager: false, onDelete: 'CASCADE', nullable: false })
+  @ApiProperty()
+  @Expose()
+  public get ownerName(): string {
+    return this.owner.name;
+  }
+
+  @ApiProperty()
+  @Expose()
+  public get ownerAvatar(): string {
+    return this.owner.avatar;
+  }
+
+  @Exclude()
+  @ManyToOne(() => UserEntity, user => user.id, { eager: true, onDelete: 'CASCADE' })
   @JoinColumn({ name: 'ownerId' })
   owner: UserEntity;
 

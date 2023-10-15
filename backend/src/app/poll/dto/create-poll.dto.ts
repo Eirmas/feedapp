@@ -1,5 +1,5 @@
 import { Expose, Type } from 'class-transformer';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsBoolean, IsEmail, IsNotEmpty, IsOptional, IsString, MaxLength } from 'class-validator';
 
 export class CreatePollDto {
@@ -19,14 +19,14 @@ export class CreatePollDto {
   @IsString()
   public question: string;
 
-  @ApiProperty({ type: Boolean, required: false })
+  @ApiPropertyOptional({ type: Boolean, default: false })
   @Expose()
   @Type(() => Boolean)
   @IsOptional()
   @IsBoolean()
   public private: boolean;
 
-  @ApiProperty({ type: String, required: false, isArray: true })
+  @ApiPropertyOptional({ type: String, isArray: true })
   @Expose()
   @Type(() => Array<string>)
   @IsOptional()
