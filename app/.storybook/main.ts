@@ -1,7 +1,6 @@
-import { mergeConfig } from 'vite';
-import path from 'path';
 import { StorybookConfig } from '@storybook/vue3-vite';
-import { VitePWA } from 'vite-plugin-pwa';
+import path from 'path';
+import { mergeConfig } from 'vite';
 
 const config: StorybookConfig = {
   stories: ['../src/**/*.stories.@(js|jsx|ts|tsx)', './stories/**/*.stories.@(js|jsx|ts|tsx)'],
@@ -21,17 +20,6 @@ const config: StorybookConfig = {
   },
   async viteFinal(config) {
     return mergeConfig(config, {
-      plugins: [
-        VitePWA({
-          registerType: 'autoUpdate',
-          devOptions: {
-            enabled: true,
-          },
-          workbox: {
-            globPatterns: ['**/*.{js,css,html,ico,png,svg,json,vue,txt,woff2}'],
-          },
-        }),
-      ],
       resolve: {
         alias: {
           '@': path.resolve(__dirname, '../src'),

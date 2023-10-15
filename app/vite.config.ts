@@ -4,6 +4,8 @@ import vue from '@vitejs/plugin-vue';
 import { tsconfigBaseAliases } from 'nx-vue3-vite';
 import { VitePWA } from 'vite-plugin-pwa';
 
+const isStorybook = process.env.NX_TASK_TARGET_TARGET === 'build-storybook';
+
 export default defineConfig({
   resolve: {
     alias: {
@@ -14,7 +16,7 @@ export default defineConfig({
   },
   publicDir: path.resolve(__dirname, './public'),
   plugins: [
-    VitePWA({
+    isStorybook ? null : VitePWA({
       registerType: 'autoUpdate',
       devOptions: {
         enabled: true,
