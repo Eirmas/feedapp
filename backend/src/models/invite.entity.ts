@@ -21,7 +21,7 @@ export default class InviteEntity {
 
   @ApiProperty()
   @CreateDateColumn({
-    type: 'timestamp',
+    type: 'timestamp with time zone',
     default: () => 'CURRENT_TIMESTAMP(6)',
     nullable: false,
   })

@@ -41,7 +41,7 @@ export default class UserEntity {
 
   @ApiProperty()
   @CreateDateColumn({
-    type: 'timestamp',
+    type: 'timestamp with time zone',
     default: () => 'CURRENT_TIMESTAMP(6)',
     nullable: false,
   })
@@ -49,7 +49,7 @@ export default class UserEntity {
 
   @ApiProperty()
   @UpdateDateColumn({
-    type: 'timestamp',
+    type: 'timestamp with time zone',
     default: () => 'CURRENT_TIMESTAMP(6)',
     onUpdate: 'CURRENT_TIMESTAMP(6)',
     nullable: false,

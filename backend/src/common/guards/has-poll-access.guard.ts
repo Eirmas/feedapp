@@ -7,6 +7,7 @@ import { lastValueFrom } from 'rxjs';
 import appConfig from '../config/app-conf';
 import { AuthGuard } from './auth.guard';
 import { InviteEntity } from '../../models';
+import ResourceNotFoundException from '../exceptions/resource-not-found.exception';
 
 @Injectable()
 export class HasPollAccessGuard implements CanActivate {
@@ -39,17 +40,17 @@ export class HasPollAccessGuard implements CanActivate {
         userId = (await AuthGuard.getUserFromRequest(request, this.jwtService, config.jwt.secret)).sub;
       }
 
-      if (!userId) {
-        throw new UnauthorizedException();
-      }
-
       if (poll.ownerId === userId) {
         return true;
       }
 
       const user = await lastValueFrom(this.userService.getUserById(userId));
       foundInvite = poll.invites.find(invite => invite.email === user.email);
-    } catch {
+    } catch (err) {
+      if (err instanceof ResourceNotFoundException) {
+        throw new ForbiddenException();
+      }
+
       throw new UnauthorizedException();
     }
 

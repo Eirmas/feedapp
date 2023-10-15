@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Observable, combineLatest, from, map, of, switchMap, tap } from 'rxjs';
+import { Observable, catchError, combineLatest, from, map, of, switchMap, tap } from 'rxjs';
 import { DeleteResult, FindOptionsUtils, Repository, UpdateResult } from 'typeorm';
 import ResourceClosedException from '../../common/exceptions/resource-closed.exception';
 import ResourceNotFoundException from '../../common/exceptions/resource-not-found.exception';

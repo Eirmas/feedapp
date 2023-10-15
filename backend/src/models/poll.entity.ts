@@ -48,7 +48,7 @@ export default class PollEntity {
 
   @ApiProperty()
   @CreateDateColumn({
-    type: 'timestamp',
+    type: 'timestamp with time zone',
     default: () => 'CURRENT_TIMESTAMP(6)',
     nullable: false,
   })
@@ -56,7 +56,7 @@ export default class PollEntity {
 
   @ApiProperty()
   @UpdateDateColumn({
-    type: 'timestamp',
+    type: 'timestamp with time zone',
     default: () => 'CURRENT_TIMESTAMP(6)',
     onUpdate: 'CURRENT_TIMESTAMP(6)',
     nullable: false,

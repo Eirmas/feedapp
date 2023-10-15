@@ -17,7 +17,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiOkResponse, ApiParam, ApiTags } from '@nestjs/swagger';
-import { catchError, lastValueFrom, take } from 'rxjs';
+import { catchError, lastValueFrom, map, take } from 'rxjs';
 import { DeleteResult, UpdateResult } from 'typeorm';
 import { AccessToken } from '../../common/decorators/access-token.decorator';
 import { PageOptionsDto } from '../../common/dto/page-options.dto';
@@ -91,12 +91,14 @@ export class PollController {
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
   @ApiBody({ type: CreatePollDto })
-  @HttpCode(HttpStatus.CREATED)
+  @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOkResponse({ type: PollEntity })
-  public createPoll(@AccessToken() accessToken: AccessTokenData, @Body() createPollDto: CreatePollDto): Promise<PollEntity> {
+  public createPoll(@AccessToken() accessToken: AccessTokenData, @Body() createPollDto: CreatePollDto): Promise<void> {
     return lastValueFrom(
       this.pollService.createPoll(accessToken.sub, createPollDto).pipe(
+        map(() => undefined),
         catchError(err => {
+          console.log(err);
           throw new BadRequestException(err.message || err);
         }),
         take(1),
