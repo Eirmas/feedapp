@@ -18,7 +18,7 @@ export default {
 
 export const Default = {
   args: {
-    text: 'Confirmed',
+    default: 'Confirmed',
     type: 'success',
   },
 };

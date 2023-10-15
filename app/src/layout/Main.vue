@@ -1,7 +1,7 @@
 <template>
   <nav class="bg-primary-lighter relative z-10">
-    <div class="flex gap-x-4 flex-wrap items-center justify-between mx-auto py-4 px-8">
-      <RouterLink to="/" class="flex items-center">
+    <div class="flex gap-x-4 flex-wrap items-center justify-between mx-auto py-4 px-4 md:px-8">
+      <RouterLink to="/" class="flex items-center cursor-pointer">
         <img src="~@/assets/logo.svg" class="h-8" alt="Flowbite Logo" />
       </RouterLink>
       <div class="flex grow justify-end">

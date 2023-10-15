@@ -1,5 +1,5 @@
 .app-badge {
-  @apply inline-block text-body rounded-full px-2 py-1 ring-1;
+  @apply inline-block text-body-small rounded-full px-2 py-0.5 ring-1;
   @apply bg-primary-lighter text-primary ring-primary;
 
   &-success {

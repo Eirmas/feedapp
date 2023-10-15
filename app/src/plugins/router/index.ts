@@ -6,6 +6,7 @@ import Profile from '../../views/profile/Profile.vue';
 import ServerError from '../../views/server-error/ServerError.vue';
 import Signout from '../../views/signout/Signout.vue';
 import TermsOfService from '../../views/terms-of-service/TermsOfService.vue';
+import Poll from '../../views/poll/Poll.vue';
 import PrivacyPolicy from '../../views/privacy-policy/PrivacyPolicy.vue';
 import { authGuard } from './guards/auth';
 
@@ -48,6 +49,12 @@ const router = createRouter({
       path: '/server-error',
       name: 'Server error',
       component: ServerError,
+    },
+    {
+      path: '/poll/:pollId',
+      name: 'Poll',
+      component: Poll,
+      props: route => ({ pollId: String(route.params.pollId) }),
     },
     {
       path: '/:pathMatch(.*)*',

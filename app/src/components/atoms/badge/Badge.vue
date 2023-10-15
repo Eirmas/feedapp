@@ -1,5 +1,7 @@
 <template>
-  <div :class="classes">{{ text }}</div>
+  <div :class="classes">
+    <slot></slot>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -9,7 +11,6 @@ import { IBadgeTypes } from './types';
 
 interface Props {
   type?: IBadgeTypes;
-  text: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {});
