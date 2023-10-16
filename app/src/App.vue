@@ -5,6 +5,7 @@
       <Spinner />
     </div>
   </Suspense>
+  <Notifications />
 </template>
 
 <script setup lang="ts">
@@ -14,6 +15,7 @@ import { useAuthStore } from '@/store/auth';
 import { useUserStore } from '@/store/user';
 import { storeToRefs } from 'pinia';
 import { RouteLocationRaw, RouterView, useRouter } from 'vue-router';
+import Notifications from './layout/Notifications.vue';
 
 const router = useRouter();
 const authStore = useAuthStore();

@@ -2,6 +2,9 @@ module.exports = {
   root: true,
   ignorePatterns: ['**/*'],
   plugins: ['@nx'],
+  globals: {
+    NodeJS: true,
+  },
   overrides: [
     {
       files: ['*.ts', '*.js'],

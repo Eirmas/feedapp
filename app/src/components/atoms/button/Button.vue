@@ -11,6 +11,7 @@
   >
     <div :class="['flex items-center justify-center', iconMode === 'append' && 'flex-row-reverse']">
       <component :is="icon" v-if="icon" class="btn-icon" />
+      <span v-if="srOnly" class="sr-only">{{ srOnly }}</span>
       <div v-if="iconMode !== 'fab'" class="btn-content">
         <slot></slot>
       </div>
@@ -30,6 +31,7 @@ interface Props {
   size?: IButtonSizes;
   disabled?: boolean;
   corners?: IButtonCorners;
+  srOnly?: string;
 }
 
 withDefaults(defineProps<Props>(), {
