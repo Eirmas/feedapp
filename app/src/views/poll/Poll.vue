@@ -2,11 +2,25 @@
   <Main>
     <div v-if="poll" class="flex flex-col gap-y-8">
       <div
+        v-if="poll.ownerId === user?.id"
+        class="bg-primary-lighter flex flex-wrap items-center gap-2 text-primary-dark p-4 rounded-sm border-2 border-primary-dark"
+      >
+        <div class="flex grow gap-x-2">
+          <InformationCircleIcon class="h-6" />
+          <p class="text-body-bold">This is your poll. Want to make any changes?</p>
+        </div>
+        <div class="flex gap-x-2">
+          <Button v-if="poll.status === 'open'" corners="square" size="small" @click="closePoll">Close</Button>
+          <Button v-if="poll.status === 'open'" corners="square" size="small">Edit</Button>
+          <Button corners="square" size="small" @click="deletePoll">Delete</Button>
+        </div>
+      </div>
+      <div
         v-if="poll.status === 'closed'"
-        class="bg-semantic-info-light flex items-center gap-x-2 text-semantic-info-dark p-4 rounded-sm border border-semantic-info-dark"
+        class="bg-semantic-info-light flex items-center gap-x-2 text-semantic-info-dark p-4 rounded-sm border-2 border-semantic-info-dark"
       >
         <InformationCircleIcon class="h-6" />
-        <p>This poll has been closed</p>
+        <p class="text-body-bold">This poll has been closed</p>
       </div>
       <div class="flex gap-4 items-center flex-wrap-reverse">
         <div class="grow">
@@ -24,7 +38,7 @@
           </div>
         </div>
       </div>
-      <Card class="flex flex-col gap-y-4">
+      <Card :class="['flex flex-col gap-y-4', loading && 'opacity-50 pointer-events-none']">
         <h3>{{ poll.question }}</h3>
         <p class="text-body">Vote standings:</p>
         <div class="flex gap-x-4">
@@ -60,20 +74,24 @@ import Button from '@/components/atoms/button/Button.vue';
 import Card from '@/components/atoms/card/Card.vue';
 import Main from '@/layout/Main.vue';
 import { supabase } from '@/plugins/supabase';
-import { ApiPollEntity } from '@/services/api/data-contracts';
+import { ApiPollEntity, ApiPollEntityStatusEnum } from '@/services/api/data-contracts';
 import PollService from '@/services/poll';
 import VoteService from '@/services/vote';
+import { useUserStore } from '@/store/user';
 import { HandThumbDownIcon, HandThumbUpIcon, InformationCircleIcon } from '@heroicons/vue/24/outline';
 import { REALTIME_LISTEN_TYPES, RealtimeChannel } from '@supabase/supabase-js';
 import { AxiosError } from 'axios';
 import moment from 'moment';
+import { storeToRefs } from 'pinia';
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
 const props = defineProps<{ pollId: string }>();
-
+const loading = ref(true);
 const poll = ref<ApiPollEntity | null>(null);
+const userStore = useUserStore();
+const { user } = storeToRefs(userStore);
 const syncVotes = ref<{ yes: number; no: number }>({ yes: 0, no: 0 });
 const asyncVotes = ref<{ yes: number; no: number }>({ yes: 0, no: 0 });
 const subscription = ref<RealtimeChannel | null>(null);
@@ -81,11 +99,28 @@ const subscription = ref<RealtimeChannel | null>(null);
 const timestampToDate = (timestamp: string) => moment(timestamp).fromNow();
 
 const vote = async (answer: boolean) => {
-  asyncVotes.value = {
-    ...asyncVotes.value,
-    [answer ? 'yes' : 'no']: asyncVotes.value[answer ? 'yes' : 'no'] + 1,
-  };
-  await VoteService.createVote(props.pollId, answer);
+  try {
+    asyncVotes.value = {
+      ...asyncVotes.value,
+      [answer ? 'yes' : 'no']: asyncVotes.value[answer ? 'yes' : 'no'] + 1,
+    };
+    await VoteService.createVote(props.pollId, answer);
+  } catch (err) {
+    if ((err as AxiosError<{ message: string }>).response?.data?.message === 'poll_closed' && poll.value) {
+      poll.value = {
+        ...poll.value,
+        status: ApiPollEntityStatusEnum.Closed,
+      };
+      asyncVotes.value = {
+        yes: 0,
+        no: 0,
+      };
+    } else if ((err as AxiosError).response?.status === 403) {
+      await router.push({ name: 'Not Found', query: { msg: `Poll with ID ${props.pollId} was not found. Maybe it got deleted?` } });
+    } else {
+      console.log(err);
+    }
+  }
 };
 
 onMounted(async () => {
@@ -99,14 +134,29 @@ onMounted(async () => {
         onNewVote(payload.new.answer),
       )
       .subscribe();
+    loading.value = false;
   } catch (err) {
     if ((err as AxiosError).response?.status === 403) {
       await router.push({ name: 'Not Found', query: { msg: `Poll with ID ${props.pollId} was not found` } });
     }
-
+    loading.value = false;
     console.log(err);
   }
 });
+
+const closePoll = async () => {
+  try {
+    if (poll.value && user.value?.id === poll.value?.ownerId) {
+      await PollService.closePollById(props.pollId);
+      poll.value = {
+        ...poll.value,
+        status: ApiPollEntityStatusEnum.Closed,
+      };
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
 
 const onNewVote = (answer: boolean) => {
   if (answer) {
@@ -115,6 +165,17 @@ const onNewVote = (answer: boolean) => {
   } else {
     if (asyncVotes.value.no > 0) asyncVotes.value.no--;
     syncVotes.value.no++;
+  }
+};
+
+const deletePoll = async () => {
+  try {
+    if (poll.value && user.value?.id === poll.value?.ownerId) {
+      await PollService.deletePollById(props.pollId);
+      await router.push({ name: 'Home', query: { msg: `Poll was deleted successfully` } });
+    }
+  } catch (err) {
+    console.log(err);
   }
 };
 

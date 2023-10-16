@@ -21,6 +21,8 @@ import { VoteEntity } from '../../models';
 import { GetVotesDao } from './dao/get-votes.dao';
 import { CreateVoteDto } from './dto/create-vote.dto';
 import { VoteService } from './vote.service';
+import ResourceClosedException from 'backend/src/common/exceptions/resource-closed.exception';
+import { PollIsOpenGuard } from 'backend/src/common/guards/poll-is-open.guard';
 
 @ApiTags('Votes')
 @Controller('votes')
@@ -50,7 +52,7 @@ export class VoteController {
 
   @Post(':pollId')
   @ApiBearerAuth()
-  @UseGuards(HasPollAccessGuard)
+  @UseGuards(HasPollAccessGuard, PollIsOpenGuard)
   @ApiParam({ name: 'pollId', format: 'uuid' })
   @ApiBody({ type: CreateVoteDto })
   @HttpCode(HttpStatus.CREATED)
@@ -61,6 +63,10 @@ export class VoteController {
         catchError(err => {
           if (err instanceof ResourceNotFoundException) {
             throw new NotFoundException(err.message);
+          }
+
+          if (err instanceof ResourceClosedException) {
+            throw new BadRequestException('poll_closed', err.message);
           }
 
           throw new BadRequestException(err.message || err);
