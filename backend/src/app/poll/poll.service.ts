@@ -1,7 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Observable, catchError, combineLatest, from, map, of, switchMap, tap } from 'rxjs';
+import { Observable, combineLatest, from, map, of, switchMap, tap } from 'rxjs';
 import { DeleteResult, FindOptionsUtils, Repository, UpdateResult } from 'typeorm';
+import { PageMetaDto } from '../../common/dto/page-meta.dto';
+import { PageOptionsDto } from '../../common/dto/page-options.dto';
+import { PageDto } from '../../common/dto/page.dto';
 import ResourceClosedException from '../../common/exceptions/resource-closed.exception';
 import ResourceNotFoundException from '../../common/exceptions/resource-not-found.exception';
 import { PollEntity } from '../../models';
@@ -10,9 +13,6 @@ import { AnalyticService } from '../analytic/analytic.service';
 import { VoteService } from '../vote/vote.service';
 import { CreatePollDto } from './dto/create-poll.dto';
 import { UpdatePollDto } from './dto/update-poll.dto';
-import { PageOptionsDto } from '../../common/dto/page-options.dto';
-import { PageMetaDto } from '../../common/dto/page-meta.dto';
-import { PageDto } from '../../common/dto/page.dto';
 
 @Injectable()
 export class PollService {

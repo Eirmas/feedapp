@@ -14,6 +14,8 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiOkResponse, ApiParam, ApiTags } from '@nestjs/swagger';
+import ResourceClosedException from '../../common/exceptions/resource-closed.exception';
+import { PollIsOpenGuard } from '../../common/guards/poll-is-open.guard';
 import { catchError, lastValueFrom, take } from 'rxjs';
 import ResourceNotFoundException from '../../common/exceptions/resource-not-found.exception';
 import { HasPollAccessGuard } from '../../common/guards/has-poll-access.guard';
@@ -21,8 +23,6 @@ import { VoteEntity } from '../../models';
 import { GetVotesDao } from './dao/get-votes.dao';
 import { CreateVoteDto } from './dto/create-vote.dto';
 import { VoteService } from './vote.service';
-import ResourceClosedException from 'backend/src/common/exceptions/resource-closed.exception';
-import { PollIsOpenGuard } from 'backend/src/common/guards/poll-is-open.guard';
 
 @ApiTags('Votes')
 @Controller('votes')

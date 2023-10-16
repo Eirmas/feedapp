@@ -1,13 +1,10 @@
-import { BadRequestException, CanActivate, ExecutionContext, ForbiddenException, Injectable, UnauthorizedException } from '@nestjs/common';
-import { ConfigService, ConfigType } from '@nestjs/config';
+import { BadRequestException, CanActivate, ExecutionContext, ForbiddenException, Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { PollService } from '../../app/poll/poll.service';
+import { PollStatus } from '../../models/poll.entity';
 import { lastValueFrom } from 'rxjs';
-import { AuthGuard } from './auth.guard';
-import appConfig from '../config/app-conf';
+import { PollService } from '../../app/poll/poll.service';
 import { PollEntity } from '../../models';
-import ResourceNotFoundException from '../exceptions/resource-not-found.exception';
-import { PollStatus } from 'backend/src/models/poll.entity';
 
 @Injectable()
 export class PollIsOpenGuard implements CanActivate {
