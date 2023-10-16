@@ -1,6 +1,6 @@
 <template>
   <div class="pointer-events-auto w-full max-w-sm overflow-hidden rounded-sm bg-neutral-white shadow-lg ring-1 ring-neutral-light">
-    <div class="p-4 pt-3">
+    <div class="px-4 py-3">
       <div class="flex items-start gap-x-2">
         <div class="flex-shrink-0 pt-1">
           <component :is="getIcon" :class="['h-6 w-6', getTextClass]" aria-hidden="true" />
@@ -11,7 +11,6 @@
         </div>
         <div class="flex flex-shrink-0">
           <Button srOnly="Dismiss" theme="tertiary" size="small" :icon="XMarkIcon" iconMode="fab" @click="emit('dismiss', $event)">
-            <XMarkIcon class="h-5 w-5" aria-hidden="true" />
           </Button>
         </div>
       </div>

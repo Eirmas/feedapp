@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Home from '../../views/home/Home.vue';
 import Index from '../../views/index/Index.vue';
+import EditPoll from '../../views/poll/EditPoll.vue';
+import CreatePoll from '../../views/poll/CreatePoll.vue';
 import NotFound from '../../views/not-found/NotFound.vue';
 import Profile from '../../views/profile/Profile.vue';
 import ServerError from '../../views/server-error/ServerError.vue';
@@ -55,6 +57,19 @@ const router = createRouter({
       name: 'Poll',
       component: Poll,
       props: route => ({ pollId: String(route.params.pollId) }),
+    },
+    {
+      path: '/poll/:pollId/edit',
+      name: 'Edit Poll',
+      component: EditPoll,
+      meta: { authRequired: true },
+      props: route => ({ pollId: String(route.params.pollId) }),
+    },
+    {
+      path: '/poll/create',
+      name: 'Create Poll',
+      meta: { authRequired: true },
+      component: CreatePoll,
     },
     {
       path: '/:pathMatch(.*)*',

@@ -50,7 +50,7 @@
       </div>
     </div>
   </nav>
-  <main class="app-main mx-4 md:mx-8">
+  <main class="block flex-1 max-w-full transition-[padding] duration-100 ease-in-out bg-neutral-white mx-4 md:mx-8">
     <div class="container mx-auto xl:max-w-screen-xl xl:mx-auto my-12">
       <slot></slot>
     </div>
@@ -82,9 +82,3 @@ const userStore = useUserStore();
 const route = useRoute();
 const { user } = storeToRefs(userStore);
 </script>
-
-<style lang="scss" scoped>
-.app-main {
-  @apply block flex-1 max-w-full transition-[padding] duration-100 ease-in-out bg-neutral-white;
-}
-</style>

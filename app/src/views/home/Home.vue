@@ -7,7 +7,9 @@
           Bellow is a list of public polls. Feel free to share your thoughts.<br />Wanna create your own poll? You can do that too!
         </p>
         <div class="pt-2">
-          <Button :icon="PlusIcon" iconMode="prepend">Create new poll</Button>
+          <RouterLink :to="{ name: 'Create Poll' }">
+            <Button :icon="PlusIcon" iconMode="prepend">Create new poll</Button>
+          </RouterLink>
         </div>
       </div>
       <div class="mb-8 hidden md:flex col-span-5 items-center justify-end mx-0">

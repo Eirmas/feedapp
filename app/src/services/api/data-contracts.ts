@@ -36,6 +36,12 @@ export interface ApiPageDto {
   meta: ApiPageMetaDto;
 }
 
+export interface ApiInviteEntity {
+  pollId: string;
+  email: string;
+  createdAt: string;
+}
+
 export interface ApiPollEntity {
   id: string;
   ownerId: string;
@@ -47,7 +53,7 @@ export interface ApiPollEntity {
   status: ApiPollEntityStatusEnum;
   ownerName: string;
   ownerAvatar: string;
-  invites: string[];
+  invites: ApiInviteEntity[];
 }
 
 export interface ApiCreatePollDto {
@@ -84,12 +90,6 @@ export interface ApiAnalytic {
 
 export interface ApiCreateInviteDto {
   email: string;
-}
-
-export interface ApiInviteEntity {
-  pollId: string;
-  email: string;
-  createdAt: string;
 }
 
 export interface ApiDeleteInviteDto {

@@ -24,6 +24,7 @@ import Button from '@/components/atoms/button/Button.vue';
 import Card from '@/components/atoms/card/Card.vue';
 import TextInput from '@/components/atoms/text-input/TextInput.vue';
 import Main from '@/layout/Main.vue';
+import { updateUserSchema } from '@/services/schemas';
 import { useUserStore } from '@/store/user';
 import { storeToRefs } from 'pinia';
 import { computed, onMounted, ref } from 'vue';
@@ -38,11 +39,11 @@ onMounted(() => {
   name.value = user.value?.name ?? '';
 });
 
-const nameSchema = z.string().min(1, 'Name must not be empty').max(255, 'Name must be less than 64 characters');
-
 const nameError = computed(() => {
   try {
-    nameSchema.parse(name.value);
+    updateUserSchema.parse({
+      name: name.value,
+    });
     return '';
   } catch (err) {
     if (err instanceof z.ZodError) {
@@ -57,6 +58,7 @@ const save = async () => {
   if (nameError.value) {
     return;
   }
+
   loading.value = true;
   await userStore.updateUser({ name: name.value });
   loading.value = false;

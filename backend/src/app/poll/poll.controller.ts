@@ -98,7 +98,6 @@ export class PollController {
       this.pollService.createPoll(accessToken.sub, createPollDto).pipe(
         map(() => undefined),
         catchError(err => {
-          console.log(err);
           throw new BadRequestException(err.message || err);
         }),
         take(1),

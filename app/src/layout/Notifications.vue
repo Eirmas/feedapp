@@ -29,13 +29,13 @@ import { useNotifications } from '@/composables/useNotifications';
 import { AlertProps } from '@/components/atoms/alert/types';
 import Alert from '@/components/atoms/alert/Alert.vue';
 
-const alerts = ref<Record<string, { alert: AlertProps; timeout: NodeJS.Timeout }>>({});
+const alerts = ref<Record<string, { alert: AlertProps; timeout?: NodeJS.Timeout }>>({});
 
 const notifications = useNotifications();
 
-const onAlert = (alert: AlertProps, duration: number) => {
+const onAlert = (alert: AlertProps, duration: number | null) => {
   const id = crypto.randomUUID();
-  const timeout = setTimeout(() => dismiss(id), duration);
+  const timeout = duration !== null ? setTimeout(() => dismiss(id), duration) : undefined;
 
   alerts.value[id] = {
     alert: alert,

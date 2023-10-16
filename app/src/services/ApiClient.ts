@@ -1,6 +1,9 @@
 import { useAuthStore } from '@/store/auth';
 import { useRouter } from 'vue-router';
 import { HttpClient } from './api/http-client';
+import { useNotifications } from '@/composables/useNotifications';
+
+const notifications = useNotifications();
 
 export default class ApiHttpClient extends HttpClient {
   constructor() {
@@ -44,7 +47,11 @@ export default class ApiHttpClient extends HttpClient {
 
             if (!(await refresh())) {
               const router = useRouter();
-              await router.push({ name: 'Logout', query: { msg: 'session_expired' } });
+              notifications.info(
+                { title: 'Session expired', description: 'You have been signed out due to inactivity. Please sign back in to continue' },
+                null,
+              );
+              await router.push({ name: 'Logout' });
               return Promise.reject(error);
             }
 

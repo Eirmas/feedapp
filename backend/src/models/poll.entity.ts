@@ -94,7 +94,7 @@ export default class PollEntity {
   })
   votes: VoteEntity[];
 
-  @ApiProperty()
+  @ApiProperty({ type: () => InviteEntity, isArray: true })
   @OneToMany(() => InviteEntity, invite => invite.poll, {
     cascade: true,
     eager: true,

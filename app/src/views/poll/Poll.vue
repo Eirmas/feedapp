@@ -11,7 +11,9 @@
         </div>
         <div class="flex gap-x-2">
           <Button v-if="poll.status === 'open'" corners="square" size="small" @click="closePoll">Close</Button>
-          <Button v-if="poll.status === 'open'" corners="square" size="small">Edit</Button>
+          <RouterLink :to="{ name: 'Edit Poll', params: { pollId: poll.id } }">
+            <Button v-if="poll.status === 'open'" corners="square" size="small">Edit</Button>
+          </RouterLink>
           <Button corners="square" size="small" @click="deletePoll">Delete</Button>
         </div>
       </div>
@@ -72,6 +74,7 @@
 import Avatar from '@/components/atoms/avatar/Avatar.vue';
 import Button from '@/components/atoms/button/Button.vue';
 import Card from '@/components/atoms/card/Card.vue';
+import { useNotifications } from '@/composables/useNotifications';
 import Main from '@/layout/Main.vue';
 import { supabase } from '@/plugins/supabase';
 import { ApiPollEntity, ApiPollEntityStatusEnum } from '@/services/api/data-contracts';
@@ -96,6 +99,7 @@ const syncVotes = ref<{ yes: number; no: number }>({ yes: 0, no: 0 });
 const asyncVotes = ref<{ yes: number; no: number }>({ yes: 0, no: 0 });
 const subscription = ref<RealtimeChannel | null>(null);
 
+const notifications = useNotifications();
 const timestampToDate = (timestamp: string) => moment(timestamp).fromNow();
 
 const vote = async (answer: boolean) => {
@@ -116,9 +120,10 @@ const vote = async (answer: boolean) => {
         no: 0,
       };
     } else if ((err as AxiosError).response?.status === 403) {
-      await router.push({ name: 'Not Found', query: { msg: `Poll with ID ${props.pollId} was not found. Maybe it got deleted?` } });
+      notifications.error({ title: 'Poll not found', description: `Poll with ID ${props.pollId} was not found. Maybe it got deleted?` });
+      await router.push({ name: 'Not Found' });
     } else {
-      console.log(err);
+      notifications.error({ title: 'An error occurred' }, err);
     }
   }
 };
@@ -137,26 +142,14 @@ onMounted(async () => {
     loading.value = false;
   } catch (err) {
     if ((err as AxiosError).response?.status === 403) {
-      await router.push({ name: 'Not Found', query: { msg: `Poll with ID ${props.pollId} was not found` } });
+      notifications.error({ title: 'Poll not found', description: `Poll with ID ${props.pollId} was not found` });
+      await router.push({ name: 'Not Found' });
+    } else {
+      notifications.error({ title: 'An error occurred' }, err);
     }
     loading.value = false;
-    console.log(err);
   }
 });
-
-const closePoll = async () => {
-  try {
-    if (poll.value && user.value?.id === poll.value?.ownerId) {
-      await PollService.closePollById(props.pollId);
-      poll.value = {
-        ...poll.value,
-        status: ApiPollEntityStatusEnum.Closed,
-      };
-    }
-  } catch (err) {
-    console.log(err);
-  }
-};
 
 const onNewVote = (answer: boolean) => {
   if (answer) {
@@ -168,14 +161,29 @@ const onNewVote = (answer: boolean) => {
   }
 };
 
+const closePoll = async () => {
+  try {
+    if (poll.value && user.value?.id === poll.value?.ownerId) {
+      await PollService.closePollById(props.pollId);
+      poll.value = {
+        ...poll.value,
+        status: ApiPollEntityStatusEnum.Closed,
+      };
+    }
+  } catch (err) {
+    notifications.error({ title: "Couldn't close poll" }, err);
+  }
+};
+
 const deletePoll = async () => {
   try {
     if (poll.value && user.value?.id === poll.value?.ownerId) {
       await PollService.deletePollById(props.pollId);
-      await router.push({ name: 'Home', query: { msg: `Poll was deleted successfully` } });
+      notifications.success({ title: 'Poll successfully deleted' });
+      await router.push({ name: 'Home' });
     }
   } catch (err) {
-    console.log(err);
+    notifications.error({ title: "Couldn't delete poll" }, err);
   }
 };
 

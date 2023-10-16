@@ -1,6 +1,6 @@
 .app-switch {
   @apply relative inline-flex shrink-0 cursor-pointer rounded-full transition-colors duration-100 ease-in-out;
-  @apply bg-neutral-light;
+  @apply bg-neutral-light #{!important};
 
   &:disabled {
     @apply cursor-default;
@@ -14,7 +14,7 @@
   }
 
   &[aria-checked="true"] {
-    @apply bg-semantic-success-dark;
+    @apply bg-semantic-success-dark #{!important};
   }
 }
 
@@ -55,5 +55,5 @@
 
 /* Size: Small */
 .app-switch.app-switch-small {
-  @include switch(24px, 0);
+  @include switch(24px, theme("spacing.0"));
 }
