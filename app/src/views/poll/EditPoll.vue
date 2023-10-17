@@ -1,6 +1,6 @@
 <template>
   <Main>
-    <h1>Edit poll</h1>
+    <h2>Edit poll</h2>
     <div>
       <Card v-if="poll" class="mt-8">
         <div class="grid grid-cols-2 p-4">
@@ -35,17 +35,21 @@
             <p class="block md:hidden text-body-bold pb-4">General</p>
             <div class="flex gap-x-2">
               <label class="flex items-center gap-x-2 pb-4">
-                <Switch
-                  :modelValue="isPrivate"
-                  :disabled="privateLoading || !!errors.private?.[0]"
-                  @update:model-value="onPrivateToggle"
-                ></Switch>
+                <Switch :modelValue="isPrivate" :disabled="privateLoading" @update:model-value="onPrivateToggle"></Switch>
                 <span :class="['text-body-small-bold', privateLoading && 'text-neutral-medium']">Private</span>
               </label>
             </div>
             <div :class="[!poll.private && 'opacity-50 select-none pointer-events-none']">
               <div class="flex gap-x-2">
-                <TextInput v-model="email" label="Email" class="grow" type="email" :disabled="!poll.private" :error="errors.email?.[0]" />
+                <TextInput
+                  v-model="email"
+                  label="Email"
+                  class="grow"
+                  type="email"
+                  :disabled="!poll.private"
+                  :error="errors.email?.[0]"
+                  @keyup.enter.stop="saveEmail"
+                />
                 <div class="pt-6">
                   <Button
                     corners="square"
@@ -73,6 +77,9 @@
           </div>
         </div>
       </Card>
+      <div v-else class="text-center my-16">
+        <p v-debounce class="text-caption text-neutral-medium">Loading poll</p>
+      </div>
     </div>
   </Main>
 </template>
@@ -103,6 +110,7 @@ const inviteLoading = ref<boolean>(false);
 const poll = ref<ApiPollEntity | null>(null);
 const props = defineProps<{ pollId: string }>();
 
+const showEmailErrors = ref<boolean>(false);
 const title = ref('');
 const question = ref('');
 const isPrivate = ref(false);
@@ -142,6 +150,12 @@ const savePrivate = async () => {
 };
 
 const saveEmail = async () => {
+  showEmailErrors.value = true;
+
+  if (errors.value.email?.[0]) {
+    return notifications.error({ title: 'Invalid email', description: errors.value.email?.[0] });
+  }
+
   emailLoading.value = true;
 
   try {
@@ -150,6 +164,8 @@ const saveEmail = async () => {
     if (poll.value) {
       poll.value.invites.push(invite);
     }
+
+    showEmailErrors.value = false;
     email.value = '';
   } catch (err) {
     notifications.error({ title: "Couldn't send invite" }, err);
@@ -208,7 +224,7 @@ const errors = computed(() => {
     };
   }
 
-  if (!inviteResult.success) {
+  if (!inviteResult.success && showEmailErrors.value) {
     errors = {
       ...errors,
       ...inviteResult.error.formErrors.fieldErrors,

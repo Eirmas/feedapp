@@ -16,6 +16,9 @@
         </div>
       </div>
     </Card>
+    <div v-else class="text-center my-16">
+      <p v-debounce class="text-caption text-neutral-medium">Loading user...</p>
+    </div>
   </Main>
 </template>
 

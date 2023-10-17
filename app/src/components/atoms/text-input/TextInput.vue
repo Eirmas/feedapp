@@ -38,6 +38,7 @@
           :readonly="readonly"
           :disabled="disabled"
           :placeholder="placeholder"
+          :v-focus="$attrs.autofocus"
           :type="type"
           :value="modelValue"
           :class="[

@@ -10,8 +10,7 @@
           <p v-if="description" class="text-body-small text-neutral-medium line-clamp-3">{{ description }}</p>
         </div>
         <div class="flex flex-shrink-0">
-          <Button srOnly="Dismiss" theme="tertiary" size="small" :icon="XMarkIcon" iconMode="fab" @click="emit('dismiss', $event)">
-          </Button>
+          <Button theme="tertiary" size="small" :icon="XMarkIcon" iconMode="fab" @click="emit('dismiss', $event)">Dismiss</Button>
         </div>
       </div>
     </div>

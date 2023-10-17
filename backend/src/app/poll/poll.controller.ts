@@ -91,12 +91,11 @@ export class PollController {
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
   @ApiBody({ type: CreatePollDto })
-  @HttpCode(HttpStatus.NO_CONTENT)
+  @HttpCode(HttpStatus.CREATED)
   @ApiOkResponse({ type: PollEntity })
-  public createPoll(@AccessToken() accessToken: AccessTokenData, @Body() createPollDto: CreatePollDto): Promise<void> {
+  public createPoll(@AccessToken() accessToken: AccessTokenData, @Body() createPollDto: CreatePollDto): Promise<PollEntity> {
     return lastValueFrom(
       this.pollService.createPoll(accessToken.sub, createPollDto).pipe(
-        map(() => undefined),
         catchError(err => {
           throw new BadRequestException(err.message || err);
         }),

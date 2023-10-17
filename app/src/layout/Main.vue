@@ -1,12 +1,12 @@
 <template>
   <nav class="bg-primary-lighter relative z-10">
     <div class="flex gap-x-4 flex-wrap items-center justify-between mx-auto py-4 px-4 md:px-8">
-      <RouterLink to="/" class="flex items-center cursor-pointer">
+      <RouterLink to="/" class="flex items-center cursor-pointer -mx-4 -my-2 py-2 px-4 rounded-xs focus-outline">
         <img src="~@/assets/logo.svg" class="h-8" alt="Flowbite Logo" />
       </RouterLink>
       <div class="flex grow justify-end">
         <Menu v-if="user" as="div" class="relative inline-block text-left">
-          <MenuButton class="flex gap-x-2 items-center hover:bg-primary-light/25 -mx-4 -my-2 py-2 px-4 rounded-xs">
+          <MenuButton class="flex gap-x-2 items-center hover:bg-primary-light/25 -mx-4 -my-2 py-2 px-4 rounded-xs focus-outline">
             <Avatar size="small" :src="user.avatar" :name="user.name"></Avatar>
             <div class="hidden sm:block text-body-small-bold">{{ user.name }}</div>
             <ChevronDownIcon class="w-4"></ChevronDownIcon>

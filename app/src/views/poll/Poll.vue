@@ -11,8 +11,8 @@
         </div>
         <div class="flex gap-x-2">
           <Button v-if="poll.status === 'open'" corners="square" size="small" @click="closePoll">Close</Button>
-          <RouterLink :to="{ name: 'Edit Poll', params: { pollId: poll.id } }">
-            <Button v-if="poll.status === 'open'" corners="square" size="small">Edit</Button>
+          <RouterLink v-slot="{ href, navigate }" :to="{ name: 'Edit Poll', params: { pollId: poll.id } }" custom>
+            <Button v-if="poll.status === 'open'" corners="square" :href="href" tag="a" size="small" @click="navigate">Edit</Button>
           </RouterLink>
           <Button corners="square" size="small" @click="deletePoll">Delete</Button>
         </div>
@@ -42,23 +42,35 @@
       </div>
       <Card :class="['flex flex-col gap-y-4', loading && 'opacity-50 pointer-events-none']">
         <h3>{{ poll.question }}</h3>
-        <p class="text-body">Vote standings:</p>
-        <div class="flex gap-x-4">
-          <Button size="medium" corners="square" :icon="HandThumbUpIcon" :disabled="poll.status === 'closed'" @click="vote(true)"
+        <p class="text-body">Add your vote:</p>
+        <div class="flex gap-x-2">
+          <Button
+            iconMode="fab"
+            size="medium"
+            corners="square"
+            :icon="HandThumbUpIcon"
+            :disabled="poll.status === 'closed'"
+            @click="vote(true)"
             >Yes</Button
           >
-          <div class="grow rounded-sm overflow-hidden border-2 border-semantic-success-dark relative">
+          <div class="grow rounded-xs overflow-hidden border-2 border-semantic-success-dark relative">
             <div class="h-full flex bg-semantic-success-light transition-[width]" :style="`width: ${votePercentages.yes}`"></div>
             <span class="absolute top-1/2 -translate-y-1/2 text-semantic-success-dark text-body-bold flex items-center pl-4"
               >{{ votes.yes }} ({{ votePercentages.yes }})</span
             >
           </div>
         </div>
-        <div class="flex gap-x-4">
-          <Button size="medium" corners="square" :icon="HandThumbDownIcon" :disabled="poll.status === 'closed'" @click="vote(false)"
+        <div class="flex gap-x-2">
+          <Button
+            iconMode="fab"
+            size="medium"
+            corners="square"
+            :icon="HandThumbDownIcon"
+            :disabled="poll.status === 'closed'"
+            @click="vote(false)"
             >No</Button
           >
-          <div class="grow rounded-sm overflow-hidden border-2 border-semantic-error-dark relative">
+          <div class="grow rounded-xs overflow-hidden border-2 border-semantic-error-dark relative">
             <div class="h-full flex bg-semantic-error-light transition-[width]" :style="`width: ${votePercentages.no}`"></div>
             <span class="absolute top-1/2 -translate-y-1/2 text-semantic-error-dark text-body-bold flex items-center pl-4"
               >{{ votes.no }} ({{ votePercentages.no }})</span
@@ -66,6 +78,17 @@
           </div>
         </div>
       </Card>
+      <div v-if="poll" class="grid gridcols-1 md:grid-cols-2">
+        <div class="flex gap-x-2 items-center">
+          <TextInput v-model="pollUrl" label="Share this poll" :icon="LinkIcon" readonly class="grow" />
+          <Button :icon="DocumentDuplicateIcon" theme="secondary" corners="square" iconMode="fab" @click="copyToClipboard"
+            >Copy poll URL to clipboard</Button
+          >
+        </div>
+      </div>
+    </div>
+    <div v-else class="text-center my-16">
+      <p v-debounce class="text-caption text-neutral-medium">Loading poll...</p>
     </div>
   </Main>
 </template>
@@ -74,6 +97,7 @@
 import Avatar from '@/components/atoms/avatar/Avatar.vue';
 import Button from '@/components/atoms/button/Button.vue';
 import Card from '@/components/atoms/card/Card.vue';
+import TextInput from '@/components/atoms/text-input/TextInput.vue';
 import { useNotifications } from '@/composables/useNotifications';
 import Main from '@/layout/Main.vue';
 import { supabase } from '@/plugins/supabase';
@@ -81,7 +105,7 @@ import { ApiPollEntity, ApiPollEntityStatusEnum } from '@/services/api/data-cont
 import PollService from '@/services/poll';
 import VoteService from '@/services/vote';
 import { useUserStore } from '@/store/user';
-import { HandThumbDownIcon, HandThumbUpIcon, InformationCircleIcon } from '@heroicons/vue/24/outline';
+import { DocumentDuplicateIcon, HandThumbDownIcon, HandThumbUpIcon, InformationCircleIcon, LinkIcon } from '@heroicons/vue/24/outline';
 import { REALTIME_LISTEN_TYPES, RealtimeChannel } from '@supabase/supabase-js';
 import { AxiosError } from 'axios';
 import moment from 'moment';
@@ -209,6 +233,19 @@ const votePercentages = computed(() => {
     no: getValue(votes.value.no) + '%',
   };
 });
+
+const pollUrl = computed(() => {
+  return `${window.location.origin}/poll/${props.pollId}`;
+});
+
+const copyToClipboard = () => {
+  try {
+    navigator.clipboard.writeText(pollUrl.value);
+    notifications.success({ title: 'Copied to clipboard', description: 'The poll URL has been copied to your clipboard' });
+  } catch (err) {
+    notifications.error({ title: "Couldn't copy to clipboard", description: "The poll URL couldn't be copied to your clipboard" });
+  }
+};
 
 onBeforeUnmount(() => {
   if (subscription.value) {

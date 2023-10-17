@@ -34,7 +34,7 @@ export class PollService {
           invites: emails.map(email => ({ email })),
         }),
       ),
-    );
+    ).pipe(switchMap(poll => this.getPollById(poll.id)));
   }
 
   public getPollsByUser(userId: string, pageOptionsDto: PageOptionsDto): Observable<PageDto<PollEntity>> {
