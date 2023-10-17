@@ -18,7 +18,7 @@
     </div>
     <Tabs :modelValue="mode" @update:model-value="onToggleMode">
       <Tab value="public">Public polls</Tab>
-      <Tab value="owner">My polls</Tab>
+      <Tab value="owner">Your polls</Tab>
     </Tabs>
     <div v-if="polls" :class="['flex flex-col gap-y-2 my-4 transition-opacity', isLoading && 'opacity-50 pointer-events-none']">
       <RouterLink v-for="poll in polls.data" :key="poll.id" :to="`/poll/${poll.id}`" class="rounded-xs focus-outline">
