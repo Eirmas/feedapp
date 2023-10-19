@@ -47,6 +47,9 @@ importers:
       '@supabase/supabase-js':
         specifier: ^2.38.0
         version: 2.38.0
+      '@vueuse/core':
+        specifier: ^10.5.0
+        version: 10.5.0(vue@3.3.4)
       axios:
         specifier: ^1.5.1
         version: 1.5.1
@@ -59,12 +62,12 @@ importers:
       code-tag:
         specifier: ^1.1.0
         version: 1.1.0
+      date-fns:
+        specifier: ^2.30.0
+        version: 2.30.0
       es6-shim:
         specifier: ^0.35.8
         version: 0.35.8
-      moment:
-        specifier: ^2.29.4
-        version: 2.29.4
       mongoose:
         specifier: ^7.6.0
         version: 7.6.0
@@ -1699,13 +1702,6 @@ packages:
 
   /@babel/regjsgen@0.8.0:
     resolution: {integrity: sha512-x/rqGMdzj+fWZvCOYForTghzbtqPDZ5gPwaoNGHdgDfF2QA/XZbCBp4Moo5scrkAMPhB7z26XM/AaHuIJdgauA==}
-    dev: true
-
-  /@babel/runtime@7.22.5:
-    resolution: {integrity: sha512-ecjvYlnAaZ/KVneE/OdKYBYfgXV3Ptu6zQWmgEF7vwKhQnvVS6bjMD2XYgj+SNvQ1GfK/pjgokfPkC/2CO8CuA==}
-    engines: {node: '>=6.9.0'}
-    dependencies:
-      regenerator-runtime: 0.13.11
     dev: true
 
   /@babel/runtime@7.23.2:
@@ -5971,6 +5967,10 @@ packages:
   /@types/validator@13.11.2:
     resolution: {integrity: sha512-nIKVVQKT6kGKysnNt+xLobr+pFJNssJRi2s034wgWeFBUx01fI8BeHTW2TcRp7VcFu9QCYG8IlChTuovcm0oKQ==}
 
+  /@types/web-bluetooth@0.0.18:
+    resolution: {integrity: sha512-v/ZHEj9xh82usl8LMR3GarzFY1IrbXJw5L4QfQhokjRV91q+SelFqxQWSep1ucXEZ22+dSTwLFkXeur25sPIbw==}
+    dev: false
+
   /@types/webidl-conversions@7.0.1:
     resolution: {integrity: sha512-8hKOnOan+Uu+NgMaCouhg3cT9x5fFZ92Jwf+uDLXLu/MFRbXxlWwGeQY7KVHkeSft6RvY+tdxklUBuyY9eIEKg==}
     dev: false
@@ -6488,6 +6488,31 @@ packages:
     transitivePeerDependencies:
       - typescript
     dev: true
+
+  /@vueuse/core@10.5.0(vue@3.3.4):
+    resolution: {integrity: sha512-z/tI2eSvxwLRjOhDm0h/SXAjNm8N5ld6/SC/JQs6o6kpJ6Ya50LnEL8g5hoYu005i28L0zqB5L5yAl8Jl26K3A==}
+    dependencies:
+      '@types/web-bluetooth': 0.0.18
+      '@vueuse/metadata': 10.5.0
+      '@vueuse/shared': 10.5.0(vue@3.3.4)
+      vue-demi: 0.14.6(vue@3.3.4)
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - vue
+    dev: false
+
+  /@vueuse/metadata@10.5.0:
+    resolution: {integrity: sha512-fEbElR+MaIYyCkeM0SzWkdoMtOpIwO72x8WsZHRE7IggiOlILttqttM69AS13nrDxosnDBYdyy3C5mR1LCxHsw==}
+    dev: false
+
+  /@vueuse/shared@10.5.0(vue@3.3.4):
+    resolution: {integrity: sha512-18iyxbbHYLst9MqU1X1QNdMHIjks6wC7XTVf0KNOv5es/Ms6gjVFCAAWTVP2JStuGqydg3DT+ExpFORUEi9yhg==}
+    dependencies:
+      vue-demi: 0.14.6(vue@3.3.4)
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - vue
+    dev: false
 
   /@webassemblyjs/ast@1.11.6:
     resolution: {integrity: sha512-IN1xI7PwOvLPgjcf180gC1bqn3q/QaOCwYUahIOhbYUu8KA/3tw2RT/T0Gidi1l7Hhj5D/INhJxiICObqpMu4Q==}
@@ -10670,7 +10695,7 @@ packages:
   /is-language-code@3.1.0:
     resolution: {integrity: sha512-zJdQ3QTeLye+iphMeK3wks+vXSRFKh68/Pnlw7aOfApFSEIOhYa8P9vwwa6QrImNNBMJTiL1PpYF0f4BxDuEgA==}
     dependencies:
-      '@babel/runtime': 7.22.5
+      '@babel/runtime': 7.23.2
     dev: true
 
   /is-map@2.0.2:
@@ -12196,10 +12221,6 @@ packages:
       pkg-types: 1.0.3
       ufo: 1.1.2
     dev: true
-
-  /moment@2.29.4:
-    resolution: {integrity: sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==}
-    dev: false
 
   /mongodb-connection-string-url@2.6.0:
     resolution: {integrity: sha512-WvTZlI9ab0QYtTYnuMLgobULWhokRjtC7db9LtcVfJ+Hsnyr5eo6ZtNAt3Ly24XZScGMelOcGtm7lSn0332tPQ==}
@@ -14183,10 +14204,6 @@ packages:
 
   /regenerate@1.4.2:
     resolution: {integrity: sha512-zrceR/XhGYU/d/opr2EKO7aRHUeiBI8qjtfHqADTwZd6Szfy16la6kqD0MIUs5z5hx6AaKa+PixpPrR289+I0A==}
-    dev: true
-
-  /regenerator-runtime@0.13.11:
-    resolution: {integrity: sha512-kY1AZVr2Ra+t+piVaJ4gxaFaReZVH40AKNo7UCX6W+dEwBo/2oZJzqfuN1qLq1oL45o56cPaTXELwrTh8Fpggg==}
     dev: true
 
   /regenerator-runtime@0.14.0:
@@ -16638,6 +16655,21 @@ packages:
         optional: true
     dependencies:
       vue: 3.3.4
+
+  /vue-demi@0.14.6(vue@3.3.4):
+    resolution: {integrity: sha512-8QA7wrYSHKaYgUxDA5ZC24w+eHm3sYCbp0EzcDwKqN3p6HqtTCGR/GVsPyZW92unff4UlcSh++lmqDWN3ZIq4w==}
+    engines: {node: '>=12'}
+    hasBin: true
+    requiresBuild: true
+    peerDependencies:
+      '@vue/composition-api': ^1.0.0-rc.1
+      vue: ^3.0.0-0 || ^2.6.0
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
+    dependencies:
+      vue: 3.3.4
+    dev: false
 
   /vue-docgen-api@4.73.0(vue@3.3.4):
     resolution: {integrity: sha512-Hx3VZNi630q/JRhHsVo7qeLJdIDkz3JEp/LBITUZQoZBruGyQa7m80uxbEo4JGBpHMxWWHFO9AXrVy7jH4vzFA==}

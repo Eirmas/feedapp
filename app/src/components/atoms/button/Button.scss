@@ -46,8 +46,8 @@ $config: (
       "secondary",
       (
         default: "bg-transparent text-primary-dark ring-primary-dark",
-        hover: "bg-transparent text-primary ring-primary ring-[3px]",
-        active: "bg-transparent text-primary-dark ring-primary-dark ring-[3px]",
+        hover: "bg-transparent text-primary ring-primary ring-2",
+        active: "bg-transparent text-primary-dark ring-primary-dark ring-2",
         disabled: "bg-transparent text-neutral-dark/[#{$disabled-opacity}] ring-neutral-dark/[#{$disabled-opacity}]",
         focus: "bg-semantic-focus text-neutral-white outline-2 outline-semantic-focus outline-offset-2 ring-transparent",
       )
@@ -66,7 +66,7 @@ $config: (
 );
 
 .btn {
-  @apply inline-block leading-none ring-2 ring-transparent ring-inset transition-all;
+  @apply inline-block leading-none ring-1 ring-transparent ring-inset transition-all;
 
   /* Typography */
   .btn-content {

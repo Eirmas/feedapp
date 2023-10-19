@@ -1,3 +1,91 @@
 {
-  "helloWorld": "Hello, World"
+  "common": {
+    "private": "Private",
+    "public": "Public",
+    "open": "Open",
+    "closed": "Closed",
+    "delete": "Delete",
+    "edit": "Edit",
+    "save": "Save",
+    "close": "Close",
+    "createdBy": "Created by",
+    "loadingPoll": "Loading poll... | Loading polls...",
+    "general": "General",
+    "title": "Title",
+    "question": "Question",
+    "access": "Access",
+    "email": "Email",
+    "anInvite": "Invite",
+    "giveInvite": "Invite",
+    "create": "Create",
+    "createdTimestamp": "Created {ago}",
+    "updatedTimestamp": "Updated {ago}",
+    "yes": "Yes",
+    "no": "No",
+    "name": "Name",
+    "signOut": "Sign out",
+    "signIn": "Sign in",
+    "github": "Github"
+  },
+  "poll": {
+    "createPoll": "Create poll",
+    "editPoll": "Edit poll",
+    "sentInvites": "Sent invites",
+    "noInvites": "No invites",
+    "ownerContext": "This is your poll. Want to make any changes?",
+    "closedPoll": "This poll is closed",
+    "addYourVote": "Add your vote",
+    "copyPollUrl": "Copy poll URL to clipboard",
+    "shareThisPoll": "Share this poll"
+  },
+  "profile": {
+    "profile": "Profile",
+    "yourProfile": "Your profile",
+    "loadingUser": "Loading user..."
+  },
+  "index": {
+    "getStartedToday": "Get started today",
+    "ingress": "Empower your voice and make every vote count with our interactive polling app. Create, vote on, and explore polls with ease. Join the community of active participants today and be part of the conversation.",
+    "signInWithGoogle": "Sign in with Google",
+    "agreement": "By signing in, you agree to our %{termsOfService} and %{privacyPolicy}.",
+    "termsOfService": "Terms of Service",
+    "privacyPolicy": "Privacy Policy"
+  },
+  "home": {
+    "explorePolls": "Explore Polls",
+    "ingress": "Below, you'll find a list of your own polls, as well as polls from other users.<br>Feel free to share your thoughts!",
+    "publicPolls": "Public polls",
+    "yourPolls": "Your polls"
+  },
+  "error": {
+    "pageNotFound": "Page not found",
+    "pageNotFoundIngress": "We couldn't find the page you were looking for",
+    "serverError": "Server error",
+    "serverErrorIngress": "Whoops! Something weird is going on<br />Don't worry, we have received a report of the issue",
+    "backToSafety": "Back to safety"
+  },
+  "notifications": {
+    "couldntLoadUser": "Couldn't load user",
+    "couldntUpdateUser": "Couldn't update user",
+    "anErrorOccurred": "An error occurred",
+    "invalidEmail": "Invalid email",
+    "emailAlreadyInvited": "Email already invited",
+    "pollCreated": "Poll created",
+    "errorCreatingPoll": "Error creating poll",
+    "errorFetchingPoll": "Error fetching poll",
+    "couldntSendInvite": "Couldn't send invite",
+    "couldntDeleteInvite": "Couldn't delete invite",
+    "errorUpdatingPoll": "Error updating poll",
+    "pollNotFound": "Poll not found",
+    "couldntClosePoll": "Couldn't close poll",
+    "pollSuccessfullyDeleted": "Poll successfully deleted",
+    "couldntDeletePoll": "Couldn't delete poll",
+    "copiedToClipboard": "Copied to clipboard",
+    "couldntCopyToClipboard": "Couldn't copy to clipboard",
+    "emailAlreadyInvitedDesc": "This email has already been invited to this poll",
+    "pollCreatedDesc": "Your poll has been created successfully",
+    "pollNotFoundDesc": "Poll with ID {id} was not found",
+    "copiedToClipboardDesc": "The poll URL has been copied to your clipboard",
+    "couldntCopyToClipboardDesc": "Couldn't copy the poll URL to your clipboard"
+  }
 }

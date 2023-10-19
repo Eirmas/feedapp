@@ -3,46 +3,50 @@
     <div v-if="poll" class="flex flex-col gap-y-8">
       <div
         v-if="poll.ownerId === user?.id"
-        class="bg-primary-lighter flex flex-wrap items-center gap-2 text-primary-dark p-4 rounded-sm border-2 border-primary-dark"
+        class="bg-primary-lighter flex flex-wrap items-center gap-2 text-primary-dark p-4 rounded-sm border border-primary-dark"
       >
         <div class="flex grow gap-x-2">
           <InformationCircleIcon class="h-6" />
-          <p class="text-body-bold">This is your poll. Want to make any changes?</p>
+          <p class="text-body-bold">{{ $t('poll.ownerContext') }}</p>
         </div>
         <div class="flex gap-x-2">
-          <Button v-if="poll.status === 'open'" corners="square" size="small" @click="closePoll">Close</Button>
+          <Button v-if="poll.status === 'open'" corners="square" size="small" @click="closePoll">{{ $t('common.close') }}</Button>
           <RouterLink v-slot="{ href, navigate }" :to="{ name: 'Edit Poll', params: { pollId: poll.id } }" custom>
-            <Button v-if="poll.status === 'open'" corners="square" :href="href" tag="a" size="small" @click="navigate">Edit</Button>
+            <Button v-if="poll.status === 'open'" corners="square" :href="href" tag="a" size="small" @click="navigate">{{
+              $t('common.edit')
+            }}</Button>
           </RouterLink>
-          <Button corners="square" size="small" @click="deletePoll">Delete</Button>
+          <Button corners="square" size="small" @click="deletePoll">{{ $t('common.delete') }}</Button>
         </div>
       </div>
       <div
         v-if="poll.status === 'closed'"
-        class="bg-semantic-info-light flex items-center gap-x-2 text-semantic-info-dark p-4 rounded-sm border-2 border-semantic-info-dark"
+        class="bg-semantic-info-light flex items-center gap-x-2 text-semantic-info-dark p-4 rounded-sm border border-semantic-info-dark"
       >
         <InformationCircleIcon class="h-6" />
-        <p class="text-body-bold">This poll has been closed</p>
+        <p class="text-body-bold">{{ $t('poll.closedPoll') }}</p>
       </div>
       <div class="flex gap-4 items-center flex-wrap-reverse">
         <div class="grow">
           <h1 class="mb-2">{{ poll.title }}</h1>
           <p class="text-body-bold">
-            Created {{ timestampToDate(poll.createdAt) }}
-            <span v-if="poll.createdAt !== poll.updatedAt" class="text-body">(Updated {{ timestampToDate(poll.updatedAt) }})</span>
+            {{ $t('common.createdTimestamp', { ago: timestampToDate(poll.createdAt) }) }}
+            <span v-if="poll.createdAt !== poll.updatedAt" class="text-body"
+              >({{ $t('common.updatedTimestamp', { ago: timestampToDate(poll.updatedAt) }) }})</span
+            >
           </p>
         </div>
         <div class="flex gap-x-2 items-center">
           <Avatar :src="poll.ownerAvatar" :name="poll.ownerName" size="large"></Avatar>
           <div>
-            <p class="text-body-small">Created by</p>
+            <p class="text-body-small">{{ $t('common.createdBy') }}</p>
             <p class="text-body-bold">{{ poll.ownerName }}</p>
           </div>
         </div>
       </div>
       <Card :class="['flex flex-col gap-y-4', loading && 'opacity-50 pointer-events-none']">
         <h3>{{ poll.question }}</h3>
-        <p class="text-body">Add your vote:</p>
+        <p class="text-body">{{ $t('poll.addYourVote') }}:</p>
         <div class="flex gap-x-2">
           <Button
             iconMode="fab"
@@ -51,9 +55,9 @@
             :icon="HandThumbUpIcon"
             :disabled="poll.status === 'closed'"
             @click="vote(true)"
-            >Yes</Button
+            >{{ $t('common.yes') }}</Button
           >
-          <div class="grow rounded-xs overflow-hidden border-2 border-semantic-success-dark relative">
+          <div class="grow rounded-xs overflow-hidden border border-semantic-success-dark relative">
             <div class="h-full flex bg-semantic-success-light transition-[width]" :style="`width: ${votePercentages.yes}`"></div>
             <span class="absolute top-1/2 -translate-y-1/2 text-semantic-success-dark text-body-bold flex items-center pl-4"
               >{{ votes.yes }} ({{ votePercentages.yes }})</span
@@ -68,9 +72,9 @@
             :icon="HandThumbDownIcon"
             :disabled="poll.status === 'closed'"
             @click="vote(false)"
-            >No</Button
+            >{{ $t('common.no') }}</Button
           >
-          <div class="grow rounded-xs overflow-hidden border-2 border-semantic-error-dark relative">
+          <div class="grow rounded-xs overflow-hidden border border-semantic-error-dark relative">
             <div class="h-full flex bg-semantic-error-light transition-[width]" :style="`width: ${votePercentages.no}`"></div>
             <span class="absolute top-1/2 -translate-y-1/2 text-semantic-error-dark text-body-bold flex items-center pl-4"
               >{{ votes.no }} ({{ votePercentages.no }})</span
@@ -80,15 +84,15 @@
       </Card>
       <div v-if="poll" class="grid gridcols-1 md:grid-cols-2">
         <div class="flex gap-x-2 items-center">
-          <TextInput v-model="pollUrl" label="Share this poll" :icon="LinkIcon" readonly class="grow" />
-          <Button :icon="DocumentDuplicateIcon" theme="secondary" corners="square" iconMode="fab" @click="copyToClipboard"
-            >Copy poll URL to clipboard</Button
-          >
+          <TextInput v-model="pollUrl" :label="$t('poll.shareThisPoll')" :icon="LinkIcon" readonly class="grow" />
+          <Button :icon="DocumentDuplicateIcon" theme="secondary" corners="square" iconMode="fab" @click="copyToClipboard">{{
+            $t('poll.copyPollUrl')
+          }}</Button>
         </div>
       </div>
     </div>
     <div v-else class="text-center my-16">
-      <p v-debounce class="text-caption text-neutral-medium">Loading poll...</p>
+      <p v-debounce class="text-caption text-neutral-medium">{{ $t('common.loadingPoll') }}</p>
     </div>
   </Main>
 </template>
@@ -108,11 +112,13 @@ import { useUserStore } from '@/store/user';
 import { DocumentDuplicateIcon, HandThumbDownIcon, HandThumbUpIcon, InformationCircleIcon, LinkIcon } from '@heroicons/vue/24/outline';
 import { REALTIME_LISTEN_TYPES, RealtimeChannel } from '@supabase/supabase-js';
 import { AxiosError } from 'axios';
-import moment from 'moment';
 import { storeToRefs } from 'pinia';
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { formatDistance } from 'date-fns';
+import { useI18n } from 'vue-i18n';
 
+const { t: $t } = useI18n();
 const router = useRouter();
 const props = defineProps<{ pollId: string }>();
 const loading = ref(true);
@@ -124,7 +130,7 @@ const asyncVotes = ref<{ yes: number; no: number }>({ yes: 0, no: 0 });
 const subscription = ref<RealtimeChannel | null>(null);
 
 const notifications = useNotifications();
-const timestampToDate = (timestamp: string) => moment(timestamp).fromNow();
+const timestampToDate = (timestamp: string) => formatDistance(new Date(timestamp), new Date(), { addSuffix: true });
 
 const vote = async (answer: boolean) => {
   try {
@@ -144,10 +150,13 @@ const vote = async (answer: boolean) => {
         no: 0,
       };
     } else if ((err as AxiosError).response?.status === 403) {
-      notifications.error({ title: 'Poll not found', description: `Poll with ID ${props.pollId} was not found. Maybe it got deleted?` });
+      notifications.error({
+        title: $t('notifications.pollNotFound'),
+        description: $t('notifications.pollNotFoundDesc', { id: props.pollId }),
+      });
       await router.push({ name: 'Not Found' });
     } else {
-      notifications.error({ title: 'An error occurred' }, err);
+      notifications.error({ title: $t('notifications.anErrorOccurred') }, err);
     }
   }
 };
@@ -166,10 +175,13 @@ onMounted(async () => {
     loading.value = false;
   } catch (err) {
     if ((err as AxiosError).response?.status === 403) {
-      notifications.error({ title: 'Poll not found', description: `Poll with ID ${props.pollId} was not found` });
+      notifications.error({
+        title: $t('notifications.pollNotFound'),
+        description: $t('notifications.pollNotFoundDesc', { id: props.pollId }),
+      });
       await router.push({ name: 'Not Found' });
     } else {
-      notifications.error({ title: 'An error occurred' }, err);
+      notifications.error({ title: $t('notifications.anErrorOccurred') }, err);
     }
     loading.value = false;
   }
@@ -195,7 +207,7 @@ const closePoll = async () => {
       };
     }
   } catch (err) {
-    notifications.error({ title: "Couldn't close poll" }, err);
+    notifications.error({ title: $t('notifications.couldntClosePoll') }, err);
   }
 };
 
@@ -203,11 +215,11 @@ const deletePoll = async () => {
   try {
     if (poll.value && user.value?.id === poll.value?.ownerId) {
       await PollService.deletePollById(props.pollId);
-      notifications.success({ title: 'Poll successfully deleted' });
+      notifications.success({ title: $t('notifications.pollSuccessfullyDeleted') });
       await router.push({ name: 'Home' });
     }
   } catch (err) {
-    notifications.error({ title: "Couldn't delete poll" }, err);
+    notifications.error({ title: $t('notifications.couldntDeletePoll') }, err);
   }
 };
 
@@ -241,9 +253,9 @@ const pollUrl = computed(() => {
 const copyToClipboard = () => {
   try {
     navigator.clipboard.writeText(pollUrl.value);
-    notifications.success({ title: 'Copied to clipboard', description: 'The poll URL has been copied to your clipboard' });
+    notifications.success({ title: $t('notifications.copiedToClipboard'), description: $t('notifications.copiedToClipboardDesc') });
   } catch (err) {
-    notifications.error({ title: "Couldn't copy to clipboard", description: "The poll URL couldn't be copied to your clipboard" });
+    notifications.error({ title: $t('notifications.couldntCopyToClipboard'), description: $t('notifications.couldntCopyToClipboardDesc') });
   }
 };
 

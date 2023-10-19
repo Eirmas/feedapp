@@ -1,23 +1,25 @@
 <template>
   <Main>
-    <h2>Your Profile</h2>
+    <h2>{{ $t('profile.yourProfile') }}</h2>
     <Card v-if="user" class="mt-8">
       <div class="grid grid-cols-2 p-4">
-        <p class="hidden md:block text-body-bold">General</p>
+        <p class="hidden md:block text-body-bold">{{ $t('common.general') }}</p>
         <div class="flex flex-col gap-y-2 col-span-2 md:col-span-1">
-          <p class="block md:hidden text-body-bold pb-4">General</p>
+          <p class="block md:hidden text-body-bold pb-4">{{ $t('common.general') }}</p>
           <div class="flex gap-x-2">
-            <TextInput v-model="name" label="Name" class="grow" :error="nameError" />
+            <TextInput v-model="name" :label="$t('common.name')" class="grow" :error="nameError" />
             <div class="pt-6">
-              <Button corners="square" :disabled="loading || !!nameError || name === user.name" @click="save">Save</Button>
+              <Button corners="square" :disabled="loading || !!nameError || name === user.name" @click="save">{{
+                $t('common.save')
+              }}</Button>
             </div>
           </div>
-          <TextInput v-model="user.email" label="Email" readonly />
+          <TextInput v-model="user.email" :label="$t('common.email')" readonly />
         </div>
       </div>
     </Card>
     <div v-else class="text-center my-16">
-      <p v-debounce class="text-caption text-neutral-medium">Loading user...</p>
+      <p v-debounce class="text-caption text-neutral-medium">{{ $t('profile.loadingUser') }}</p>
     </div>
   </Main>
 </template>
@@ -26,13 +28,18 @@
 import Button from '@/components/atoms/button/Button.vue';
 import Card from '@/components/atoms/card/Card.vue';
 import TextInput from '@/components/atoms/text-input/TextInput.vue';
+import { useNotifications } from '@/composables/useNotifications';
 import Main from '@/layout/Main.vue';
 import { updateUserSchema } from '@/services/schemas';
 import { useUserStore } from '@/store/user';
+import { AxiosError } from 'axios';
 import { storeToRefs } from 'pinia';
 import { computed, onMounted, ref } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { z } from 'zod';
 
+const { t: $t } = useI18n();
+const notifications = useNotifications();
 const name = ref('');
 const loading = ref(false);
 const userStore = useUserStore();
@@ -63,7 +70,13 @@ const save = async () => {
   }
 
   loading.value = true;
-  await userStore.updateUser({ name: name.value });
+
+  try {
+    await userStore.updateUser({ name: name.value });
+  } catch (err) {
+    notifications.error({ title: $t('notifications.couldntUpdateUser') }, err as AxiosError);
+  }
+
   loading.value = false;
 };
 </script>

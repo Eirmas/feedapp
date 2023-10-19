@@ -2,9 +2,13 @@
   <nav class="bg-primary-lighter relative z-10">
     <div class="flex gap-x-4 flex-wrap items-center justify-between mx-auto py-4 px-4 md:px-8">
       <RouterLink to="/" class="flex items-center cursor-pointer -mx-4 -my-2 py-2 px-4 rounded-xs focus-outline">
-        <img src="~@/assets/logo.svg" class="h-8" alt="Flowbite Logo" />
+        <img src="~@/assets/logo.svg" class="h-8" alt="FeedApp Logo" />
       </RouterLink>
       <div class="flex grow justify-end">
+        <div class="mr-6 rounded-xs overflow-hidden cursor-pointer hover:ring-2 ring-semantic-focus transition-all" @click="toggle">
+          <img v-if="currentLocale === 'en'" src="~@/assets/en.svg" class="h-8" alt="English" />
+          <img v-if="currentLocale === 'no'" src="~@/assets/no.svg" class="h-8" alt="Norsk" />
+        </div>
         <Menu v-if="user" as="div" class="relative inline-block text-left">
           <MenuButton class="flex gap-x-2 items-center hover:bg-primary-light/25 -mx-4 -my-2 py-2 px-4 rounded-xs focus-outline">
             <Avatar size="small" :src="user.avatar" :name="user.name"></Avatar>
@@ -25,28 +29,30 @@
                   <ListSubheader>Settings</ListSubheader>
                   <MenuItem v-slot="{ active }">
                     <RouterLink :to="{ name: 'Profile' }">
-                      <ListItem :prependIcon="UserCircleIcon" :selected="active" value="profile">Profile</ListItem>
+                      <ListItem :prependIcon="UserCircleIcon" :selected="active" value="profile">{{ $t('profile.profile') }}</ListItem>
                     </RouterLink>
                   </MenuItem>
                   <MenuItem v-slot="{ active }">
                     <RouterLink :to="{ name: 'Sign out' }">
-                      <ListItem :prependIcon="ArrowLeftOnRectangleIcon" :selected="active" value="signout">Sign out</ListItem>
+                      <ListItem :prependIcon="ArrowLeftOnRectangleIcon" :selected="active" value="signout">{{
+                        $t('common.signOut')
+                      }}</ListItem>
                     </RouterLink>
                   </MenuItem>
                   <ListDivider></ListDivider>
                   <MenuItem v-slot="{ active }">
-                    <ListItem :prependIcon="CodeBracketIcon" :selected="active" href="https://github.com/eirmas/feedapp" targetBlank
-                      >Github</ListItem
-                    >
+                    <ListItem :prependIcon="CodeBracketIcon" :selected="active" href="https://github.com/eirmas/feedapp" targetBlank>{{
+                      $t('common.github')
+                    }}</ListItem>
                   </MenuItem>
                 </List>
               </Card>
             </MenuItems>
           </transition>
         </Menu>
-        <Button v-else-if="route.name !== 'Index'" size="small" :icon="ArrowRightOnRectangleIcon" iconMode="prepend" @click="login"
-          >Sign in</Button
-        >
+        <Button v-else-if="route.name !== 'Index'" size="small" :icon="ArrowRightOnRectangleIcon" iconMode="prepend" @click="login">{{
+          $t('common.signIn')
+        }}</Button>
       </div>
     </div>
   </nav>
@@ -77,8 +83,13 @@ import {
 } from '@heroicons/vue/24/outline';
 import { storeToRefs } from 'pinia';
 import { RouterLink, useRoute } from 'vue-router';
+import { setLocale, currentLocale } from '@/plugins/i18n/i18n';
 
 const userStore = useUserStore();
 const route = useRoute();
 const { user } = storeToRefs(userStore);
+
+const toggle = () => {
+  setLocale(currentLocale.value === 'en' ? 'no' : 'en');
+};
 </script>

@@ -16,7 +16,11 @@ import { useUserStore } from '@/store/user';
 import { storeToRefs } from 'pinia';
 import { RouteLocationRaw, RouterView, useRouter } from 'vue-router';
 import Notifications from './layout/Notifications.vue';
+import { useNotifications } from './composables/useNotifications';
+import { useI18n } from 'vue-i18n';
 
+const { t: $t } = useI18n();
+const notifications = useNotifications();
 const router = useRouter();
 const authStore = useAuthStore();
 const userStore = useUserStore();
@@ -28,7 +32,11 @@ supabase.auth.onAuthStateChange(event => {
   if (event === 'SIGNED_IN') {
     authStore.loadSession();
     authStore.loadRedirectRoute();
-    userStore.loadUser();
+    try {
+      userStore.loadUser();
+    } catch (err) {
+      notifications.error({ title: $t('notifications.couldntLoadUser') }, err);
+    }
   } else if (event === 'SIGNED_OUT') {
     authStore.clearSession();
     userStore.clearUser();

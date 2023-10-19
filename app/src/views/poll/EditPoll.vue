@@ -1,28 +1,28 @@
 <template>
   <Main>
-    <h2>Edit poll</h2>
+    <h2>{{ $t('poll.editPoll') }}</h2>
     <div>
       <Card v-if="poll" class="mt-8">
         <div class="grid grid-cols-2 p-4">
-          <p class="hidden md:block text-body-bold">General</p>
+          <p class="hidden md:block text-body-bold">{{ $t('common.general') }}</p>
           <div class="flex flex-col gap-y-2 col-span-2 md:col-span-1">
-            <p class="block md:hidden text-body-bold pb-4">General</p>
+            <p class="block md:hidden text-body-bold pb-4">{{ $t('common.general') }}</p>
             <div class="flex gap-x-2">
-              <TextInput v-model="title" label="Title" class="grow" :error="errors.title?.[0]" />
+              <TextInput v-model="title" :label="$t('common.title')" class="grow" :error="errors.title?.[0]" />
               <div class="pt-6">
-                <Button corners="square" :disabled="titleLoading || !!errors.title?.[0] || title === poll.title" @click="saveTitle"
-                  >Save</Button
-                >
+                <Button corners="square" :disabled="titleLoading || !!errors.title?.[0] || title === poll.title" @click="saveTitle">{{
+                  $t('common.save')
+                }}</Button>
               </div>
             </div>
             <div class="flex gap-x-2">
-              <TextInput v-model="question" label="Question" class="grow" :error="errors.question?.[0]" />
+              <TextInput v-model="question" :label="$t('common.question')" class="grow" :error="errors.question?.[0]" />
               <div class="pt-6">
                 <Button
                   corners="square"
                   :disabled="questionLoading || !!errors.question?.[0] || question === poll.question"
                   @click="saveQuestion"
-                  >Save</Button
+                  >{{ $t('common.save') }}</Button
                 >
               </div>
             </div>
@@ -30,20 +30,20 @@
         </div>
         <hr class="border-neutral-light -mx-4 py-2" />
         <div class="grid grid-cols-2 p-4">
-          <p class="hidden md:block text-body-bold">Access</p>
+          <p class="hidden md:block text-body-bold">{{ $t('common.access') }}</p>
           <div class="flex flex-col gap-y-2 col-span-2 md:col-span-1">
-            <p class="block md:hidden text-body-bold pb-4">General</p>
+            <p class="block md:hidden text-body-bold pb-4">{{ $t('common.access') }}</p>
             <div class="flex gap-x-2">
               <label class="flex items-center gap-x-2 pb-4">
                 <Switch :modelValue="isPrivate" :disabled="privateLoading" @update:model-value="onPrivateToggle"></Switch>
-                <span :class="['text-body-small-bold', privateLoading && 'text-neutral-medium']">Private</span>
+                <span :class="['text-body-small-bold', privateLoading && 'text-neutral-medium']">{{ $t('common.private') }}</span>
               </label>
             </div>
             <div :class="[!poll.private && 'opacity-50 select-none pointer-events-none']">
               <div class="flex gap-x-2">
                 <TextInput
                   v-model="email"
-                  label="Email"
+                  :label="$t('common.email')"
                   class="grow"
                   type="email"
                   :disabled="!poll.private"
@@ -55,12 +55,12 @@
                     corners="square"
                     :disabled="emailLoading || !!errors.email?.[0] || !!poll.invites.find(i => i.email === email.trim())"
                     @click="saveEmail"
-                    >Invite</Button
+                    >{{ $t('common.giveInvite') }}</Button
                   >
                 </div>
               </div>
-              <div>
-                <p class="text-body-small-bold">Sent invites:</p>
+              <div class="mt-2">
+                <p class="text-body-small-bold">{{ $t('poll.sentInvites') }}:</p>
                 <ul>
                   <li
                     v-for="invite in poll.invites"
@@ -70,7 +70,7 @@
                     <span>{{ invite.email }}</span>
                     <Button theme="tertiary" size="small" :icon="XMarkIcon" iconMode="fab" @click="deleteInvite(invite.email)"></Button>
                   </li>
-                  <span v-if="!poll.invites.length" class="text-caption text-neutral-medium">No invites</span>
+                  <span v-if="!poll.invites.length" class="text-caption text-neutral-medium">{{ $t('poll.noInvites') }}</span>
                 </ul>
               </div>
             </div>
@@ -78,7 +78,7 @@
         </div>
       </Card>
       <div v-else class="text-center my-16">
-        <p v-debounce class="text-caption text-neutral-medium">Loading poll</p>
+        <p v-debounce class="text-caption text-neutral-medium">{{ $t('common.loadingPoll') }}</p>
       </div>
     </div>
   </Main>
@@ -97,8 +97,10 @@ import PollService from '@/services/poll';
 import { createInviteSchema, updatePollSchema } from '@/services/schemas';
 import { XMarkIcon } from '@heroicons/vue/24/outline';
 import { Ref, computed, onMounted, ref } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
+const { t: $t } = useI18n();
 const notifications = useNotifications();
 const router = useRouter();
 const loading = ref<boolean>(true);
@@ -123,7 +125,7 @@ onMounted(async () => {
     question.value = poll.value.question;
     isPrivate.value = poll.value.private;
   } catch (err) {
-    notifications.error({ title: 'Error fetching poll' }, err);
+    notifications.error({ title: $t('notifications.errorFetchingPoll') }, err);
     await router.push({ name: 'Home' });
   }
   loading.value = false;
@@ -153,7 +155,7 @@ const saveEmail = async () => {
   showEmailErrors.value = true;
 
   if (errors.value.email?.[0]) {
-    return notifications.error({ title: 'Invalid email', description: errors.value.email?.[0] });
+    return notifications.error({ title: $t('notifications.invalidEmail'), description: errors.value.email?.[0] });
   }
 
   emailLoading.value = true;
@@ -168,7 +170,7 @@ const saveEmail = async () => {
     showEmailErrors.value = false;
     email.value = '';
   } catch (err) {
-    notifications.error({ title: "Couldn't send invite" }, err);
+    notifications.error({ title: $t('notifications.couldntSendInvite') }, err);
   }
 
   emailLoading.value = false;
@@ -183,7 +185,7 @@ const deleteInvite = async (email: string) => {
       poll.value.invites = poll.value.invites.filter(i => i.email !== email);
     }
   } catch (err) {
-    notifications.error({ title: "Couldn't delete invite" }, err);
+    notifications.error({ title: $t('notifications.couldntDeleteInvite') }, err);
   }
 
   inviteLoading.value = false;
@@ -196,7 +198,7 @@ const update = async (data: ApiUpdatePollDto, loading: Ref<boolean>): Promise<bo
   try {
     await PollService.updatePoll(props.pollId, data);
   } catch (err) {
-    notifications.error({ title: 'Error updating poll' }, err);
+    notifications.error({ title: $t('notifications.errorUpdatingPoll') }, err);
     success = false;
   }
 

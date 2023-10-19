@@ -1,0 +1,91 @@
+{
+  "common": {
+    "private": "Privat",
+    "public": "Offentlig",
+    "open": "Åpen",
+    "closed": "Lukket",
+    "delete": "Slett",
+    "edit": "Rediger",
+    "save": "Lagre",
+    "close": "Lukk",
+    "createdBy": "Opprettet av",
+    "loadingPoll": "Laster avstemming... | Laster avstemminger...",
+    "general": "Generelt",
+    "title": "Tittel",
+    "question": "Spørsmål",
+    "access": "Tilgang",
+    "email": "E-post",
+    "anInvite": "Invitasjon",
+    "giveInvite": "Inviter",
+    "create": "Opprett",
+    "createdTimestamp": "Opprettet {ago}",
+    "updatedTimestamp": "Oppdatert {ago}",
+    "yes": "Ja",
+    "no": "Nei",
+    "name": "Navn",
+    "signOut": "Logg ut",
+    "signIn": "Logg inn",
+    "github": "Github"
+  },
+  "poll": {
+    "createPoll": "Opprett avstemming",
+    "editPoll": "Rediger avstemming",
+    "sentInvites": "Sendte invitasjoner",
+    "noInvites": "Ingen invitasjoner",
+    "ownerContext": "Dette er din avstemming. Vil du gjøre endringer?",
+    "closedPoll": "Denne avstemmingen er lukket",
+    "addYourVote": "Legg til din stemme",
+    "copyPollUrl": "Kopier avstemningens URL til utklippstavlen",
+    "shareThisPoll": "Del denne avstemmingen"
+  },
+  "profile": {
+    "profile": "Profil",
+    "yourProfile": "Din profil",
+    "loadingUser": "Laster bruker..."
+  },
+  "index": {
+    "getStartedToday": "Kom i gang i dag",
+    "ingress": "Styrk stemmen din og få hver stemme til å telle med vår interaktive avstemningsapp. Lag, stem på og utforsk meningsmålinger med letthet. Bli med i fellesskapet av aktive deltakere i dag og bli en del av samtalen.",
+    "signInWithGoogle": "Logg inn med Google",
+    "agreement": "Ved å logge på godtar du våre %{termsOfService} og %{privacyPolicy}.",
+    "termsOfService": "vilkår for bruk",
+    "privacyPolicy": "personvernerklæring"
+  },
+  "home": {
+    "explorePolls": "Utforsk avstemminger",
+    "ingress": "Nedenfor finner du en liste over dine egne meningsmålinger, samt meningsmålinger fra andre brukere.<br>Del gjerne tankene dine!",
+    "publicPolls": "Offentlige avstemminger",
+    "yourPolls": "Dine avstemminger"
+  },
+  "error": {
+    "pageNotFound": "Side ikke funnet",
+    "pageNotFoundIngress": "Vi fant ikke siden du lette etter",
+    "serverError": "Server error",
+    "serverErrorIngress": "Oops! Noe rart skjer<br />Vi har mottatt en rapport om problemet",
+    "backToSafety": "Tilbake til sikkerhet"
+  },
+  "notifications": {
+    "couldntLoadUser": "Kunne ikke laste bruker",
+    "couldntUpdateUser": "Kunne ikke oppdatere bruker",
+    "anErrorOccurred": "En feil oppstod",
+    "invalidEmail": "Ugyldig e-post",
+    "emailAlreadyInvited": "E-post allerede invitert",
+    "pollCreated": "Avstemming opprettet",
+    "errorCreatingPoll": "Feil ved oppretting av avstemming",
+    "errorFetchingPoll": "Feil ved henting av avstemming",
+    "couldntSendInvite": "Kunne ikke sende invitasjon",
+    "couldntDeleteInvite": "Kunne ikke slette invitasjon",
+    "errorUpdatingPoll": "Feil ved oppdatering av avstemming",
+    "pollNotFound": "Avstemming ikke funnet",
+    "couldntClosePoll": "Kunne ikke lukke avstemming",
+    "pollSuccessfullyDeleted": "Avstemming slettet",
+    "couldntDeletePoll": "Kunne ikke slette avstemming",
+    "copiedToClipboard": "Kopiert til utklippstavlen",
+    "couldntCopyToClipboard": "Kunne ikke kopiere til utklippstavlen",
+    "emailAlreadyInvitedDesc": "Denne e-posten har allerede blitt invitert til avstemmingen",
+    "pollCreatedDesc": "Din avstemning ble opprettet",
+    "pollNotFoundDesc": "Avstemning med ID {id} ble ikke funnet",
+    "copiedToClipboardDesc": "Avstemnings-URLen ble kopiert til utklippstavlen din",
+    "couldntCopyToClipboardDesc": "Kunne ikke kopiere avstemnings-URLen til utklippstavlen din"
+  }
+}
