@@ -1,6 +1,6 @@
 <template>
   <Main>
-    <div class="grid grid-cols-12 gap-0 md:gap-12 my-4">
+    <div class="grid grid-cols-12 gap-0 md:gap-12 my-8">
       <div class="flex flex-col justify-center gap-y-6 col-span-12 md:col-span-7">
         <h2 class="pb-1">{{ $t('home.explorePolls') }}</h2>
         <p class="text-body-la text-primary-dark" v-html="$t('home.ingress')"></p>
@@ -23,17 +23,17 @@
         <Card class="flex hover:bg-primary-lighter transition-colors">
           <div class="flex grow gap-x-2">
             <div class="grow">
-              <h3 class="text-body-large-bold flex items-center gap-x-2">
+              <h3 class="text-body-bold md:text-body-large-bold flex items-center gap-x-2">
                 {{ poll.title }}
                 <span class="text-caption line-clamp-1">{{ timestampToDate(poll.createdAt) }}</span>
               </h3>
-              <p class="line-clamp-1">{{ poll.question }}</p>
+              <p class="text-body-small md:text-body line-clamp-1">{{ poll.question }}</p>
             </div>
             <div class="flex gap-x-2 flex-none items-center mr-4">
-              <Badge v-if="poll.private" type="info">{{ $t('common.private') }}</Badge>
-              <Badge v-else type="success">{{ $t('common.public') }}</Badge>
-              <Badge v-if="poll.status === 'open'" type="success">{{ $t('common.open') }}</Badge>
-              <Badge v-else type="error">{{ $t('common.closed') }}</Badge>
+              <Badge v-if="poll.private" class="hidden md:block" type="info">{{ $t('common.private') }}</Badge>
+              <Badge v-else class="hidden md:block" type="success">{{ $t('common.public') }}</Badge>
+              <Badge v-if="poll.status === 'open'" class="hidden md:block" type="success">{{ $t('common.open') }}</Badge>
+              <Badge v-else class="hidden md:block" type="error">{{ $t('common.closed') }}</Badge>
               <Avatar :src="poll.ownerAvatar" size="small" :name="poll.ownerName" class="ml-2"></Avatar>
               <div class="hidden md:block">
                 <p class="text-caption">{{ $t('common.createdBy') }}</p>

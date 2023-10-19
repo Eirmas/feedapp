@@ -71,7 +71,7 @@ export class PollService {
     FindOptionsUtils.joinEagerRelations(queryBuilder, queryBuilder.alias, this.pollRepository.metadata);
 
     queryBuilder
-      .where({ private: false })
+      .where({ private: false, status: PollStatus.OPEN })
       .orderBy('poll.createdAt', pageOptionsDto.order)
       .skip(pageOptionsDto.skip)
       .take(pageOptionsDto.take);

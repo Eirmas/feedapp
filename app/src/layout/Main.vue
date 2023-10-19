@@ -4,10 +4,10 @@
       <RouterLink to="/" class="flex items-center cursor-pointer -mx-4 -my-2 py-2 px-4 rounded-xs focus-outline">
         <img src="~@/assets/logo.svg" class="h-8" alt="FeedApp Logo" />
       </RouterLink>
-      <div class="flex grow justify-end">
+      <div class="flex grow justify-end items-center">
         <div class="mr-6 rounded-xs overflow-hidden cursor-pointer hover:ring-2 ring-semantic-focus transition-all" @click="toggle">
-          <img v-if="currentLocale === 'en'" src="~@/assets/en.svg" class="h-8" alt="English" />
-          <img v-if="currentLocale === 'no'" src="~@/assets/no.svg" class="h-8" alt="Norsk" />
+          <img v-if="currentLocale === 'en'" src="~@/assets/en.svg" class="h-6 md:h-8" alt="English" />
+          <img v-if="currentLocale === 'no'" src="~@/assets/no.svg" class="h-6 md:h-8" alt="Norsk" />
         </div>
         <Menu v-if="user" as="div" class="relative inline-block text-left">
           <MenuButton class="flex gap-x-2 items-center hover:bg-primary-light/25 -mx-4 -my-2 py-2 px-4 rounded-xs focus-outline">

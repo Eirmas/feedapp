@@ -28,7 +28,7 @@
       </div>
       <div class="flex gap-4 items-center flex-wrap-reverse">
         <div class="grow">
-          <h1 class="mb-2">{{ poll.title }}</h1>
+          <h1 class="text-h3 md:text-h2 mb-2">{{ poll.title }}</h1>
           <p class="text-body-bold">
             {{ $t('common.createdTimestamp', { ago: timestampToDate(poll.createdAt) }) }}
             <span v-if="poll.createdAt !== poll.updatedAt" class="text-body"
@@ -45,8 +45,8 @@
         </div>
       </div>
       <Card :class="['flex flex-col gap-y-4', loading && 'opacity-50 pointer-events-none']">
-        <h3>{{ poll.question }}</h3>
-        <p class="text-body">{{ $t('poll.addYourVote') }}:</p>
+        <h3 class="text-body-large-bold md:text-h3">{{ poll.question }}</h3>
+        <p class="text-body-small md:text-body">{{ $t('poll.addYourVote') }}:</p>
         <div class="flex gap-x-2">
           <Button
             iconMode="fab"
