@@ -2,10 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer utilities {
-  .focus-outline:focus-visible {
-    outline: 2px double theme("colors.semantic.focus");
-  }
+.focus-outline:focus-visible {
+  outline: 2px double theme("colors.semantic.focus");
 }
 
 h1 {
