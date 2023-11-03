@@ -1,15 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import Home from '../../views/home/Home.vue';
-import Index from '../../views/index/Index.vue';
-import EditPoll from '../../views/poll/EditPoll.vue';
-import CreatePoll from '../../views/poll/CreatePoll.vue';
-import NotFound from '../../views/not-found/NotFound.vue';
-import Profile from '../../views/profile/Profile.vue';
-import ServerError from '../../views/server-error/ServerError.vue';
-import Signout from '../../views/signout/Signout.vue';
-import TermsOfService from '../../views/terms-of-service/TermsOfService.vue';
-import Poll from '../../views/poll/Poll.vue';
-import PrivacyPolicy from '../../views/privacy-policy/PrivacyPolicy.vue';
 import { authGuard } from './guards/auth';
 
 const router = createRouter({
@@ -18,50 +7,50 @@ const router = createRouter({
     {
       path: '/',
       name: 'Index',
-      component: Index,
+      component: () => import('@/views/index/Index.vue'),
     },
     {
       path: '/home',
       name: 'Home',
-      component: Home,
+      component: () => import('@/views/home/Home.vue'),
       meta: { authRequired: true },
     },
     {
       path: '/signout',
       name: 'Sign out',
-      component: Signout,
+      component: () => import('@/views/signout/Signout.vue'),
     },
     {
       path: '/profile',
       name: 'Profile',
-      component: Profile,
+      component: () => import('@/views/profile/Profile.vue'),
       meta: { authRequired: true },
     },
     {
       path: '/privacy-policy',
       name: 'Privacy Policy',
-      component: PrivacyPolicy,
+      component: () => import('@/views/privacy-policy/PrivacyPolicy.vue'),
     },
     {
       path: '/terms-of-service',
       name: 'Terms of Service',
-      component: TermsOfService,
+      component: () => import('@/views/terms-of-service/TermsOfService.vue'),
     },
     {
       path: '/server-error',
       name: 'Server error',
-      component: ServerError,
+      component: () => import('@/views/server-error/ServerError.vue'),
     },
     {
       path: '/poll/:pollId',
       name: 'Poll',
-      component: Poll,
+      component: () => import('@/views/poll/Poll.vue'),
       props: route => ({ pollId: String(route.params.pollId) }),
     },
     {
       path: '/poll/:pollId/edit',
       name: 'Edit Poll',
-      component: EditPoll,
+      component: () => import('@/views/poll/EditPoll.vue'),
       meta: { authRequired: true },
       props: route => ({ pollId: String(route.params.pollId) }),
     },
@@ -69,12 +58,12 @@ const router = createRouter({
       path: '/poll/create',
       name: 'Create Poll',
       meta: { authRequired: true },
-      component: CreatePoll,
+      component: () => import('@/views/poll/CreatePoll.vue'),
     },
     {
       path: '/:pathMatch(.*)*',
       name: 'Not Found',
-      component: NotFound,
+      component: () => import('@/views/not-found/NotFound.vue'),
     },
   ],
 });

@@ -62,7 +62,9 @@
     "pageNotFoundIngress": "We couldn't find the page you were looking for",
     "serverError": "Server error",
     "serverErrorIngress": "Whoops! Something weird is going on<br />Don't worry, we have received a report of the issue",
-    "backToSafety": "Back to safety"
+    "backToSafety": "Back to safety",
+    "unauthorized": "Unauthorized",
+    "unauthorizedIngress": "You must be signed in to access this resource"
   },
   "notifications": {
     "couldntLoadUser": "Couldn't load user",

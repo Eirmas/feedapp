@@ -155,7 +155,7 @@ const vote = async (answer: boolean) => {
         description: $t('notifications.pollNotFoundDesc', { id: props.pollId }),
       });
       await router.push({ name: 'Not Found' });
-    } else {
+    } else if ((err as AxiosError).response?.status !== 401) {
       notifications.error({ title: $t('notifications.anErrorOccurred') }, err);
     }
   }
@@ -180,7 +180,7 @@ onMounted(async () => {
         description: $t('notifications.pollNotFoundDesc', { id: props.pollId }),
       });
       await router.push({ name: 'Not Found' });
-    } else {
+    } else if ((err as AxiosError).response?.status !== 401) {
       notifications.error({ title: $t('notifications.anErrorOccurred') }, err);
     }
     loading.value = false;

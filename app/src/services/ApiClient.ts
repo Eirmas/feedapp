@@ -1,7 +1,8 @@
-import { useAuthStore } from '@/store/auth';
-import { useRouter } from 'vue-router';
-import { HttpClient } from './api/http-client';
 import { useNotifications } from '@/composables/useNotifications';
+import Router from '@/plugins/router';
+import { useAuthStore } from '@/store/auth';
+import { HttpClient } from './api/http-client';
+import i18n from '@/plugins/i18n/i18n';
 
 const notifications = useNotifications();
 
@@ -46,12 +47,14 @@ export default class ApiHttpClient extends HttpClient {
             };
 
             if (!(await refresh())) {
-              const router = useRouter();
               notifications.info(
-                { title: 'Session expired', description: 'You have been signed out due to inactivity. Please sign back in to continue' },
+                {
+                  title: i18n.global.t('error.unauthorized'),
+                  description: i18n.global.t('error.unauthorizedIngress'),
+                },
                 null,
               );
-              await router.push({ name: 'Logout' });
+              await Router.push({ name: 'Sign out' });
               return Promise.reject(error);
             }
 
@@ -60,8 +63,7 @@ export default class ApiHttpClient extends HttpClient {
         }
 
         if (error.response.status >= 500) {
-          const router = useRouter();
-          await router.push({ name: 'Server Error' });
+          await Router.push({ name: 'Server error' });
         }
 
         return Promise.reject(error);

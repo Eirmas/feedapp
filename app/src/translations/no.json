@@ -62,7 +62,9 @@
     "pageNotFoundIngress": "Vi fant ikke siden du lette etter",
     "serverError": "Server error",
     "serverErrorIngress": "Oops! Noe rart skjer<br />Vi har mottatt en rapport om problemet",
-    "backToSafety": "Tilbake til sikkerhet"
+    "backToSafety": "Tilbake til sikkerhet",
+    "unauthorized": "Uautorisert",
+    "unauthorizedIngress": "Du må være innlogget for å få tilgang til denne ressursen"
   },
   "notifications": {
     "couldntLoadUser": "Kunne ikke laste bruker",
