@@ -1,16 +1,17 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService, ConfigType } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
+import { MongooseModule } from '@nestjs/mongoose';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import appConfig from '../common/config/app-conf';
 import entities from '../models';
-import { HealthModule } from './health/health.module';
-import { UserModule } from './user/user.module';
-import { PollModule } from './poll/poll.module';
-import { InviteModule } from './invite/invite.module';
-import { VoteModule } from './vote/vote.module';
-import { MongooseModule } from '@nestjs/mongoose';
 import { AnalyticModule } from './analytic/analytic.module';
+import { HealthModule } from './health/health.module';
+import { InviteModule } from './invite/invite.module';
+import { PollModule } from './poll/poll.module';
+import { RmqModule } from './rmq/rmq.module';
+import { UserModule } from './user/user.module';
+import { VoteModule } from './vote/vote.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { AnalyticModule } from './analytic/analytic.module';
     UserModule,
     PollModule,
     InviteModule,
+    RmqModule,
     VoteModule,
     AnalyticModule,
     ConfigModule.forRoot({

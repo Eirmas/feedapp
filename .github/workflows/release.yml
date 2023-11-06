@@ -121,6 +121,8 @@ jobs:
           NX_SUPABASE_URL: ${{ secrets.NX_SUPABASE_URL }}
           NX_SUPABASE_KEY: ${{ secrets.NX_SUPABASE_KEY }}
           NX_JWT_SECRET: ${{ secrets.NX_JWT_SECRET }}
+          NX_RABBITMQ_URL: ${{ secrets.NX_RABBITMQ_URL }}
+          NX_RABBITMQ_QUEUE: ${{ secrets.NX_RABBITMQ_QUEUE }}
 
       - uses: actions/upload-artifact@v3
         with:

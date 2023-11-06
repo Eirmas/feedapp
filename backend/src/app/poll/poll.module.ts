@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { GuardModule } from '../../common/guards/guard.module';
 import { PollEntity } from '../../models';
 import { AnalyticModule } from '../analytic/analytic.module';
+import { RmqModule } from '../rmq/rmq.module';
 import { UserModule } from '../user/user.module';
 import { VoteModule } from '../vote/vote.module';
 import { PollController } from './poll.controller';
@@ -16,6 +17,7 @@ import { PollService } from './poll.service';
     forwardRef(() => UserModule),
     forwardRef(() => VoteModule),
     forwardRef(() => AnalyticModule),
+    forwardRef(() => RmqModule),
     ConfigModule,
   ],
   controllers: [PollController],

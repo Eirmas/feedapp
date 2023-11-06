@@ -13,6 +13,7 @@ import { AnalyticService } from '../analytic/analytic.service';
 import { VoteService } from '../vote/vote.service';
 import { CreatePollDto } from './dto/create-poll.dto';
 import { UpdatePollDto } from './dto/update-poll.dto';
+import { RmqService } from '../rmq/rmq.service';
 
 @Injectable()
 export class PollService {
@@ -21,6 +22,7 @@ export class PollService {
     private readonly pollRepository: Repository<PollEntity>,
     private readonly voteService: VoteService,
     private readonly analyticService: AnalyticService,
+    private readonly rmqService: RmqService,
   ) {}
 
   public createPoll(ownerId: string, createPollDto: CreatePollDto): Observable<PollEntity> {
@@ -127,7 +129,7 @@ export class PollService {
   private handleClosedPoll(pollId: string): Observable<void> {
     return combineLatest([this.getPollById(pollId), this.voteService.getVotesByPoll(pollId)]).pipe(
       switchMap(([poll, votes]) => this.analyticService.createAnalytic(poll, votes.yes, votes.no)),
-      switchMap(() => of(undefined)),
+      switchMap(analytic => this.rmqService.closePoll(analytic)),
     );
   }
 }

@@ -19,6 +19,10 @@ export default registerAs('appConfig', () => ({
     cluster: process.env.NX_MONGODB_CLUSTER,
     database: process.env.NX_MONGODB_DATABASE,
   },
+  rabbitmq: {
+    url: process.env.NX_RABBITMQ_URL,
+    queue: process.env.NX_RABBITMQ_QUEUE,
+  },
   jwt: {
     secret: process.env.NX_JWT_SECRET,
   },
