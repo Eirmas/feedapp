@@ -25,6 +25,13 @@
       >
         <InformationCircleIcon class="h-6" />
         <p class="text-body-bold">{{ $t('poll.closedPoll') }}</p>
+        <Translation keypath="poll.closedPoll" tag="p" class="text-body-bold">
+          <template #dweetUrl>
+            <a :href="`https://dweet.io/get/latest/dweet/for/${poll.id}`" target="_blank" class="underline text-semantic-link">
+              dweet.io
+            </a>
+          </template>
+        </Translation>
       </div>
       <div class="flex gap-4 items-center flex-wrap-reverse">
         <div class="grow">
@@ -116,7 +123,7 @@ import { storeToRefs } from 'pinia';
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { formatDistance } from 'date-fns';
-import { useI18n } from 'vue-i18n';
+import { Translation, useI18n } from 'vue-i18n';
 
 const { t: $t } = useI18n();
 const router = useRouter();
@@ -199,6 +206,7 @@ const onNewVote = (answer: boolean) => {
 
 const closePoll = async () => {
   try {
+    loading.value = true;
     if (poll.value && user.value?.id === poll.value?.ownerId) {
       await PollService.closePollById(props.pollId);
       poll.value = {
@@ -206,8 +214,10 @@ const closePoll = async () => {
         status: ApiPollEntityStatusEnum.Closed,
       };
     }
+    loading.value = false;
   } catch (err) {
     notifications.error({ title: $t('notifications.couldntClosePoll') }, err);
+    loading.value = false;
   }
 };
 

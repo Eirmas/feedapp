@@ -14,6 +14,8 @@ import { VoteService } from '../vote/vote.service';
 import { CreatePollDto } from './dto/create-poll.dto';
 import { UpdatePollDto } from './dto/update-poll.dto';
 import { RmqService } from '../rmq/rmq.service';
+import { HttpService } from '@nestjs/axios';
+import { Analytic } from '../../models/analytic.schema';
 
 @Injectable()
 export class PollService {
@@ -23,6 +25,7 @@ export class PollService {
     private readonly voteService: VoteService,
     private readonly analyticService: AnalyticService,
     private readonly rmqService: RmqService,
+    private readonly httpService: HttpService,
   ) {}
 
   public createPoll(ownerId: string, createPollDto: CreatePollDto): Observable<PollEntity> {
@@ -129,7 +132,12 @@ export class PollService {
   private handleClosedPoll(pollId: string): Observable<void> {
     return combineLatest([this.getPollById(pollId), this.voteService.getVotesByPoll(pollId)]).pipe(
       switchMap(([poll, votes]) => this.analyticService.createAnalytic(poll, votes.yes, votes.no)),
+      switchMap(analytic => this.dweetAnalytic(analytic)),
       switchMap(analytic => this.rmqService.closePoll(analytic)),
     );
+  }
+
+  private dweetAnalytic(analytic: Analytic): Observable<Analytic> {
+    return this.httpService.post(`https://dweet.io/dweet/for/${analytic._id}`, analytic).pipe(map(() => analytic));
   }
 }

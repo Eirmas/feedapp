@@ -33,7 +33,7 @@
     "sentInvites": "Sent invites",
     "noInvites": "No invites",
     "ownerContext": "This is your poll. Want to make any changes?",
-    "closedPoll": "This poll is closed",
+    "closedPoll": "This poll is closed. The you can fetch the results at %{dweetUrl}",
     "addYourVote": "Add your vote",
     "copyPollUrl": "Copy poll URL to clipboard",
     "shareThisPoll": "Share this poll"

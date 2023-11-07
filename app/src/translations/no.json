@@ -33,7 +33,7 @@
     "sentInvites": "Sendte invitasjoner",
     "noInvites": "Ingen invitasjoner",
     "ownerContext": "Dette er din avstemming. Vil du gjøre endringer?",
-    "closedPoll": "Denne avstemmingen er lukket",
+    "closedPoll": "Denne avstemmingen er lukket. Du kan hente resultatene på %{dweetUrl}",
     "addYourVote": "Legg til din stemme",
     "copyPollUrl": "Kopier avstemningens URL til utklippstavlen",
     "shareThisPoll": "Del denne avstemmingen"
