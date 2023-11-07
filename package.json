@@ -27,6 +27,7 @@
     "@headlessui/vue": "^1.7.15",
     "@heroicons/vue": "^2.0.18",
     "@ivanv/vue-collapse-transition": "^1.0.2",
+    "@nestjs/axios": "^3.0.0",
     "@nestjs/common": "^10.0.2",
     "@nestjs/config": "^3.1.1",
     "@nestjs/core": "^10.0.2",
@@ -60,7 +61,6 @@
   },
   "devDependencies": {
     "@intlify/eslint-plugin-vue-i18n": "^2.0.0",
-    "@nestjs/axios": "^3.0.0",
     "@nestjs/schematics": "^10.0.1",
     "@nestjs/testing": "^10.0.2",
     "@nrwl/vite": "^16.10.0",
