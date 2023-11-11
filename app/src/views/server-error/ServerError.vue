@@ -4,7 +4,7 @@
       <img src="~@/assets/server_error.svg" class="w-full max-w-md" />
       <div class="flex flex-col items-center gap-y-4 pb-8">
         <h3>{{ $t('error.serverError') }}</h3>
-        <p class="text-body-small text-center" v-html="$t('error.serverErrorIngress')"></p>
+        <p class="text-body-small text-center">{{ $t('error.serverErrorIngress') }}</p>
         <RouterLink to="/">
           <Button>{{ $t('error.backToSafety') }}</Button>
         </RouterLink>

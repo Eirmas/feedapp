@@ -12,6 +12,7 @@ import { PollModule } from './poll/poll.module';
 import { RmqModule } from './rmq/rmq.module';
 import { UserModule } from './user/user.module';
 import { VoteModule } from './vote/vote.module';
+import { DeviceModule } from './device/device.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { VoteModule } from './vote/vote.module';
     PollModule,
     InviteModule,
     RmqModule,
+    DeviceModule,
     VoteModule,
     AnalyticModule,
     ConfigModule.forRoot({

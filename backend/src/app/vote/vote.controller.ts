@@ -14,15 +14,20 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiOkResponse, ApiParam, ApiTags } from '@nestjs/swagger';
-import ResourceClosedException from '../../common/exceptions/resource-closed.exception';
-import { PollIsOpenGuard } from '../../common/guards/poll-is-open.guard';
 import { catchError, lastValueFrom, take } from 'rxjs';
+import ResourceClosedException from '../../common/exceptions/resource-closed.exception';
 import ResourceNotFoundException from '../../common/exceptions/resource-not-found.exception';
 import { HasPollAccessGuard } from '../../common/guards/has-poll-access.guard';
+import { PollIsOpenGuard } from '../../common/guards/poll-is-open.guard';
 import { VoteEntity } from '../../models';
 import { GetVotesDao } from './dao/get-votes.dao';
 import { CreateVoteDto } from './dto/create-vote.dto';
 import { VoteService } from './vote.service';
+
+export interface AggregatedVotes {
+  yes: number;
+  no: number;
+}
 
 @ApiTags('Votes')
 @Controller('votes')
@@ -35,7 +40,7 @@ export class VoteController {
   @UseGuards(HasPollAccessGuard)
   @ApiParam({ name: 'pollId', format: 'uuid' })
   @ApiOkResponse({ type: GetVotesDao })
-  public getVotesByPoll(@Param('pollId', new ParseUUIDPipe()) pollId: string): Promise<{ yes: number; no: number }> {
+  public getVotesByPoll(@Param('pollId', new ParseUUIDPipe()) pollId: string): Promise<AggregatedVotes> {
     return lastValueFrom(
       this.voteService.getVotesByPoll(pollId).pipe(
         take(1),

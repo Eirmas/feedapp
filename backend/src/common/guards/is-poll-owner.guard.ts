@@ -6,6 +6,7 @@ import { PollService } from '../../app/poll/poll.service';
 import { PollEntity } from '../../models';
 import appConfig from '../config/app-conf';
 import { AuthGuard } from './auth.guard';
+import { AccessTokenData } from '../interfaces/access-token.type';
 
 @Injectable()
 export class IsPollOwnerGuard implements CanActivate {
@@ -14,7 +15,7 @@ export class IsPollOwnerGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
     const pollId: string | undefined = request.params?.pollId;
-    let userId: string = context.switchToHttp().getRequest()?.user?.sub;
+    let user: AccessTokenData | undefined = context.switchToHttp().getRequest()?.user;
     let poll: PollEntity | null = null;
 
     if (!pollId) {
@@ -27,12 +28,12 @@ export class IsPollOwnerGuard implements CanActivate {
       throw new ForbiddenException();
     }
 
-    if (!userId) {
+    if (!user) {
       const config = this.configService.get<ConfigType<typeof appConfig>>('appConfig');
-      userId = (await AuthGuard.getUserFromRequest(request, this.jwtService, config.jwt.secret)).sub;
+      user = await AuthGuard.getUserFromRequest(request, this.jwtService, config.jwt.secret);
     }
 
-    if (poll.ownerId !== userId) {
+    if (poll.ownerId !== user.sub) {
       throw new ForbiddenException();
     }
 

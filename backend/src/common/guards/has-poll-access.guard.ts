@@ -1,28 +1,21 @@
-import { BadRequestException, CanActivate, ExecutionContext, ForbiddenException, Injectable, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, CanActivate, ExecutionContext, ForbiddenException, Injectable } from '@nestjs/common';
 import { ConfigService, ConfigType } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { PollService } from '../../app/poll/poll.service';
-import { UserService } from '../../app/user/user.service';
 import { lastValueFrom } from 'rxjs';
+import { PollService } from '../../app/poll/poll.service';
 import appConfig from '../config/app-conf';
-import { AuthGuard } from './auth.guard';
-import { InviteEntity } from '../../models';
 import ResourceNotFoundException from '../exceptions/resource-not-found.exception';
+import { AccessTokenData } from '../interfaces/access-token.type';
+import { AuthGuard } from './auth.guard';
 
 @Injectable()
 export class HasPollAccessGuard implements CanActivate {
-  constructor(
-    private pollService: PollService,
-    private userService: UserService,
-    private jwtService: JwtService,
-    private configService: ConfigService,
-  ) {}
+  constructor(private pollService: PollService, private jwtService: JwtService, private configService: ConfigService) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
     const pollId: string | undefined = request.params?.pollId;
-    let userId: string = context.switchToHttp().getRequest()?.user?.sub;
-    let foundInvite: InviteEntity | null = null;
+    let user: AccessTokenData | undefined = context.switchToHttp().getRequest()?.user;
 
     if (!pollId) {
       throw new BadRequestException('No poll id provided');
@@ -34,30 +27,26 @@ export class HasPollAccessGuard implements CanActivate {
       if (!poll.private) {
         return true;
       }
-
-      if (!userId) {
+      if (!user) {
         const config = this.configService.get<ConfigType<typeof appConfig>>('appConfig');
-        userId = (await AuthGuard.getUserFromRequest(request, this.jwtService, config.jwt.secret)).sub;
+        user = await AuthGuard.getUserFromRequest(request, this.jwtService, config.jwt.secret);
       }
 
-      if (poll.ownerId === userId) {
+      if (poll.invites.find(invite => invite.email === user.email)) {
         return true;
       }
 
-      const user = await lastValueFrom(this.userService.getUserById(userId));
-      foundInvite = poll.invites.find(invite => invite.email === user.email);
+      if (poll.ownerId === user.sub) {
+        return true;
+      }
     } catch (err) {
       if (err instanceof ResourceNotFoundException) {
         throw new ForbiddenException();
       }
 
-      throw new UnauthorizedException();
+      throw err;
     }
 
-    if (!foundInvite) {
-      throw new ForbiddenException();
-    }
-
-    return true;
+    throw new ForbiddenException();
   }
 }

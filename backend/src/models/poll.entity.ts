@@ -4,6 +4,7 @@ import UserEntity from './user.entity';
 import VoteEntity from './vote.entity';
 import { ApiProperty } from '@nestjs/swagger';
 import { Exclude, Expose } from 'class-transformer';
+import DeviceEntity from './device.entity';
 
 export enum PollStatus {
   OPEN = 'open',
@@ -100,4 +101,7 @@ export default class PollEntity {
     eager: true,
   })
   invites: InviteEntity[];
+
+  @OneToMany(() => DeviceEntity, device => device.poll, { onDelete: 'CASCADE' })
+  devices: DeviceEntity[];
 }

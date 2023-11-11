@@ -4,6 +4,7 @@ import { Observable, combineLatest, from, of, switchMap, throwError } from 'rxjs
 import { Repository } from 'typeorm';
 import { VoteEntity } from '../../models';
 import { supabase } from '../../common/supabase';
+import { AggregatedVotes } from './vote.controller';
 
 @Injectable()
 export class VoteService {
@@ -12,7 +13,7 @@ export class VoteService {
     private readonly voteRepository: Repository<VoteEntity>,
   ) {}
 
-  public getVotesByPoll(pollId: string): Observable<{ yes: number; no: number }> {
+  public getVotesByPoll(pollId: string): Observable<AggregatedVotes> {
     return combineLatest([
       from(this.voteRepository.count({ where: { pollId, answer: true } })),
       from(this.voteRepository.count({ where: { pollId, answer: false } })),

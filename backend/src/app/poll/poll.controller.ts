@@ -17,7 +17,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiOkResponse, ApiParam, ApiTags } from '@nestjs/swagger';
-import { catchError, lastValueFrom, map, take } from 'rxjs';
+import { catchError, lastValueFrom, take } from 'rxjs';
 import { DeleteResult, UpdateResult } from 'typeorm';
 import { AccessToken } from '../../common/decorators/access-token.decorator';
 import { PageOptionsDto } from '../../common/dto/page-options.dto';

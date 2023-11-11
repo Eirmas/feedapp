@@ -3,7 +3,7 @@
     <div class="grid grid-cols-12 gap-0 md:gap-12 my-8">
       <div class="flex flex-col justify-center gap-y-6 col-span-12 md:col-span-7">
         <h2 class="pb-1">{{ $t('home.explorePolls') }}</h2>
-        <p class="text-body-la text-primary-dark" v-html="$t('home.ingress')"></p>
+        <p class="text-body-la text-primary-dark">{{ $t('home.ingress') }}</p>
         <div class="pt-2">
           <RouterLink v-slot="{ href, navigate }" :to="{ name: 'Create Poll' }" custom>
             <Button tag="a" :href="href" :icon="PlusIcon" iconMode="prepend" @click="navigate">{{ $t('poll.createPoll') }}</Button>
