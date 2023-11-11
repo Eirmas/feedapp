@@ -35,5 +35,6 @@
         "cacheableOperations": ["build", "lint", "test", "stylelint"]
       }
     }
-  }
+  },
+  "$schema": "./node_modules/nx/schemas/nx-schema.json"
 }

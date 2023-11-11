@@ -33,7 +33,7 @@
     },
     "test": {
       "executor": "@nrwl/vite:test",
-      "outputs": ["coverage/e2e/app"],
+      "outputs": ["{workspaceRoot}/coverage/e2e/app"],
       "options": {
         "passWithNoTests": true
       }
