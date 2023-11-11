@@ -86,6 +86,20 @@ jobs:
           VITE_REST_API_URL: ${{ secrets.VITE_REST_API_URL }}
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           VITE_SUPABASE_KEY: ${{ secrets.VITE_SUPABASE_KEY }}
+          NX_POSTGRES_HOST: ${{ secrets.NX_POSTGRES_HOST }}
+          NX_POSTGRES_USER: ${{ secrets.NX_POSTGRES_USER }}
+          NX_POSTGRES_PASSWORD: ${{ secrets.NX_POSTGRES_PASSWORD }}
+          NX_POSTGRES_PORT: ${{ secrets.NX_POSTGRES_PORT }}
+          NX_POSTGRES_DATABASE: ${{ secrets.NX_POSTGRES_DATABASE }}
+          NX_MONGODB_USERNAME: ${{ secrets.NX_MONGODB_USERNAME }}
+          NX_MONGODB_PASSWORD: ${{ secrets.NX_MONGODB_PASSWORD }}
+          NX_MONGODB_CLUSTER: ${{ secrets.NX_MONGODB_CLUSTER }}
+          NX_MONGODB_DATABASE: ${{ secrets.NX_MONGODB_DATABASE }}
+          NX_SUPABASE_URL: ${{ secrets.NX_SUPABASE_URL }}
+          NX_SUPABASE_KEY: ${{ secrets.NX_SUPABASE_KEY }}
+          NX_JWT_SECRET: ${{ secrets.NX_JWT_SECRET }}
+          NX_RABBITMQ_URL: ${{ secrets.NX_RABBITMQ_URL }}
+          NX_RABBITMQ_QUEUE: ${{ secrets.NX_RABBITMQ_QUEUE }}
 
   build:
     name: Build

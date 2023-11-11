@@ -16,6 +16,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiOkResponse, ApiParam, ApiTags, getSchemaPath } from '@nestjs/swagger';
+import { PollIsOpenGuard } from '../../common/guards/poll-is-open.guard';
 import { catchError, lastValueFrom, take } from 'rxjs';
 import { UpdateResult } from 'typeorm';
 import { AccessToken } from '../../common/decorators/access-token.decorator';
@@ -59,7 +60,7 @@ export class DeviceController {
 
   @Get('votes')
   @ApiBearerAuth()
-  @UseGuards(IsDeviceGuard, AuthGuard)
+  @UseGuards(IsDeviceGuard, AuthGuard, PollIsOpenGuard)
   public getVotes(@AccessToken() accessToken: AccessTokenData): Promise<AggregatedVotes> {
     return lastValueFrom(
       this.deviceService.getVotes(accessToken.sub).pipe(
@@ -99,7 +100,7 @@ export class DeviceController {
 
   @Put('connect/:pollId')
   @ApiBearerAuth()
-  @UseGuards(AuthGuard, IsDeviceGuard, HasPollAccessGuard)
+  @UseGuards(AuthGuard, IsDeviceGuard, HasPollAccessGuard, PollIsOpenGuard)
   @ApiParam({ name: 'pollId', format: 'uuid' })
   @HttpCode(HttpStatus.NO_CONTENT)
   public connectDevice(
@@ -118,7 +119,7 @@ export class DeviceController {
 
   @Post('vote')
   @ApiBearerAuth()
-  @UseGuards(AuthGuard, IsDeviceGuard)
+  @UseGuards(AuthGuard, IsDeviceGuard, PollIsOpenGuard)
   @ApiBody({ type: CreateVoteDto })
   @HttpCode(HttpStatus.CREATED)
   public vote(@AccessToken() accessToken: AccessTokenData, @Body() createVoteDto: CreateVoteDto): Promise<AggregatedVotes> {

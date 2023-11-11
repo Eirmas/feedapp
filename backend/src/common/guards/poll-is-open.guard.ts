@@ -1,4 +1,4 @@
-import { BadRequestException, CanActivate, ExecutionContext, ForbiddenException, Injectable } from '@nestjs/common';
+import { BadRequestException, CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { lastValueFrom } from 'rxjs';
 import { PollService } from '../../app/poll/poll.service';
 import { PollEntity } from '../../models';
@@ -20,7 +20,7 @@ export class PollIsOpenGuard implements CanActivate {
     try {
       poll = await lastValueFrom(this.pollService.getPollById(pollId));
     } catch (err) {
-      throw new ForbiddenException();
+      throw new BadRequestException('Poll not found');
     }
 
     if (poll.status === PollStatus.CLOSED) {
