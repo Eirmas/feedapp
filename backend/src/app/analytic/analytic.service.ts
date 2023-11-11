@@ -25,6 +25,7 @@ export class AnalyticService {
 
     return from(createdAnalytic.save());
   }
+
   public getAnalytics(pageOptionsDto: PageOptionsDto): Observable<PageDto<Analytic>> {
     const order = pageOptionsDto.order.toLocaleLowerCase() as 'asc' | 'desc';
     const dataQueryBuilder = this.analyticModel.find({}).sort({ created: order }).skip(pageOptionsDto.skip).limit(pageOptionsDto.take);
