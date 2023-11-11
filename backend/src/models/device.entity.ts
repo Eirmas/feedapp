@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import PollEntity from './poll.entity';
+import { Expose } from 'class-transformer';
 
 @Entity({
   name: 'devices',
@@ -35,4 +36,9 @@ export default class DeviceEntity {
   @ManyToOne(() => PollEntity, poll => poll.devices, { eager: true, onUpdate: 'CASCADE', onDelete: 'SET NULL', nullable: true })
   @JoinColumn({ name: 'connectedPollId' })
   poll?: PollEntity;
+
+  @Expose()
+  get email(): string {
+    return `${this.id}@feedapp.no`;
+  }
 }

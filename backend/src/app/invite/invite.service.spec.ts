@@ -10,6 +10,7 @@ import { InviteService } from './invite.service';
 describe('InviteService', () => {
   let inviteService: InviteService;
   const inviteRepository: MockProxy<Repository<InviteEntity>> = mock<Repository<InviteEntity>>();
+  const email = 'email@feedapp.no';
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -32,7 +33,6 @@ describe('InviteService', () => {
   describe('createInvite', () => {
     it('should return invite', done => {
       const pollId = '123';
-      const email = 'email@feedapp.no';
       const invite = { pollId, email } as InviteEntity;
       inviteRepository.findOne.mockResolvedValue(null);
       inviteRepository.save.mockResolvedValue(invite);
@@ -49,7 +49,6 @@ describe('InviteService', () => {
 
     it('should throw error if invite already exists', done => {
       const pollId = '123';
-      const email = 'email@feedapp.no';
       const invite = { pollId, email } as InviteEntity;
       inviteRepository.findOne.mockResolvedValue(invite);
 
@@ -66,7 +65,6 @@ describe('InviteService', () => {
   describe('deleteInvite', () => {
     it('should return delete result', done => {
       const pollId = '123';
-      const email = 'email@feedapp.no';
       const deleteResult = { affected: 1 } as DeleteResult;
       inviteRepository.delete.mockResolvedValue(deleteResult);
 
@@ -79,7 +77,6 @@ describe('InviteService', () => {
 
     it('should throw error if invite does not exist', done => {
       const pollId = '123';
-      const email = 'email@feedapp.no';
       const deleteResult = { affected: 0 } as DeleteResult;
       inviteRepository.delete.mockResolvedValue(deleteResult);
 

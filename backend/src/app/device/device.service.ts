@@ -37,7 +37,7 @@ export class DeviceService {
   public createDevice(): Observable<string> {
     return from(this.deviceRepository.save(this.deviceRepository.create())).pipe(
       switchMap((device: DeviceEntity) => {
-        const payload: AccessTokenData = { sub: device.id, email: `${device.id}@feedapp.no`, isDevice: true };
+        const payload: AccessTokenData = { sub: device.id, email: `${device.email}`, isDevice: true };
         const { secret } = this.appConfig.config.jwt;
         return from(this.jwtService.signAsync(payload, { secret }));
       }),
@@ -59,7 +59,7 @@ export class DeviceService {
           throw new ResourceClosedException(`Poll with id ${device.poll.id} is closed`);
         }
 
-        if (device.poll.private && !device.poll.invites.find(invite => invite.email === `${deviceId}@feedapp.no`)) {
+        if (device.poll.private && !device.poll.invites.find(invite => invite.email === `${device.email}`)) {
           throw new ResourcePermissionDeniedException(`Device with id ${deviceId} is not allowed to vote on this poll`);
         }
       }),
@@ -81,7 +81,7 @@ export class DeviceService {
           throw new ResourceClosedException(`Poll with id ${device.poll.id} is closed`);
         }
 
-        if (device.poll.private && !device.poll.invites.find(invite => invite.email === `${deviceId}@feedapp.no`)) {
+        if (device.poll.private && !device.poll.invites.find(invite => invite.email === `${device.email}`)) {
           throw new ResourcePermissionDeniedException(`Device with id ${deviceId} is not allowed to vote on this poll`);
         }
       }),

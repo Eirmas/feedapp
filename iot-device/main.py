@@ -102,7 +102,7 @@ def home(error=None):
         }
     )
 
-    message = f"""Device ID: {device.get('id')}\nDevice email: {device.get('id')}@feedapp.no\nPoll: { device.get('poll').get('id') if device.get('poll') is not None else "-" }"""
+    message = f"""Device ID: {device.get('id')}\nDevice email: {device.get('email')}\nPoll: { device.get('poll').get('id') if device.get('poll') is not None else "-" }"""
     selected_option = curses.wrapper(menu.run_menu, menu_options, message, 4, error)
 
     if selected_option == "go":

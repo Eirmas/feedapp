@@ -83,7 +83,7 @@ describe('DeviceService', () => {
         expect(deviceRepository.save).toBeCalledTimes(1);
         expect(jwtServiceMock.signAsync).toBeCalledTimes(1);
         expect(jwtServiceMock.signAsync).toBeCalledWith(
-          { sub: device.id, email: `${device.id}@feedapp.no`, isDevice: true },
+          { sub: device.id, email: device.email, isDevice: true },
           { secret: appConfig.config.jwt.secret },
         );
         done();
@@ -175,9 +175,9 @@ describe('DeviceService', () => {
     });
 
     it('should vote successfully if the poll is private and the device has an invite', done => {
-      const poll = { id: 'test-poll-id', status: PollStatus.OPEN, private: true, invites: [{ email: 'test-id@feedapp.no' }] } as PollEntity;
       const device: DeviceEntity = new DeviceEntity();
       device.id = 'test-id';
+      const poll = { id: 'test-poll-id', status: PollStatus.OPEN, private: true, invites: [{ email: device.email }] } as PollEntity;
       device.poll = poll;
 
       const voteResult: AggregatedVotes = { yes: 1, no: 0 };
@@ -262,9 +262,9 @@ describe('DeviceService', () => {
     });
 
     it('should get votes successfully if the poll is private and the device has an invite', done => {
-      const poll = { id: 'test-poll-id', status: PollStatus.OPEN, private: true, invites: [{ email: 'test-id@feedapp.no' }] } as PollEntity;
       const device: DeviceEntity = new DeviceEntity();
       device.id = 'test-id';
+      const poll = { id: 'test-poll-id', status: PollStatus.OPEN, private: true, invites: [{ email: device.email }] } as PollEntity;
       device.poll = poll;
 
       const voteResult: AggregatedVotes = { yes: 1, no: 0 };
