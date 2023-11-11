@@ -25,6 +25,16 @@ export class DeviceService {
     private readonly configService: ConfigService,
   ) {}
 
+  public getDeviceById(id: string): Observable<DeviceEntity> {
+    return from(this.deviceRepository.findOneBy({ id })).pipe(
+      tap((device: DeviceEntity | null) => {
+        if (!device) {
+          throw new ResourceNotFoundException(`Device with id ${id} not found`);
+        }
+      }),
+    );
+  }
+
   public createDevice(): Observable<string> {
     return from(this.deviceRepository.save(this.deviceRepository.create())).pipe(
       switchMap((device: DeviceEntity) => {
@@ -40,12 +50,8 @@ export class DeviceService {
   }
 
   public vote(deviceId: string, answer: boolean): Observable<AggregatedVotes> {
-    return from(this.deviceRepository.findOne({ where: { id: deviceId } })).pipe(
-      tap((device: DeviceEntity | null) => {
-        if (!device) {
-          throw new ResourceNotFoundException(`Device with id ${deviceId} not found`);
-        }
-
+    return from(this.getDeviceById(deviceId)).pipe(
+      tap((device: DeviceEntity) => {
         if (!device.poll) {
           throw new ResourceNotConnectedException(`Device with id ${deviceId} is not connected to a poll`);
         }
@@ -60,6 +66,25 @@ export class DeviceService {
       }),
       switchMap((device: DeviceEntity) => {
         return this.voteService.createVote(device.poll.id, answer).pipe(map(() => device));
+      }),
+      switchMap((device: DeviceEntity) => this.voteService.getVotesByPoll(device.poll.id)),
+    );
+  }
+
+  public getVotes(deviceId: string): Observable<AggregatedVotes> {
+    return from(this.getDeviceById(deviceId)).pipe(
+      tap((device: DeviceEntity) => {
+        if (!device.poll) {
+          throw new ResourceNotConnectedException(`Device with id ${deviceId} is not connected to a poll`);
+        }
+
+        if (device.poll.status === PollStatus.CLOSED) {
+          throw new ResourceClosedException(`Poll with id ${device.poll.id} is closed`);
+        }
+
+        if (device.poll.private && !device.poll.invites.find(invite => invite.email === `${deviceId}@feedapp.no`)) {
+          throw new ResourcePermissionDeniedException(`Device with id ${deviceId} is not allowed to vote on this poll`);
+        }
       }),
       switchMap((device: DeviceEntity) => this.voteService.getVotesByPoll(device.poll.id)),
     );

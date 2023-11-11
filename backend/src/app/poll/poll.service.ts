@@ -7,7 +7,7 @@ import { PageOptionsDto } from '../../common/dto/page-options.dto';
 import { PageDto } from '../../common/dto/page.dto';
 import ResourceClosedException from '../../common/exceptions/resource-closed.exception';
 import ResourceNotFoundException from '../../common/exceptions/resource-not-found.exception';
-import { PollEntity } from '../../models';
+import { DeviceEntity, PollEntity } from '../../models';
 import { PollStatus } from '../../models/poll.entity';
 import { AnalyticService } from '../analytic/analytic.service';
 import { VoteService } from '../vote/vote.service';

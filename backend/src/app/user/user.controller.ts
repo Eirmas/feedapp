@@ -15,17 +15,19 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiOkResponse, ApiParam, ApiTags, getSchemaPath } from '@nestjs/swagger';
-import { AccessToken } from '../../common/decorators/access-token.decorator';
-import { AuthGuard } from '../../common/guards/auth.guard';
-import { AccessTokenData } from '../../common/interfaces/access-token.type';
 import { catchError, lastValueFrom, take } from 'rxjs';
 import { DeleteResult, UpdateResult } from 'typeorm';
+import { AccessToken } from '../../common/decorators/access-token.decorator';
 import ResourceNotFoundException from '../../common/exceptions/resource-not-found.exception';
+import { AuthGuard } from '../../common/guards/auth.guard';
+import { IsNotDeviceGuard } from '../../common/guards/is-not-device.guard';
+import { AccessTokenData } from '../../common/interfaces/access-token.type';
 import { UserEntity } from '../../models';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserService } from './user.service';
 
 @ApiTags('Users')
+@UseGuards(IsNotDeviceGuard)
 @Controller('users')
 @UseInterceptors(ClassSerializerInterceptor)
 export class UserController {

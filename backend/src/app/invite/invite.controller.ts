@@ -24,8 +24,10 @@ import { DeleteResult } from 'typeorm';
 import { CreateInviteDto } from './dto/create-invite.dto';
 import { DeleteInviteDto } from './dto/delete-invite.dto';
 import { InviteService } from './invite.service';
+import { IsNotDeviceGuard } from '../../common/guards/is-not-device.guard';
 
 @ApiTags('Invites')
+@UseGuards(IsNotDeviceGuard)
 @Controller('invites')
 @UseInterceptors(ClassSerializerInterceptor)
 export class InviteController {

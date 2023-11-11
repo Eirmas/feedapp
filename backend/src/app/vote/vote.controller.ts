@@ -18,6 +18,7 @@ import { catchError, lastValueFrom, take } from 'rxjs';
 import ResourceClosedException from '../../common/exceptions/resource-closed.exception';
 import ResourceNotFoundException from '../../common/exceptions/resource-not-found.exception';
 import { HasPollAccessGuard } from '../../common/guards/has-poll-access.guard';
+import { IsNotDeviceGuard } from '../../common/guards/is-not-device.guard';
 import { PollIsOpenGuard } from '../../common/guards/poll-is-open.guard';
 import { VoteEntity } from '../../models';
 import { GetVotesDao } from './dao/get-votes.dao';
@@ -30,6 +31,7 @@ export interface AggregatedVotes {
 }
 
 @ApiTags('Votes')
+@UseGuards(IsNotDeviceGuard)
 @Controller('votes')
 @UseInterceptors(ClassSerializerInterceptor)
 export class VoteController {

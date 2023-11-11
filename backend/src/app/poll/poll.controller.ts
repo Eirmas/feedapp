@@ -17,9 +17,11 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiOkResponse, ApiParam, ApiTags } from '@nestjs/swagger';
+import { IsNotDeviceGuard } from '../../common/guards/is-not-device.guard';
 import { catchError, lastValueFrom, take } from 'rxjs';
 import { DeleteResult, UpdateResult } from 'typeorm';
 import { AccessToken } from '../../common/decorators/access-token.decorator';
+import { ApiOkResponsePaginated } from '../../common/decorators/api-ok-response-paginated.decorator';
 import { PageOptionsDto } from '../../common/dto/page-options.dto';
 import { PageDto } from '../../common/dto/page.dto';
 import ResourceNotFoundException from '../../common/exceptions/resource-not-found.exception';
@@ -31,10 +33,10 @@ import { PollEntity } from '../../models';
 import { CreatePollDto } from './dto/create-poll.dto';
 import { UpdatePollDto } from './dto/update-poll.dto';
 import { PollService } from './poll.service';
-import { ApiOkResponsePaginated } from '../../common/decorators/api-ok-response-paginated.decorator';
 
 @ApiTags('Polls')
 @Controller('polls')
+@UseGuards(IsNotDeviceGuard)
 @UseInterceptors(ClassSerializerInterceptor)
 export class PollController {
   constructor(private readonly pollService: PollService) {}

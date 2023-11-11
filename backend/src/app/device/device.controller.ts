@@ -4,6 +4,7 @@ import {
   ClassSerializerInterceptor,
   Controller,
   ForbiddenException,
+  Get,
   HttpCode,
   HttpStatus,
   NotFoundException,
@@ -14,7 +15,7 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiBody, ApiOkResponse, ApiParam, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiOkResponse, ApiParam, ApiTags, getSchemaPath } from '@nestjs/swagger';
 import { catchError, lastValueFrom, take } from 'rxjs';
 import { UpdateResult } from 'typeorm';
 import { AccessToken } from '../../common/decorators/access-token.decorator';
@@ -26,6 +27,7 @@ import { AuthGuard } from '../../common/guards/auth.guard';
 import { HasPollAccessGuard } from '../../common/guards/has-poll-access.guard';
 import { IsDeviceGuard } from '../../common/guards/is-device.guard';
 import { AccessTokenData } from '../../common/interfaces/access-token.type';
+import { DeviceEntity } from '../../models';
 import { CreateVoteDto } from '../vote/dto/create-vote.dto';
 import { AggregatedVotes } from '../vote/vote.controller';
 import { DeviceService } from './device.service';
@@ -35,6 +37,51 @@ import { DeviceService } from './device.service';
 @UseInterceptors(ClassSerializerInterceptor)
 export class DeviceController {
   constructor(private readonly deviceService: DeviceService) {}
+
+  @Get()
+  @ApiBearerAuth()
+  @UseGuards(IsDeviceGuard, AuthGuard)
+  @ApiOkResponse({ schema: { $ref: getSchemaPath(DeviceEntity) } })
+  public getDevice(@AccessToken() accessToken: AccessTokenData): Promise<DeviceEntity> {
+    return lastValueFrom(
+      this.deviceService.getDeviceById(accessToken.sub).pipe(
+        take(1),
+        catchError(err => {
+          if (err instanceof ResourceNotFoundException) {
+            throw new NotFoundException(err.message);
+          }
+
+          throw new BadRequestException(err.message || err);
+        }),
+      ),
+    );
+  }
+
+  @Get('votes')
+  @ApiBearerAuth()
+  @UseGuards(IsDeviceGuard, AuthGuard)
+  public getVotes(@AccessToken() accessToken: AccessTokenData): Promise<AggregatedVotes> {
+    return lastValueFrom(
+      this.deviceService.getVotes(accessToken.sub).pipe(
+        take(1),
+        catchError(err => {
+          if (err instanceof ResourceNotFoundException) {
+            throw new NotFoundException(err.message);
+          }
+
+          if (err instanceof ResourceNotConnectedException) {
+            throw new BadRequestException('device_not_connected', err.message);
+          }
+
+          if (err instanceof ResourcePermissionDeniedException) {
+            throw new ForbiddenException(err.message);
+          }
+
+          throw new BadRequestException(err.message || err);
+        }),
+      ),
+    );
+  }
 
   @Post('create')
   @HttpCode(HttpStatus.CREATED)
@@ -75,6 +122,7 @@ export class DeviceController {
   @ApiBody({ type: CreateVoteDto })
   @HttpCode(HttpStatus.CREATED)
   public createVote(@AccessToken() accessToken: AccessTokenData, @Body() createVoteDto: CreateVoteDto): Promise<AggregatedVotes> {
+    console.log('hello!');
     return lastValueFrom(
       this.deviceService.vote(accessToken.sub, createVoteDto.answer).pipe(
         take(1),
