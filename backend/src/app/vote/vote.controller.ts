@@ -73,7 +73,7 @@ export class VoteController {
           }
 
           if (err instanceof ResourceClosedException) {
-            throw new BadRequestException('poll_closed', err.message);
+            throw new BadRequestException(err.message);
           }
 
           throw new BadRequestException(err.message || err);
