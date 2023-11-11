@@ -70,7 +70,7 @@ export class DeviceController {
           }
 
           if (err instanceof ResourceNotConnectedException) {
-            throw new BadRequestException('device_not_connected', err.message);
+            throw new BadRequestException(err.message);
           }
 
           if (err instanceof ResourcePermissionDeniedException) {
@@ -86,7 +86,7 @@ export class DeviceController {
   @Post('create')
   @HttpCode(HttpStatus.CREATED)
   @ApiOkResponse({ type: String, description: 'Returns a JWT token to be used by the device for future requests' })
-  public createPoll(): Promise<string> {
+  public createDevice(): Promise<string> {
     return lastValueFrom(
       this.deviceService.createDevice().pipe(
         catchError(err => {
@@ -102,7 +102,7 @@ export class DeviceController {
   @UseGuards(AuthGuard, IsDeviceGuard, HasPollAccessGuard)
   @ApiParam({ name: 'pollId', format: 'uuid' })
   @HttpCode(HttpStatus.NO_CONTENT)
-  public connectPoll(
+  public connectDevice(
     @AccessToken() accessToken: AccessTokenData,
     @Param('pollId', new ParseUUIDPipe()) pollId: string,
   ): Promise<UpdateResult> {
@@ -121,8 +121,7 @@ export class DeviceController {
   @UseGuards(AuthGuard, IsDeviceGuard)
   @ApiBody({ type: CreateVoteDto })
   @HttpCode(HttpStatus.CREATED)
-  public createVote(@AccessToken() accessToken: AccessTokenData, @Body() createVoteDto: CreateVoteDto): Promise<AggregatedVotes> {
-    console.log('hello!');
+  public vote(@AccessToken() accessToken: AccessTokenData, @Body() createVoteDto: CreateVoteDto): Promise<AggregatedVotes> {
     return lastValueFrom(
       this.deviceService.vote(accessToken.sub, createVoteDto.answer).pipe(
         take(1),
@@ -132,11 +131,11 @@ export class DeviceController {
           }
 
           if (err instanceof ResourceNotConnectedException) {
-            throw new BadRequestException('device_not_connected', err.message);
+            throw new BadRequestException(err.message);
           }
 
           if (err instanceof ResourceClosedException) {
-            throw new BadRequestException('poll_closed', err.message);
+            throw new BadRequestException(err.message);
           }
 
           if (err instanceof ResourcePermissionDeniedException) {

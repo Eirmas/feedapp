@@ -4,7 +4,7 @@ import appConfig from './app-conf';
 
 @Injectable()
 export class AppConfig {
-  public config;
+  public config: ConfigType<typeof appConfig>;
   constructor(private configService: ConfigService) {
     this.config = this.configService.get<ConfigType<typeof appConfig>>('appConfig');
   }

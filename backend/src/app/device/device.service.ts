@@ -3,6 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Observable, from, map, switchMap, tap } from 'rxjs';
 import { Repository, UpdateResult } from 'typeorm';
+import { AppConfig } from '../../common/config/app-config';
 import ResourceNotConnectedException from '../../common/exceptions/device-not-connected.exception';
 import ResourceClosedException from '../../common/exceptions/resource-closed.exception';
 import ResourceNotFoundException from '../../common/exceptions/resource-not-found.exception';
@@ -10,10 +11,8 @@ import ResourcePermissionDeniedException from '../../common/exceptions/resource-
 import { AccessTokenData } from '../../common/interfaces/access-token.type';
 import { DeviceEntity } from '../../models';
 import { PollStatus } from '../../models/poll.entity';
-import appConfig from '../../common/config/app-conf';
-import { VoteService } from '../vote/vote.service';
-import { ConfigService, ConfigType } from '@nestjs/config';
 import { AggregatedVotes } from '../vote/vote.controller';
+import { VoteService } from '../vote/vote.service';
 
 @Injectable()
 export class DeviceService {
@@ -22,7 +21,7 @@ export class DeviceService {
     private readonly deviceRepository: Repository<DeviceEntity>,
     private readonly voteService: VoteService,
     private readonly jwtService: JwtService,
-    private readonly configService: ConfigService,
+    private readonly appConfig: AppConfig,
   ) {}
 
   public getDeviceById(id: string): Observable<DeviceEntity> {
@@ -39,8 +38,8 @@ export class DeviceService {
     return from(this.deviceRepository.save(this.deviceRepository.create())).pipe(
       switchMap((device: DeviceEntity) => {
         const payload: AccessTokenData = { sub: device.id, email: `${device.id}@feedapp.no`, isDevice: true };
-        const config = this.configService.get<ConfigType<typeof appConfig>>('appConfig');
-        return from(this.jwtService.signAsync(payload, { secret: config.jwt.secret }));
+        const { secret } = this.appConfig.config.jwt;
+        return from(this.jwtService.signAsync(payload, { secret }));
       }),
     );
   }
