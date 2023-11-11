@@ -1,3 +1,4 @@
+import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Observable, combineLatest, from, map, of, switchMap, tap } from 'rxjs';
@@ -7,15 +8,14 @@ import { PageOptionsDto } from '../../common/dto/page-options.dto';
 import { PageDto } from '../../common/dto/page.dto';
 import ResourceClosedException from '../../common/exceptions/resource-closed.exception';
 import ResourceNotFoundException from '../../common/exceptions/resource-not-found.exception';
-import { DeviceEntity, PollEntity } from '../../models';
+import { PollEntity } from '../../models';
+import { Analytic } from '../../models/analytic.schema';
 import { PollStatus } from '../../models/poll.entity';
 import { AnalyticService } from '../analytic/analytic.service';
+import { RmqService } from '../rmq/rmq.service';
 import { VoteService } from '../vote/vote.service';
 import { CreatePollDto } from './dto/create-poll.dto';
 import { UpdatePollDto } from './dto/update-poll.dto';
-import { RmqService } from '../rmq/rmq.service';
-import { HttpService } from '@nestjs/axios';
-import { Analytic } from '../../models/analytic.schema';
 
 @Injectable()
 export class PollService {
