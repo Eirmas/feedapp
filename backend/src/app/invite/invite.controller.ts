@@ -64,7 +64,10 @@ export class InviteController {
   @ApiParam({ name: 'pollId', format: 'uuid' })
   @ApiBody({ type: DeleteInviteDto })
   @HttpCode(HttpStatus.NO_CONTENT)
-  public deletePoll(@Param('pollId', new ParseUUIDPipe()) pollId: string, @Body() deleteInviteDto: DeleteInviteDto): Promise<DeleteResult> {
+  public deleteInvite(
+    @Param('pollId', new ParseUUIDPipe()) pollId: string,
+    @Body() deleteInviteDto: DeleteInviteDto,
+  ): Promise<DeleteResult> {
     return lastValueFrom(
       this.inviteService.deleteInvite(pollId, deleteInviteDto.email).pipe(
         catchError(err => {
