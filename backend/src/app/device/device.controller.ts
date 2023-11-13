@@ -119,7 +119,7 @@ export class DeviceController {
 
   @Post('vote')
   @ApiBearerAuth()
-  @UseGuards(AuthGuard, IsDeviceGuard, PollIsOpenGuard)
+  @UseGuards(AuthGuard, IsDeviceGuard)
   @ApiBody({ type: CreateVoteDto })
   @HttpCode(HttpStatus.CREATED)
   public vote(@AccessToken() accessToken: AccessTokenData, @Body() createVoteDto: CreateVoteDto): Promise<AggregatedVotes> {
