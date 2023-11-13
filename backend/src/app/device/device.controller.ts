@@ -60,7 +60,7 @@ export class DeviceController {
 
   @Get('votes')
   @ApiBearerAuth()
-  @UseGuards(IsDeviceGuard, AuthGuard, PollIsOpenGuard)
+  @UseGuards(IsDeviceGuard, AuthGuard)
   public getVotes(@AccessToken() accessToken: AccessTokenData): Promise<AggregatedVotes> {
     return lastValueFrom(
       this.deviceService.getVotes(accessToken.sub).pipe(
