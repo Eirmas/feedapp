@@ -1,0 +1,1 @@
+.v-enter-active,.v-leave-active{transition-property:transform,opacity;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.v-enter-from,.v-leave-to{position:absolute;transform:translateY(-8px);opacity:0}
